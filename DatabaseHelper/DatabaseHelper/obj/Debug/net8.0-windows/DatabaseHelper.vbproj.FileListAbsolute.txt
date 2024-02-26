@@ -1,0 +1,17 @@
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\bin\Debug\net8.0-windows\DatabaseHelper.exe
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\bin\Debug\net8.0-windows\DatabaseHelper.deps.json
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\bin\Debug\net8.0-windows\DatabaseHelper.runtimeconfig.json
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\bin\Debug\net8.0-windows\DatabaseHelper.dll
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\bin\Debug\net8.0-windows\DatabaseHelper.pdb
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.Form1.resources
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.vbproj.GenerateResource.cache
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.GeneratedMSBuildEditorConfig.editorconfig
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.AssemblyInfoInputs.cache
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.AssemblyInfo.vb
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.vbproj.CoreCompileInputs.cache
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.sourcelink.json
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.dll
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\refint\DatabaseHelper.dll
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.pdb
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\DatabaseHelper.genruntimeconfig.cache
+E:\Pasindu\GITHUB\DatabaseHelper\DatabaseHelper\DatabaseHelper\obj\Debug\net8.0-windows\ref\DatabaseHelper.dll
