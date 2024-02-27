@@ -33,7 +33,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.DatabaseHelper.frmMain
+            Me.MainForm = Global.DatabaseHelper.frmLandingPage
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _

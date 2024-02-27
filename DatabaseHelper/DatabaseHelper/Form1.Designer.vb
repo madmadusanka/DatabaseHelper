@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class frmMain
+Partial Class frmLandingPage
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -23,6 +23,8 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Panel1 = New Panel()
+        Panel3 = New Panel()
+        cmbDatabases = New ComboBox()
         lblDatabaseCount = New Label()
         btnToggleConnection = New Button()
         lblServerName = New Label()
@@ -30,12 +32,14 @@ Partial Class frmMain
         Panel2 = New Panel()
         lblsqlserver = New Label()
         Panel1.SuspendLayout()
+        Panel3.SuspendLayout()
         Panel2.SuspendLayout()
         SuspendLayout()
         ' 
         ' Panel1
         ' 
         Panel1.BackColor = SystemColors.ActiveBorder
+        Panel1.Controls.Add(Panel3)
         Panel1.Controls.Add(lblDatabaseCount)
         Panel1.Controls.Add(btnToggleConnection)
         Panel1.Controls.Add(lblServerName)
@@ -44,8 +48,25 @@ Partial Class frmMain
         Panel1.Dock = DockStyle.Left
         Panel1.Location = New Point(0, 0)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(311, 450)
+        Panel1.Size = New Size(311, 749)
         Panel1.TabIndex = 0
+        ' 
+        ' Panel3
+        ' 
+        Panel3.BackColor = SystemColors.ControlDarkDark
+        Panel3.Controls.Add(cmbDatabases)
+        Panel3.Location = New Point(12, 186)
+        Panel3.Name = "Panel3"
+        Panel3.Size = New Size(287, 252)
+        Panel3.TabIndex = 5
+        ' 
+        ' cmbDatabases
+        ' 
+        cmbDatabases.FormattingEnabled = True
+        cmbDatabases.Location = New Point(14, 77)
+        cmbDatabases.Name = "cmbDatabases"
+        cmbDatabases.Size = New Size(260, 23)
+        cmbDatabases.TabIndex = 0
         ' 
         ' lblDatabaseCount
         ' 
@@ -100,16 +121,18 @@ Partial Class frmMain
         lblsqlserver.TabIndex = 0
         lblsqlserver.Text = "SQL Server"
         ' 
-        ' frmMain
+        ' frmLandingPage
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(851, 450)
+        ClientSize = New Size(1264, 749)
         Controls.Add(Panel1)
-        Name = "frmMain"
-        Text = "Main "
+        Name = "frmLandingPage"
+        Text = "Landing Page"
+        WindowState = FormWindowState.Maximized
         Panel1.ResumeLayout(False)
         Panel1.PerformLayout()
+        Panel3.ResumeLayout(False)
         Panel2.ResumeLayout(False)
         Panel2.PerformLayout()
         ResumeLayout(False)
@@ -122,5 +145,7 @@ Partial Class frmMain
     Friend WithEvents lblsqlserver As Label
     Friend WithEvents btnToggleConnection As Button
     Friend WithEvents lblDatabaseCount As Label
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents cmbDatabases As ComboBox
 
 End Class
