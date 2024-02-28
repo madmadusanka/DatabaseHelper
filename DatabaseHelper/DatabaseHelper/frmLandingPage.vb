@@ -8,38 +8,42 @@ Public Class frmLandingPage
 
     Private Async Sub btnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
         Try
-            If isConnected Then
-                ' Disconnect from the server
-                ConnectionManager.DisconnectServer(connection)
-                btnToggleConnection.Text = "Connect"
-                isConnected = False
-                lblDBCount.Text = ""
-                cmbDatabases.Items.Clear()
-                lblTableCount.Text = ""
-                lblSpCount.Text = ""
-                lblViewCount.Text = ""
-                lbltbllbl.Text = ""
-                lblsplbl.Text = ""
-                lblviewlbl.Text = ""
-                pnlShowTable.Visible = False
-                pnlShowSp.Visible = False
-                pnlShowView.Visible = False
-            Else
-                ' Connect to the server
-                connection = Await ConnectionManager.ConnectServer(txtServerName.Text)
+            If Not String.IsNullOrEmpty(txtServerName.Text) Then
+                If isConnected Then
+                    ' Disconnect from the server
+                    ConnectionManager.DisconnectServer(connection)
+                    btnToggleConnection.Text = "Connect"
+                    isConnected = False
+                    lblDBCount.Text = ""
+                    cmbDatabases.Items.Clear()
+                    lblTableCount.Text = ""
+                    lblSpCount.Text = ""
+                    lblViewCount.Text = ""
+                    lbltbllbl.Text = ""
+                    lblsplbl.Text = ""
+                    lblviewlbl.Text = ""
+                    pnlShowTable.Visible = False
+                    pnlShowSp.Visible = False
+                    pnlShowView.Visible = False
+                Else
+                    ' Connect to the server
+                    connection = Await ConnectionManager.ConnectServer(txtServerName.Text)
 
-                ' Update the button text based on the connection status
-                If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
-                    btnToggleConnection.Text = "Disconnect"
-                    isConnected = True
+                    ' Update the button text based on the connection status
+                    If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
+                        btnToggleConnection.Text = "Disconnect"
+                        isConnected = True
 
-                    Dim countDBquery As String = "SELECT COUNT(name) FROM sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb')"
-                    Await ShowDBCount(countDBquery, connection, lblDBCount)
+                        Dim countDBquery As String = SQLQueries.CountDb
+                        Await ShowDBCount(countDBquery, connection, lblDBCount)
 
-                    ' Retrieve database names and populate ComboBox
-                    Dim getDBquery As String = "SELECT name FROM sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb')"
-                    Await PopulateComboBoxWithQuery(getDBquery, connection, cmbDatabases)
+                        ' Retrieve database names and populate ComboBox
+                        Dim getDBquery As String = SQLQueries.FetchDbNames
+                        Await PopulateComboBoxWithQuery(getDBquery, connection, cmbDatabases)
+                    End If
                 End If
+            Else
+                MessageBox.Show("Server name is empty or null. Please enter a valid server name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         Catch ex As Exception
             ' Handle any exceptions
@@ -72,6 +76,7 @@ Public Class frmLandingPage
             MessageBox.Show("An error occurred while populating the ComboBox: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Function
+
 
     Private Async Function ShowDBCount(ByVal query As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
         Try
@@ -114,7 +119,7 @@ Public Class frmLandingPage
         Try
             If connection.State = ConnectionState.Open Then
                 ' Query to retrieve the count of tables in the database
-                Dim query As String = $"USE [{databaseName}]; SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'"
+                Dim query As String = $"USE [{databaseName}]; {SQLQueries.CountTables}"
 
 
                 ' Create command
@@ -138,7 +143,7 @@ Public Class frmLandingPage
         Try
             If connection.State = ConnectionState.Open Then
                 ' Query to retrieve the count of tables in the database
-                Dim query As String = $"USE [{databaseName}]; SELECT COUNT(*) AS StoredProcedureCount FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = 'PROCEDURE'"
+                Dim query As String = $"USE [{databaseName}]; {SQLQueries.CountStoredProcedures}"
 
 
                 ' Create command
@@ -162,7 +167,7 @@ Public Class frmLandingPage
         Try
             If connection.State = ConnectionState.Open Then
                 ' Query to retrieve the count of tables in the database
-                Dim query As String = $"USE [{databaseName}]; SELECT COUNT(*) AS ViewCount FROM INFORMATION_SCHEMA.VIEWS"
+                Dim query As String = $"USE [{databaseName}]; {SQLQueries.CountViews}"
 
 
                 ' Create command
