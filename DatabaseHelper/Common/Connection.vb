@@ -2,33 +2,22 @@
 Imports System.Data.SqlClient
 
 Public Class Connection
-    Private sqlConnection As SqlConnection
-
     Public Async Function ConnectServer(ByVal serverName As String) As Task(Of SqlConnection)
-        ' Connection string to your SQL Server instance
-        Dim connectionString As String = "Server=" & serverName & ";Database=master;Integrated Security=True;"
+        Dim connectionString As String = $"Server={serverName};Database=master;Integrated Security=True;"
+        Dim connection As New SqlConnection(connectionString)
 
-        If Not String.IsNullOrEmpty(serverName) Then
-            Try
-                ' Create and open connection
-                sqlConnection = New SqlConnection(connectionString)
-                Await sqlConnection.OpenAsync()
-
-                ' Return the opened connection
-                Return sqlConnection
-            Catch ex As Exception
-                ' Handle any exceptions
-                Throw New Exception("An error occurred while connecting to the server: " & ex.Message)
-            End Try
-        Else
-            Throw New Exception("Server name is empty or null")
-        End If
+        Try
+            Await connection.OpenAsync()
+            Return connection
+        Catch ex As Exception
+            Throw New Exception($"Error connecting to the server: {ex.Message}")
+        End Try
     End Function
 
-    Public Sub DisconnectServer()
-        If sqlConnection IsNot Nothing AndAlso sqlConnection.State = ConnectionState.Open Then
-            sqlConnection.Close()
-            sqlConnection.Dispose()
+    Public Sub DisconnectServer(ByVal connection As SqlConnection)
+        If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
+            connection.Close()
+            connection.Dispose()
         End If
     End Sub
 End Class
