@@ -24,6 +24,7 @@ Partial Class frmLandingPage
     Private Sub InitializeComponent()
         Panel1 = New Panel()
         Panel3 = New Panel()
+        lblDBCount = New Label()
         Label1 = New Label()
         cmbDatabases = New ComboBox()
         lblDatabaseCount = New Label()
@@ -36,9 +37,9 @@ Partial Class frmLandingPage
         Button2 = New Button()
         Button3 = New Button()
         Panel4 = New Panel()
+        TableLayoutPanel1 = New TableLayoutPanel()
         Button5 = New Button()
         Button4 = New Button()
-        TableLayoutPanel1 = New TableLayoutPanel()
         Panel1.SuspendLayout()
         Panel3.SuspendLayout()
         Panel2.SuspendLayout()
@@ -63,6 +64,7 @@ Partial Class frmLandingPage
         ' Panel3
         ' 
         Panel3.BackColor = SystemColors.ControlDarkDark
+        Panel3.Controls.Add(lblDBCount)
         Panel3.Controls.Add(Label1)
         Panel3.Controls.Add(cmbDatabases)
         Panel3.Location = New Point(12, 146)
@@ -70,11 +72,20 @@ Partial Class frmLandingPage
         Panel3.Size = New Size(287, 538)
         Panel3.TabIndex = 5
         ' 
+        ' lblDBCount
+        ' 
+        lblDBCount.AutoSize = True
+        lblDBCount.Font = New Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        lblDBCount.Location = New Point(76, 16)
+        lblDBCount.Name = "lblDBCount"
+        lblDBCount.Size = New Size(0, 17)
+        lblDBCount.TabIndex = 2
+        ' 
         ' Label1
         ' 
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        Label1.Location = New Point(76, 16)
+        Label1.Location = New Point(76, 51)
         Label1.Name = "Label1"
         Label1.Size = New Size(131, 17)
         Label1.TabIndex = 1
@@ -83,7 +94,7 @@ Partial Class frmLandingPage
         ' cmbDatabases
         ' 
         cmbDatabases.FormattingEnabled = True
-        cmbDatabases.Location = New Point(14, 46)
+        cmbDatabases.Location = New Point(14, 81)
         cmbDatabases.Name = "cmbDatabases"
         cmbDatabases.Size = New Size(260, 23)
         cmbDatabases.TabIndex = 0
@@ -133,7 +144,7 @@ Partial Class frmLandingPage
         ' lblsqlserver
         ' 
         lblsqlserver.AutoSize = True
-        lblsqlserver.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblsqlserver.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lblsqlserver.ForeColor = SystemColors.ButtonFace
         lblsqlserver.Location = New Point(99, 12)
         lblsqlserver.Name = "lblsqlserver"
@@ -182,6 +193,19 @@ Partial Class frmLandingPage
         Panel4.Size = New Size(1053, 738)
         Panel4.TabIndex = 4
         ' 
+        ' TableLayoutPanel1
+        ' 
+        TableLayoutPanel1.ColumnCount = 2
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50.0F))
+        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50.0F))
+        TableLayoutPanel1.Location = New Point(23, 162)
+        TableLayoutPanel1.Name = "TableLayoutPanel1"
+        TableLayoutPanel1.RowCount = 2
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50.0F))
+        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50.0F))
+        TableLayoutPanel1.Size = New Size(1000, 522)
+        TableLayoutPanel1.TabIndex = 6
+        ' 
         ' Button5
         ' 
         Button5.Location = New Point(846, 26)
@@ -199,19 +223,6 @@ Partial Class frmLandingPage
         Button4.TabIndex = 4
         Button4.Text = "Button4"
         Button4.UseVisualStyleBackColor = True
-        ' 
-        ' TableLayoutPanel1
-        ' 
-        TableLayoutPanel1.ColumnCount = 2
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
-        TableLayoutPanel1.Location = New Point(23, 162)
-        TableLayoutPanel1.Name = "TableLayoutPanel1"
-        TableLayoutPanel1.RowCount = 2
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel1.Size = New Size(1000, 522)
-        TableLayoutPanel1.TabIndex = 6
         ' 
         ' frmLandingPage
         ' 
@@ -250,5 +261,6 @@ Partial Class frmLandingPage
     Friend WithEvents Button4 As Button
     Friend WithEvents Button5 As Button
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents lblDBCount As Label
 
 End Class
