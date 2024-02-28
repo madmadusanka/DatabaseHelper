@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Threading.Tasks
 
 Public Class Connection
 
@@ -14,14 +13,15 @@ Public Class Connection
                 Await connection.OpenAsync()
 
                 ' Return the opened connection
+                ' Return the opened connection
                 Return connection
             Catch ex As Exception
                 ' Handle any exceptions
-                'MessageBox.Show("An error occurred while connecting to the server: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Throw New Exception("An error occurred while connecting to the server: " & ex.Message)
                 Return Nothing
             End Try
         Else
-            ' MessageBox.Show("Server name is empty or null", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Throw New Exception("Server name is empty or null")
             Return Nothing
         End If
     End Function
