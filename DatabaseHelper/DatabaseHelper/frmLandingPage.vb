@@ -34,11 +34,11 @@ Public Class frmLandingPage
                         btnToggleConnection.Text = "Disconnect"
                         isConnected = True
 
-                        Dim countDBquery As String = SQLQueries.CountDb
+                        Dim countDBquery As String = SQLQueries.DbCountQuery
                         Await ShowDBCount(countDBquery, connection, lblDBCount)
 
                         ' Retrieve database names and populate ComboBox
-                        Dim getDBquery As String = SQLQueries.FetchDbNames
+                        Dim getDBquery As String = SQLQueries.DBNamesQuery
                         Await PopulateComboBoxWithQuery(getDBquery, connection, cmbDatabases)
                     End If
                 End If
@@ -119,7 +119,7 @@ Public Class frmLandingPage
         Try
             If connection.State = ConnectionState.Open Then
                 ' Query to retrieve the count of tables in the database
-                Dim query As String = $"USE [{databaseName}]; {SQLQueries.CountTables}"
+                Dim query As String = $"USE [{databaseName}]; {SQLQueries.TablesCountQuery}"
 
 
                 ' Create command
@@ -143,7 +143,7 @@ Public Class frmLandingPage
         Try
             If connection.State = ConnectionState.Open Then
                 ' Query to retrieve the count of tables in the database
-                Dim query As String = $"USE [{databaseName}]; {SQLQueries.CountStoredProcedures}"
+                Dim query As String = $"USE [{databaseName}]; {SQLQueries.StoredProceduresCountQuery}"
 
 
                 ' Create command
@@ -167,7 +167,7 @@ Public Class frmLandingPage
         Try
             If connection.State = ConnectionState.Open Then
                 ' Query to retrieve the count of tables in the database
-                Dim query As String = $"USE [{databaseName}]; {SQLQueries.CountViews}"
+                Dim query As String = $"USE [{databaseName}]; {SQLQueries.ViewsCountQuery}"
 
 
                 ' Create command
