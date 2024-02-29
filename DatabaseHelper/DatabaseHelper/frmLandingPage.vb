@@ -87,7 +87,6 @@ Public Class frmLandingPage
         End Try
     End Function
 
-
     Private Async Function ShowDBCount(ByVal query As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
         Try
             If connection.State = ConnectionState.Open Then
@@ -287,21 +286,30 @@ Public Class frmLandingPage
         End Try
     End Function
 
-    Private Sub btnShowViewQuery_Click(sender As Object, e As EventArgs) Handles btnShowViewQuery.Click
+    Private Async Sub btnShowViewQuery_Click(sender As Object, e As EventArgs) Handles btnShowViewQuery.Click
+        ' Get the selected view name
+        If cmbSelectView.SelectedItem IsNot Nothing Then
+            Dim selectedViewName As String = cmbSelectView.SelectedItem.ToString()
+
+            ' Query to retrieve the view definition
+            Dim query As String = String.Format(ViewDetailQuery, selectedViewName)
+
+            Await ShowQuery(query, connection, selectedViewName)
+        Else
+            MessageBox.Show("Please select a view.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+
+    Private Function ShowQuery(ByVal query As String, ByVal connection As SqlConnection, ByVal selectedName As String) As Task
         Try
             If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
-                ' Get the selected view name
-                Dim selectedViewName As String = cmbSelectView.SelectedItem.ToString()
-
-                ' Query to retrieve the view definition
-                Dim query As String = String.Format(ViewDetailQuery, selectedViewName)
 
                 ' Execute the query
                 Using command As New SqlCommand(query, connection)
                     Dim viewDefinition As String = command.ExecuteScalar()?.ToString()
 
                     ' Open the ViewQueryForm and pass the view query
-                    Dim viewQueryForm As New frmViewQuery(selectedViewName, viewDefinition)
+                    Dim viewQueryForm As New frmViewQuery(selectedName, viewDefinition)
                     viewQueryForm.Show()
                 End Using
             Else
@@ -312,5 +320,21 @@ Public Class frmLandingPage
             ' Handle any exceptions
             MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
+        Return Task.CompletedTask
+    End Function
+
+    Private Async Sub btnShowProcedure_Click(sender As Object, e As EventArgs) Handles btnShowProcedure.Click
+        ' Get the selected view name
+        If cmbSelectProcedure.SelectedItem IsNot Nothing Then
+            Dim selectedProcedureName As String = cmbSelectProcedure.SelectedItem.ToString()
+
+            ' Query to retrieve the view definition
+            Dim query As String = String.Format(ProcedureDetailQuery, selectedProcedureName)
+
+            Await ShowQuery(query, connection, selectedProcedureName)
+        Else
+            MessageBox.Show("Please select a procedure.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
 End Class

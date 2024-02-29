@@ -41,6 +41,7 @@ Partial Class frmViewQuery
         txtViewDefinition.Location = New Point(41, 113)
         txtViewDefinition.Multiline = True
         txtViewDefinition.Name = "txtViewDefinition"
+        txtViewDefinition.ScrollBars = ScrollBars.Both
         txtViewDefinition.Size = New Size(1280, 403)
         txtViewDefinition.TabIndex = 2
         ' 
