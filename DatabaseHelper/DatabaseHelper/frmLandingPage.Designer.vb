@@ -22,8 +22,18 @@ Partial Class frmLandingPage
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Panel1 = New Panel()
-        Panel3 = New Panel()
+        pnlSqlServer = New Panel()
+        pnlMain = New Panel()
+        pnlSelectDetails = New Panel()
+        cmbSelectTable = New ComboBox()
+        pnlSelectViewlbl = New Panel()
+        lblSelectViewlbl = New Label()
+        cmbSelectProcedure = New ComboBox()
+        pnlSelectProcedurelbl = New Panel()
+        lblSelectProcedurelbl = New Label()
+        cmbSelectView = New ComboBox()
+        pnlselectTablelbl = New Panel()
+        lblselectTablelbl = New Label()
         lblDBCount = New Label()
         pnlShowView = New Panel()
         lblviewlbl = New Label()
@@ -35,57 +45,166 @@ Partial Class frmLandingPage
         pnlShowTable = New Panel()
         lbltbllbl = New Label()
         lblTableCount = New Label()
-        Panel5 = New Panel()
-        Label2 = New Label()
+        pnlselectYourDatabaselbl = New Panel()
+        lblSelectyourDatabaselbl = New Label()
         btnToggleConnection = New Button()
         lblServerName = New Label()
         txtServerName = New TextBox()
-        Panel2 = New Panel()
+        pnlSqlServerlbl = New Panel()
         lblsqlserver = New Label()
         Button1 = New Button()
         Button2 = New Button()
         Button3 = New Button()
-        Panel4 = New Panel()
-        TableLayoutPanel1 = New TableLayoutPanel()
+        pnlDashBoardMain = New Panel()
         Button5 = New Button()
         Button4 = New Button()
-        Panel1.SuspendLayout()
-        Panel3.SuspendLayout()
+        pnlSqlServer.SuspendLayout()
+        pnlMain.SuspendLayout()
+        pnlSelectDetails.SuspendLayout()
+        pnlSelectViewlbl.SuspendLayout()
+        pnlSelectProcedurelbl.SuspendLayout()
+        pnlselectTablelbl.SuspendLayout()
         pnlShowView.SuspendLayout()
         pnlShowSp.SuspendLayout()
         pnlShowTable.SuspendLayout()
-        Panel5.SuspendLayout()
-        Panel2.SuspendLayout()
-        Panel4.SuspendLayout()
+        pnlselectYourDatabaselbl.SuspendLayout()
+        pnlSqlServerlbl.SuspendLayout()
+        pnlDashBoardMain.SuspendLayout()
         SuspendLayout()
         ' 
-        ' Panel1
+        ' pnlSqlServer
         ' 
-        Panel1.BackColor = SystemColors.ActiveBorder
-        Panel1.Controls.Add(Panel3)
-        Panel1.Controls.Add(btnToggleConnection)
-        Panel1.Controls.Add(lblServerName)
-        Panel1.Controls.Add(txtServerName)
-        Panel1.Controls.Add(Panel2)
-        Panel1.Dock = DockStyle.Left
-        Panel1.Location = New Point(0, 0)
-        Panel1.Name = "Panel1"
-        Panel1.Size = New Size(311, 738)
-        Panel1.TabIndex = 0
+        pnlSqlServer.BackColor = SystemColors.ActiveBorder
+        pnlSqlServer.Controls.Add(pnlMain)
+        pnlSqlServer.Controls.Add(btnToggleConnection)
+        pnlSqlServer.Controls.Add(lblServerName)
+        pnlSqlServer.Controls.Add(txtServerName)
+        pnlSqlServer.Controls.Add(pnlSqlServerlbl)
+        pnlSqlServer.Dock = DockStyle.Left
+        pnlSqlServer.Location = New Point(0, 0)
+        pnlSqlServer.Name = "pnlSqlServer"
+        pnlSqlServer.Size = New Size(311, 738)
+        pnlSqlServer.TabIndex = 0
         ' 
-        ' Panel3
+        ' pnlMain
         ' 
-        Panel3.BackColor = SystemColors.ControlDarkDark
-        Panel3.Controls.Add(lblDBCount)
-        Panel3.Controls.Add(pnlShowView)
-        Panel3.Controls.Add(pnlShowSp)
-        Panel3.Controls.Add(cmbDatabases)
-        Panel3.Controls.Add(pnlShowTable)
-        Panel3.Controls.Add(Panel5)
-        Panel3.Location = New Point(12, 146)
-        Panel3.Name = "Panel3"
-        Panel3.Size = New Size(287, 538)
-        Panel3.TabIndex = 5
+        pnlMain.BackColor = SystemColors.ControlDarkDark
+        pnlMain.Controls.Add(pnlSelectDetails)
+        pnlMain.Controls.Add(lblDBCount)
+        pnlMain.Controls.Add(pnlShowView)
+        pnlMain.Controls.Add(pnlShowSp)
+        pnlMain.Controls.Add(cmbDatabases)
+        pnlMain.Controls.Add(pnlShowTable)
+        pnlMain.Controls.Add(pnlselectYourDatabaselbl)
+        pnlMain.Location = New Point(12, 146)
+        pnlMain.Name = "pnlMain"
+        pnlMain.Size = New Size(287, 538)
+        pnlMain.TabIndex = 5
+        pnlMain.Visible = False
+        ' 
+        ' pnlSelectDetails
+        ' 
+        pnlSelectDetails.Controls.Add(cmbSelectTable)
+        pnlSelectDetails.Controls.Add(pnlSelectViewlbl)
+        pnlSelectDetails.Controls.Add(cmbSelectProcedure)
+        pnlSelectDetails.Controls.Add(pnlSelectProcedurelbl)
+        pnlSelectDetails.Controls.Add(cmbSelectView)
+        pnlSelectDetails.Controls.Add(pnlselectTablelbl)
+        pnlSelectDetails.Location = New Point(3, 223)
+        pnlSelectDetails.Name = "pnlSelectDetails"
+        pnlSelectDetails.Size = New Size(281, 255)
+        pnlSelectDetails.TabIndex = 11
+        pnlSelectDetails.Visible = False
+        ' 
+        ' cmbSelectTable
+        ' 
+        cmbSelectTable.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        cmbSelectTable.AutoCompleteSource = AutoCompleteSource.ListItems
+        cmbSelectTable.FormattingEnabled = True
+        cmbSelectTable.Location = New Point(11, 49)
+        cmbSelectTable.Name = "cmbSelectTable"
+        cmbSelectTable.Size = New Size(260, 23)
+        cmbSelectTable.TabIndex = 8
+        ' 
+        ' pnlSelectViewlbl
+        ' 
+        pnlSelectViewlbl.BackColor = SystemColors.ControlDark
+        pnlSelectViewlbl.Controls.Add(lblSelectViewlbl)
+        pnlSelectViewlbl.ForeColor = SystemColors.ActiveCaptionText
+        pnlSelectViewlbl.Location = New Point(11, 176)
+        pnlSelectViewlbl.Name = "pnlSelectViewlbl"
+        pnlSelectViewlbl.Size = New Size(260, 34)
+        pnlSelectViewlbl.TabIndex = 8
+        ' 
+        ' lblSelectViewlbl
+        ' 
+        lblSelectViewlbl.AutoSize = True
+        lblSelectViewlbl.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblSelectViewlbl.Location = New Point(93, 9)
+        lblSelectViewlbl.Name = "lblSelectViewlbl"
+        lblSelectViewlbl.Size = New Size(78, 17)
+        lblSelectViewlbl.TabIndex = 2
+        lblSelectViewlbl.Text = "Select View"
+        ' 
+        ' cmbSelectProcedure
+        ' 
+        cmbSelectProcedure.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        cmbSelectProcedure.AutoCompleteSource = AutoCompleteSource.ListItems
+        cmbSelectProcedure.FormattingEnabled = True
+        cmbSelectProcedure.Location = New Point(11, 132)
+        cmbSelectProcedure.Name = "cmbSelectProcedure"
+        cmbSelectProcedure.Size = New Size(260, 23)
+        cmbSelectProcedure.TabIndex = 9
+        ' 
+        ' pnlSelectProcedurelbl
+        ' 
+        pnlSelectProcedurelbl.BackColor = SystemColors.ControlDark
+        pnlSelectProcedurelbl.Controls.Add(lblSelectProcedurelbl)
+        pnlSelectProcedurelbl.ForeColor = SystemColors.ActiveCaptionText
+        pnlSelectProcedurelbl.Location = New Point(11, 92)
+        pnlSelectProcedurelbl.Name = "pnlSelectProcedurelbl"
+        pnlSelectProcedurelbl.Size = New Size(260, 34)
+        pnlSelectProcedurelbl.TabIndex = 8
+        ' 
+        ' lblSelectProcedurelbl
+        ' 
+        lblSelectProcedurelbl.AutoSize = True
+        lblSelectProcedurelbl.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblSelectProcedurelbl.Location = New Point(78, 9)
+        lblSelectProcedurelbl.Name = "lblSelectProcedurelbl"
+        lblSelectProcedurelbl.Size = New Size(110, 17)
+        lblSelectProcedurelbl.TabIndex = 2
+        lblSelectProcedurelbl.Text = "Select Procedure"
+        ' 
+        ' cmbSelectView
+        ' 
+        cmbSelectView.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        cmbSelectView.AutoCompleteSource = AutoCompleteSource.ListItems
+        cmbSelectView.FormattingEnabled = True
+        cmbSelectView.Location = New Point(11, 216)
+        cmbSelectView.Name = "cmbSelectView"
+        cmbSelectView.Size = New Size(260, 23)
+        cmbSelectView.TabIndex = 10
+        ' 
+        ' pnlselectTablelbl
+        ' 
+        pnlselectTablelbl.BackColor = SystemColors.ControlDark
+        pnlselectTablelbl.Controls.Add(lblselectTablelbl)
+        pnlselectTablelbl.ForeColor = SystemColors.ActiveCaptionText
+        pnlselectTablelbl.Location = New Point(11, 9)
+        pnlselectTablelbl.Name = "pnlselectTablelbl"
+        pnlselectTablelbl.Size = New Size(260, 34)
+        pnlselectTablelbl.TabIndex = 8
+        ' 
+        ' lblselectTablelbl
+        ' 
+        lblselectTablelbl.AutoSize = True
+        lblselectTablelbl.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblselectTablelbl.Location = New Point(89, 9)
+        lblselectTablelbl.Name = "lblselectTablelbl"
+        lblselectTablelbl.Size = New Size(81, 17)
+        lblselectTablelbl.TabIndex = 2
+        lblselectTablelbl.Text = "Select Table"
         ' 
         ' lblDBCount
         ' 
@@ -157,6 +276,8 @@ Partial Class frmLandingPage
         ' 
         ' cmbDatabases
         ' 
+        cmbDatabases.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        cmbDatabases.AutoCompleteSource = AutoCompleteSource.ListItems
         cmbDatabases.FormattingEnabled = True
         cmbDatabases.Location = New Point(13, 95)
         cmbDatabases.Name = "cmbDatabases"
@@ -192,25 +313,25 @@ Partial Class frmLandingPage
         lblTableCount.Size = New Size(0, 25)
         lblTableCount.TabIndex = 3
         ' 
-        ' Panel5
+        ' pnlselectYourDatabaselbl
         ' 
-        Panel5.BackColor = SystemColors.ControlDark
-        Panel5.Controls.Add(Label2)
-        Panel5.ForeColor = SystemColors.ActiveCaptionText
-        Panel5.Location = New Point(13, 54)
-        Panel5.Name = "Panel5"
-        Panel5.Size = New Size(260, 34)
-        Panel5.TabIndex = 7
+        pnlselectYourDatabaselbl.BackColor = SystemColors.ControlDark
+        pnlselectYourDatabaselbl.Controls.Add(lblSelectyourDatabaselbl)
+        pnlselectYourDatabaselbl.ForeColor = SystemColors.ActiveCaptionText
+        pnlselectYourDatabaselbl.Location = New Point(13, 54)
+        pnlselectYourDatabaselbl.Name = "pnlselectYourDatabaselbl"
+        pnlselectYourDatabaselbl.Size = New Size(260, 34)
+        pnlselectYourDatabaselbl.TabIndex = 7
         ' 
-        ' Label2
+        ' lblSelectyourDatabaselbl
         ' 
-        Label2.AutoSize = True
-        Label2.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        Label2.Location = New Point(62, 9)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(137, 17)
-        Label2.TabIndex = 2
-        Label2.Text = "Select your Database"
+        lblSelectyourDatabaselbl.AutoSize = True
+        lblSelectyourDatabaselbl.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblSelectyourDatabaselbl.Location = New Point(62, 9)
+        lblSelectyourDatabaselbl.Name = "lblSelectyourDatabaselbl"
+        lblSelectyourDatabaselbl.Size = New Size(137, 17)
+        lblSelectyourDatabaselbl.TabIndex = 2
+        lblSelectyourDatabaselbl.Text = "Select your Database"
         ' 
         ' btnToggleConnection
         ' 
@@ -237,14 +358,14 @@ Partial Class frmLandingPage
         txtServerName.Size = New Size(287, 23)
         txtServerName.TabIndex = 1
         ' 
-        ' Panel2
+        ' pnlSqlServerlbl
         ' 
-        Panel2.BackColor = SystemColors.ControlDarkDark
-        Panel2.Controls.Add(lblsqlserver)
-        Panel2.Location = New Point(0, 0)
-        Panel2.Name = "Panel2"
-        Panel2.Size = New Size(311, 48)
-        Panel2.TabIndex = 0
+        pnlSqlServerlbl.BackColor = SystemColors.ControlDarkDark
+        pnlSqlServerlbl.Controls.Add(lblsqlserver)
+        pnlSqlServerlbl.Location = New Point(0, 0)
+        pnlSqlServerlbl.Name = "pnlSqlServerlbl"
+        pnlSqlServerlbl.Size = New Size(311, 48)
+        pnlSqlServerlbl.TabIndex = 0
         ' 
         ' lblsqlserver
         ' 
@@ -284,32 +405,18 @@ Partial Class frmLandingPage
         Button3.Text = "Button3"
         Button3.UseVisualStyleBackColor = True
         ' 
-        ' Panel4
+        ' pnlDashBoardMain
         ' 
-        Panel4.Controls.Add(TableLayoutPanel1)
-        Panel4.Controls.Add(Button5)
-        Panel4.Controls.Add(Button4)
-        Panel4.Controls.Add(Button1)
-        Panel4.Controls.Add(Button2)
-        Panel4.Controls.Add(Button3)
-        Panel4.Dock = DockStyle.Right
-        Panel4.Location = New Point(317, 0)
-        Panel4.Name = "Panel4"
-        Panel4.Size = New Size(1053, 738)
-        Panel4.TabIndex = 4
-        ' 
-        ' TableLayoutPanel1
-        ' 
-        TableLayoutPanel1.ColumnCount = 2
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
-        TableLayoutPanel1.ColumnStyles.Add(New ColumnStyle(SizeType.Percent, 50F))
-        TableLayoutPanel1.Location = New Point(23, 162)
-        TableLayoutPanel1.Name = "TableLayoutPanel1"
-        TableLayoutPanel1.RowCount = 2
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel1.RowStyles.Add(New RowStyle(SizeType.Percent, 50F))
-        TableLayoutPanel1.Size = New Size(1000, 522)
-        TableLayoutPanel1.TabIndex = 6
+        pnlDashBoardMain.Controls.Add(Button5)
+        pnlDashBoardMain.Controls.Add(Button4)
+        pnlDashBoardMain.Controls.Add(Button1)
+        pnlDashBoardMain.Controls.Add(Button2)
+        pnlDashBoardMain.Controls.Add(Button3)
+        pnlDashBoardMain.Dock = DockStyle.Right
+        pnlDashBoardMain.Location = New Point(317, 0)
+        pnlDashBoardMain.Name = "pnlDashBoardMain"
+        pnlDashBoardMain.Size = New Size(1053, 738)
+        pnlDashBoardMain.TabIndex = 4
         ' 
         ' Button5
         ' 
@@ -334,44 +441,50 @@ Partial Class frmLandingPage
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1370, 738)
-        Controls.Add(Panel1)
-        Controls.Add(Panel4)
+        Controls.Add(pnlSqlServer)
+        Controls.Add(pnlDashBoardMain)
         Name = "frmLandingPage"
         Text = "Landing Page"
         WindowState = FormWindowState.Maximized
-        Panel1.ResumeLayout(False)
-        Panel1.PerformLayout()
-        Panel3.ResumeLayout(False)
-        Panel3.PerformLayout()
+        pnlSqlServer.ResumeLayout(False)
+        pnlSqlServer.PerformLayout()
+        pnlMain.ResumeLayout(False)
+        pnlMain.PerformLayout()
+        pnlSelectDetails.ResumeLayout(False)
+        pnlSelectViewlbl.ResumeLayout(False)
+        pnlSelectViewlbl.PerformLayout()
+        pnlSelectProcedurelbl.ResumeLayout(False)
+        pnlSelectProcedurelbl.PerformLayout()
+        pnlselectTablelbl.ResumeLayout(False)
+        pnlselectTablelbl.PerformLayout()
         pnlShowView.ResumeLayout(False)
         pnlShowView.PerformLayout()
         pnlShowSp.ResumeLayout(False)
         pnlShowSp.PerformLayout()
         pnlShowTable.ResumeLayout(False)
         pnlShowTable.PerformLayout()
-        Panel5.ResumeLayout(False)
-        Panel5.PerformLayout()
-        Panel2.ResumeLayout(False)
-        Panel2.PerformLayout()
-        Panel4.ResumeLayout(False)
+        pnlselectYourDatabaselbl.ResumeLayout(False)
+        pnlselectYourDatabaselbl.PerformLayout()
+        pnlSqlServerlbl.ResumeLayout(False)
+        pnlSqlServerlbl.PerformLayout()
+        pnlDashBoardMain.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents pnlSqlServer As Panel
     Friend WithEvents lblServerName As Label
     Friend WithEvents txtServerName As TextBox
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents pnlSqlServerlbl As Panel
     Friend WithEvents lblsqlserver As Label
     Friend WithEvents btnToggleConnection As Button
-    Friend WithEvents Panel3 As Panel
+    Friend WithEvents pnlMain As Panel
     Friend WithEvents cmbDatabases As ComboBox
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
-    Friend WithEvents Panel4 As Panel
+    Friend WithEvents pnlDashBoardMain As Panel
     Friend WithEvents Button4 As Button
     Friend WithEvents Button5 As Button
-    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents lblTableCount As Label
     Friend WithEvents pnlShowView As Panel
     Friend WithEvents pnlShowSp As Panel
@@ -381,8 +494,18 @@ Partial Class frmLandingPage
     Friend WithEvents lbltbllbl As Label
     Friend WithEvents lblviewlbl As Label
     Friend WithEvents lblsplbl As Label
-    Friend WithEvents Panel5 As Panel
+    Friend WithEvents pnlselectYourDatabaselbl As Panel
     Friend WithEvents lblDBCount As Label
-    Friend WithEvents Label2 As Label
+    Friend WithEvents lblSelectyourDatabaselbl As Label
+    Friend WithEvents pnlSelectViewlbl As Panel
+    Friend WithEvents lblSelectViewlbl As Label
+    Friend WithEvents pnlSelectProcedurelbl As Panel
+    Friend WithEvents lblSelectProcedurelbl As Label
+    Friend WithEvents pnlselectTablelbl As Panel
+    Friend WithEvents lblselectTablelbl As Label
+    Friend WithEvents cmbSelectView As ComboBox
+    Friend WithEvents cmbSelectProcedure As ComboBox
+    Friend WithEvents cmbSelectTable As ComboBox
+    Friend WithEvents pnlSelectDetails As Panel
 
 End Class
