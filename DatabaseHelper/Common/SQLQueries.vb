@@ -16,5 +16,7 @@
 
     Public Const ViewsNamesQuery As String = "SELECT TABLE_NAME AS ViewName FROM INFORMATION_SCHEMA.VIEWS;"
 
+    Public Const ViewDetailQuery As String = "SELECT OBJECT_DEFINITION(OBJECT_ID"
+
 End Module
 

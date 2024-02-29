@@ -292,7 +292,7 @@ Public Class frmLandingPage
                 Dim selectedViewName As String = cmbSelectView.SelectedItem.ToString()
 
                 ' Query to retrieve the view definition
-                Dim query As String = $"SELECT OBJECT_DEFINITION(OBJECT_ID('{selectedViewName}')) AS ViewDefinition;"
+                Dim query As String = $"{SQLQueries.ViewDetailQuery}('{selectedViewName}')) AS ViewDefinition;"
 
                 ' Execute the query
                 Using command As New SqlCommand(query, connection)
