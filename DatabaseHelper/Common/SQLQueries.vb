@@ -18,6 +18,7 @@
 
     Public Const ViewDetailQuery As String = "SELECT OBJECT_DEFINITION(OBJECT_ID('{0}')) AS ViewDefinition;"
 
+    Public Const ProcedureDetailQuery As String = "SELECT OBJECT_DEFINITION(OBJECT_ID('{0}')) AS ProcedureDefinition;"
 
 End Module
 
