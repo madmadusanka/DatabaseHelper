@@ -306,10 +306,10 @@ Public Class frmLandingPage
 
                 ' Execute the query
                 Using command As New SqlCommand(query, connection)
-                    Dim viewDefinition As String = command.ExecuteScalar()?.ToString()
+                    Dim QueryDefinition As String = command.ExecuteScalar()?.ToString()
 
                     ' Open the ViewQueryForm and pass the view query
-                    Dim viewQueryForm As New frmViewQuery(selectedName, viewDefinition)
+                    Dim viewQueryForm As New frmViewQuery(selectedName, QueryDefinition)
                     viewQueryForm.Show()
                 End Using
             Else
