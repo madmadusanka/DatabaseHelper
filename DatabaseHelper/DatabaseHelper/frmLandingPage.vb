@@ -285,4 +285,30 @@ Public Class frmLandingPage
         End Try
     End Function
 
+    Private Sub btnShowViewQuery_Click(sender As Object, e As EventArgs) Handles btnShowViewQuery.Click
+        Try
+            If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
+                ' Get the selected view name
+                Dim selectedViewName As String = cmbSelectView.SelectedItem.ToString()
+
+                ' Query to retrieve the view definition
+                Dim query As String = $"SELECT OBJECT_DEFINITION(OBJECT_ID('{selectedViewName}')) AS ViewDefinition;"
+
+                ' Execute the query
+                Using command As New SqlCommand(query, connection)
+                    Dim viewDefinition As String = command.ExecuteScalar()?.ToString()
+
+                    ' Open the ViewQueryForm and pass the view query
+                    Dim viewQueryForm As New frmViewQuery(selectedViewName, viewDefinition)
+                    viewQueryForm.Show()
+                End Using
+            Else
+                ' Display error message if database connection is closed
+                MessageBox.Show("Database connection is closed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        Catch ex As Exception
+            ' Handle any exceptions
+            MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
 End Class
