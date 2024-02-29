@@ -58,6 +58,7 @@ Partial Class frmLandingPage
         pnlDashBoardMain = New Panel()
         Button5 = New Button()
         Button4 = New Button()
+        btnShowViewQuery = New Button()
         pnlSqlServer.SuspendLayout()
         pnlMain.SuspendLayout()
         pnlSelectDetails.SuspendLayout()
@@ -104,6 +105,7 @@ Partial Class frmLandingPage
         ' 
         ' pnlSelectDetails
         ' 
+        pnlSelectDetails.Controls.Add(btnShowViewQuery)
         pnlSelectDetails.Controls.Add(cmbSelectTable)
         pnlSelectDetails.Controls.Add(pnlSelectViewlbl)
         pnlSelectDetails.Controls.Add(cmbSelectProcedure)
@@ -112,7 +114,7 @@ Partial Class frmLandingPage
         pnlSelectDetails.Controls.Add(pnlselectTablelbl)
         pnlSelectDetails.Location = New Point(3, 223)
         pnlSelectDetails.Name = "pnlSelectDetails"
-        pnlSelectDetails.Size = New Size(281, 255)
+        pnlSelectDetails.Size = New Size(281, 270)
         pnlSelectDetails.TabIndex = 11
         pnlSelectDetails.Visible = False
         ' 
@@ -436,6 +438,15 @@ Partial Class frmLandingPage
         Button4.Text = "Button4"
         Button4.UseVisualStyleBackColor = True
         ' 
+        ' btnShowViewQuery
+        ' 
+        btnShowViewQuery.Location = New Point(11, 244)
+        btnShowViewQuery.Name = "btnShowViewQuery"
+        btnShowViewQuery.Size = New Size(259, 23)
+        btnShowViewQuery.TabIndex = 12
+        btnShowViewQuery.Text = "Show View Query"
+        btnShowViewQuery.UseVisualStyleBackColor = True
+        ' 
         ' frmLandingPage
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -507,5 +518,6 @@ Partial Class frmLandingPage
     Friend WithEvents cmbSelectProcedure As ComboBox
     Friend WithEvents cmbSelectTable As ComboBox
     Friend WithEvents pnlSelectDetails As Panel
+    Friend WithEvents btnShowViewQuery As Button
 
 End Class
