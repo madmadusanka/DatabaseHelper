@@ -5,6 +5,7 @@ Public Class frmLandingPage
     Private isConnected As Boolean = False
     Private connection As SqlConnection
     Private ConnectionManager As New Connection()
+    Private originalComboBoxItems As New List(Of Object)()
 
     Private Async Sub btnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
         Try
@@ -15,7 +16,11 @@ Public Class frmLandingPage
                     btnToggleConnection.Text = "Connect"
                     isConnected = False
                     lblDBCount.Text = ""
+                    cmbDatabases.SelectedIndex = -1
                     cmbDatabases.Items.Clear()
+                    cmbSelectTable.Items.Clear()
+                    cmbSelectProcedure.Items.Clear()
+                    cmbSelectView.Items.Clear()
                     lblTableCount.Text = ""
                     lblSpCount.Text = ""
                     lblViewCount.Text = ""
@@ -25,6 +30,10 @@ Public Class frmLandingPage
                     pnlShowTable.Visible = False
                     pnlShowSp.Visible = False
                     pnlShowView.Visible = False
+                    pnlMain.Visible = False
+                    pnlSelectDetails.Visible = False
+
+
                 Else
                     ' Connect to the server
                     connection = Await ConnectionManager.ConnectServer(txtServerName.Text)
@@ -33,6 +42,7 @@ Public Class frmLandingPage
                     If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
                         btnToggleConnection.Text = "Disconnect"
                         isConnected = True
+                        pnlMain.Visible = True
 
                         Dim countDBquery As String = SQLQueries.DbCountQuery
                         Await ShowDBCount(countDBquery, connection, lblDBCount)
@@ -102,10 +112,20 @@ Public Class frmLandingPage
                 ' Get the selected database name
                 Dim selectedDatabaseName As String = cmbDatabases.SelectedItem.ToString()
 
+                Dim getDBquery As String = SQLQueries.DBNamesQuery
+                Await PopulateComboBoxWithQuery(getDBquery, connection, cmbDatabases)
+
                 ' Show the table count for the selected database
                 Await ShowTableCount(selectedDatabaseName, connection, lblTableCount)
                 Await ShowSpCount(selectedDatabaseName, connection, lblSpCount)
                 Await viewCount(selectedDatabaseName, connection, lblViewCount)
+
+                Await PopulateTableComboBoxWithQuery(selectedDatabaseName, connection, cmbSelectTable)
+                Await PopulateProcedureComboBoxWithQuery(selectedDatabaseName, connection, cmbSelectProcedure)
+                Await PopulateViewComboBoxWithQuery(selectedDatabaseName, connection, cmbSelectView)
+
+                pnlSelectDetails.Visible = True
+
             Else
                 MessageBox.Show("Database connection is closed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
@@ -184,6 +204,84 @@ Public Class frmLandingPage
         Catch ex As Exception
             ' Handle any exceptions
             MessageBox.Show("Error retrieving table count: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Function
+
+    Private Async Function PopulateTableComboBoxWithQuery(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
+        Try
+            If connection.State = ConnectionState.Open Then
+                ' Construct the SQL query to retrieve table names
+                Dim query As String = $"USE [{databaseName}]; {SQLQueries.TablesNamesQuery}"
+
+                ' Create and execute the command asynchronously
+                Using command As New SqlCommand(query, connection)
+                    ' Execute the query asynchronously
+                    Using reader As SqlDataReader = Await command.ExecuteReaderAsync()
+                        ' Clear existing items in the ComboBox
+                        cmb.Items.Clear()
+
+                        ' Iterate over the result set and add table names to the ComboBox
+                        While reader.Read()
+                            cmb.Items.Add(reader("TABLE_NAME").ToString())
+                        End While
+                    End Using
+                End Using
+            End If
+        Catch ex As Exception
+            ' Handle any exceptions
+            MessageBox.Show($"An error occurred while populating the ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Function
+
+    Private Async Function PopulateProcedureComboBoxWithQuery(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
+        Try
+            If connection.State = ConnectionState.Open Then
+                ' Construct the SQL query to retrieve table names
+                Dim query As String = $"USE [{databaseName}]; {SQLQueries.StoredProceduresNamesQuery}"
+
+                ' Create and execute the command asynchronously
+                Using command As New SqlCommand(query, connection)
+                    ' Execute the query asynchronously
+                    Using reader As SqlDataReader = Await command.ExecuteReaderAsync()
+                        ' Clear existing items in the ComboBox
+                        cmb.Items.Clear()
+
+                        ' Iterate over the result set and add table names to the ComboBox
+                        While reader.Read()
+                            cmb.Items.Add(reader("StoredProcedureName").ToString())
+                        End While
+                    End Using
+                End Using
+            End If
+        Catch ex As Exception
+            ' Handle any exceptions
+            MessageBox.Show($"An error occurred while populating the ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Function
+
+    Private Async Function PopulateViewComboBoxWithQuery(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
+        Try
+            If connection.State = ConnectionState.Open Then
+                ' Construct the SQL query to retrieve table names
+                Dim query As String = $"USE [{databaseName}]; {SQLQueries.ViewsNamesQuery}"
+
+                ' Create and execute the command asynchronously
+                Using command As New SqlCommand(query, connection)
+                    ' Execute the query asynchronously
+                    Using reader As SqlDataReader = Await command.ExecuteReaderAsync()
+                        ' Clear existing items in the ComboBox
+                        cmb.Items.Clear()
+
+                        ' Iterate over the result set and add table names to the ComboBox
+                        While reader.Read()
+                            cmb.Items.Add(reader("ViewName").ToString())
+                        End While
+                    End Using
+                End Using
+            End If
+        Catch ex As Exception
+            ' Handle any exceptions
+            MessageBox.Show($"An error occurred while populating the ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Function
 

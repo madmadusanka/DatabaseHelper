@@ -10,5 +10,11 @@
 
     Public Const ViewsCountQuery As String = "SELECT COUNT(*) AS ViewCount FROM INFORMATION_SCHEMA.VIEWS"
 
+    Public Const TablesNamesQuery As String = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE'"
+
+    Public Const StoredProceduresNamesQuery As String = "SELECT ROUTINE_NAME AS StoredProcedureName FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = 'PROCEDURE'"
+
+    Public Const ViewsNamesQuery As String = "SELECT TABLE_NAME AS ViewName FROM INFORMATION_SCHEMA.VIEWS;"
+
 End Module
 
