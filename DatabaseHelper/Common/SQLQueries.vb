@@ -24,5 +24,7 @@
 
     Public Const TriggerNamesQuery As String = "USE [{0}];SELECT name AS TriggerName FROM sys.triggers WHERE parent_class_desc = 'OBJECT_OR_COLUMN' AND OBJECT_NAME(parent_id) = '{1}';"
 
+    Public Const TableSchemadesignQuery As String = "USE [{0}]; EXEC sp_help '{1}';"
+
 End Module
 

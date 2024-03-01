@@ -90,7 +90,7 @@ Public Class frmTableOption
             End If
 
             ' Construct the SQL query to retrieve table schema
-            Dim query As String = $"USE [{databaseName}]; EXEC sp_help '{tableName}'"
+            Dim query As String = String.Format(TableSchemadesignQuery, databaseName, tableName)
 
             ' Create a new data adapter and fill the DataSet
             Using adapter As New SqlDataAdapter(query, connection)
