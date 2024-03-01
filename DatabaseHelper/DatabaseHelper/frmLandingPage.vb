@@ -6,6 +6,10 @@ Public Class frmLandingPage
     Private connection As SqlConnection
     Private ConnectionManager As New Connection()
     Private originalComboBoxItems As New List(Of Object)()
+    Private selectedDatabaseName As String
+
+    Dim TableOptionForm As String
+
 
     Private Async Sub btnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
         Try
@@ -32,7 +36,8 @@ Public Class frmLandingPage
                     pnlShowView.Visible = False
                     pnlMain.Visible = False
                     pnlSelectDetails.Visible = False
-
+                    selectedDatabaseName = ""
+                    pnlDashBoardMain.Visible = False
 
                 Else
                     ' Connect to the server
@@ -105,11 +110,11 @@ Public Class frmLandingPage
         End Try
     End Function
 
-    Private Async Sub cmbDatabases_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDatabases.SelectedIndexChanged
+    Public Async Sub cmbDatabases_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDatabases.SelectedIndexChanged
         Try
             If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
                 ' Get the selected database name
-                Dim selectedDatabaseName As String = cmbDatabases.SelectedItem.ToString()
+                selectedDatabaseName = cmbDatabases.SelectedItem.ToString()
 
                 Dim getDBquery As String = SQLQueries.DBNamesQuery
                 Await PopulateComboBoxWithQuery(getDBquery, connection, cmbDatabases)
@@ -291,6 +296,7 @@ Public Class frmLandingPage
         If cmbSelectView.SelectedItem IsNot Nothing Then
             Dim selectedViewName As String = cmbSelectView.SelectedItem.ToString()
 
+
             ' Query to retrieve the view definition
             Dim query As String = String.Format(ViewDetailQuery, selectedViewName)
 
@@ -300,7 +306,7 @@ Public Class frmLandingPage
         End If
     End Sub
 
-    Private Function ShowQuery(ByVal query As String, ByVal connection As SqlConnection, ByVal selectedName As String) As Task
+    Public Function ShowQuery(ByVal query As String, ByVal connection As SqlConnection, ByVal selectedName As String) As Task
         Try
             If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
 
@@ -337,4 +343,29 @@ Public Class frmLandingPage
             MessageBox.Show("Please select a procedure.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
     End Sub
+
+    Private Sub btnTableOption_Click(sender As Object, e As EventArgs) Handles btnTableOption.Click
+        Try
+            If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
+                ' Check if an item is selected in cmbDatabases
+                Dim selectedTableName As String = cmbSelectTable.SelectedItem.ToString()
+
+                ' Check if an item is selected in cmbSelectTable
+                If selectedTableName IsNot Nothing Then
+                    ' Populate the ComboBox with trigger names
+
+                    Dim TableOptionForm As New frmTableOption(selectedDatabaseName, selectedTableName, connection)
+                    TableOptionForm.Show()
+                Else
+                    MessageBox.Show("Please select a table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            Else
+                MessageBox.Show("Database connection is closed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        Catch ex As Exception
+            ' Handle any exceptions
+            MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
 End Class
