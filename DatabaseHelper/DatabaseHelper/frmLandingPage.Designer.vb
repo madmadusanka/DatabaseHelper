@@ -25,6 +25,7 @@ Partial Class frmLandingPage
         pnlSqlServer = New Panel()
         pnlMain = New Panel()
         pnlSelectDetails = New Panel()
+        btnTableOption = New Button()
         btnShowProcedure = New Button()
         btnShowViewQuery = New Button()
         cmbSelectTable = New ComboBox()
@@ -106,6 +107,7 @@ Partial Class frmLandingPage
         ' 
         ' pnlSelectDetails
         ' 
+        pnlSelectDetails.Controls.Add(btnTableOption)
         pnlSelectDetails.Controls.Add(btnShowProcedure)
         pnlSelectDetails.Controls.Add(btnShowViewQuery)
         pnlSelectDetails.Controls.Add(cmbSelectTable)
@@ -114,28 +116,37 @@ Partial Class frmLandingPage
         pnlSelectDetails.Controls.Add(pnlSelectProcedurelbl)
         pnlSelectDetails.Controls.Add(cmbSelectView)
         pnlSelectDetails.Controls.Add(pnlselectTablelbl)
-        pnlSelectDetails.Location = New Point(3, 223)
+        pnlSelectDetails.Location = New Point(3, 192)
         pnlSelectDetails.Name = "pnlSelectDetails"
-        pnlSelectDetails.Size = New Size(281, 312)
+        pnlSelectDetails.Size = New Size(281, 343)
         pnlSelectDetails.TabIndex = 11
         pnlSelectDetails.Visible = False
         ' 
+        ' btnTableOption
+        ' 
+        btnTableOption.Location = New Point(10, 86)
+        btnTableOption.Name = "btnTableOption"
+        btnTableOption.Size = New Size(259, 23)
+        btnTableOption.TabIndex = 14
+        btnTableOption.Text = "Show View Table Options"
+        btnTableOption.UseVisualStyleBackColor = True
+        ' 
         ' btnShowProcedure
         ' 
-        btnShowProcedure.Location = New Point(12, 168)
+        btnShowProcedure.Location = New Point(12, 192)
         btnShowProcedure.Name = "btnShowProcedure"
         btnShowProcedure.Size = New Size(259, 23)
         btnShowProcedure.TabIndex = 13
-        btnShowProcedure.Text = "Show View Procedure"
+        btnShowProcedure.Text = "Show Procedure"
         btnShowProcedure.UseVisualStyleBackColor = True
         ' 
         ' btnShowViewQuery
         ' 
-        btnShowViewQuery.Location = New Point(11, 278)
+        btnShowViewQuery.Location = New Point(11, 302)
         btnShowViewQuery.Name = "btnShowViewQuery"
         btnShowViewQuery.Size = New Size(259, 23)
         btnShowViewQuery.TabIndex = 12
-        btnShowViewQuery.Text = "Show View Query"
+        btnShowViewQuery.Text = "Show View "
         btnShowViewQuery.UseVisualStyleBackColor = True
         ' 
         ' cmbSelectTable
@@ -143,7 +154,7 @@ Partial Class frmLandingPage
         cmbSelectTable.AutoCompleteMode = AutoCompleteMode.SuggestAppend
         cmbSelectTable.AutoCompleteSource = AutoCompleteSource.ListItems
         cmbSelectTable.FormattingEnabled = True
-        cmbSelectTable.Location = New Point(11, 49)
+        cmbSelectTable.Location = New Point(11, 58)
         cmbSelectTable.Name = "cmbSelectTable"
         cmbSelectTable.Size = New Size(260, 23)
         cmbSelectTable.TabIndex = 8
@@ -153,7 +164,7 @@ Partial Class frmLandingPage
         pnlSelectViewlbl.BackColor = SystemColors.ControlDark
         pnlSelectViewlbl.Controls.Add(lblSelectViewlbl)
         pnlSelectViewlbl.ForeColor = SystemColors.ActiveCaptionText
-        pnlSelectViewlbl.Location = New Point(11, 210)
+        pnlSelectViewlbl.Location = New Point(11, 234)
         pnlSelectViewlbl.Name = "pnlSelectViewlbl"
         pnlSelectViewlbl.Size = New Size(260, 34)
         pnlSelectViewlbl.TabIndex = 8
@@ -173,7 +184,7 @@ Partial Class frmLandingPage
         cmbSelectProcedure.AutoCompleteMode = AutoCompleteMode.SuggestAppend
         cmbSelectProcedure.AutoCompleteSource = AutoCompleteSource.ListItems
         cmbSelectProcedure.FormattingEnabled = True
-        cmbSelectProcedure.Location = New Point(11, 139)
+        cmbSelectProcedure.Location = New Point(11, 163)
         cmbSelectProcedure.Name = "cmbSelectProcedure"
         cmbSelectProcedure.Size = New Size(260, 23)
         cmbSelectProcedure.TabIndex = 9
@@ -183,7 +194,7 @@ Partial Class frmLandingPage
         pnlSelectProcedurelbl.BackColor = SystemColors.ControlDark
         pnlSelectProcedurelbl.Controls.Add(lblSelectProcedurelbl)
         pnlSelectProcedurelbl.ForeColor = SystemColors.ActiveCaptionText
-        pnlSelectProcedurelbl.Location = New Point(11, 99)
+        pnlSelectProcedurelbl.Location = New Point(11, 123)
         pnlSelectProcedurelbl.Name = "pnlSelectProcedurelbl"
         pnlSelectProcedurelbl.Size = New Size(260, 34)
         pnlSelectProcedurelbl.TabIndex = 8
@@ -203,7 +214,7 @@ Partial Class frmLandingPage
         cmbSelectView.AutoCompleteMode = AutoCompleteMode.SuggestAppend
         cmbSelectView.AutoCompleteSource = AutoCompleteSource.ListItems
         cmbSelectView.FormattingEnabled = True
-        cmbSelectView.Location = New Point(11, 250)
+        cmbSelectView.Location = New Point(11, 274)
         cmbSelectView.Name = "cmbSelectView"
         cmbSelectView.Size = New Size(260, 23)
         cmbSelectView.TabIndex = 10
@@ -213,7 +224,7 @@ Partial Class frmLandingPage
         pnlselectTablelbl.BackColor = SystemColors.ControlDark
         pnlselectTablelbl.Controls.Add(lblselectTablelbl)
         pnlselectTablelbl.ForeColor = SystemColors.ActiveCaptionText
-        pnlselectTablelbl.Location = New Point(11, 9)
+        pnlselectTablelbl.Location = New Point(11, 21)
         pnlselectTablelbl.Name = "pnlselectTablelbl"
         pnlselectTablelbl.Size = New Size(260, 34)
         pnlselectTablelbl.TabIndex = 8
@@ -439,6 +450,7 @@ Partial Class frmLandingPage
         pnlDashBoardMain.Name = "pnlDashBoardMain"
         pnlDashBoardMain.Size = New Size(1053, 738)
         pnlDashBoardMain.TabIndex = 4
+        pnlDashBoardMain.Visible = False
         ' 
         ' Button5
         ' 
@@ -531,5 +543,6 @@ Partial Class frmLandingPage
     Friend WithEvents pnlSelectDetails As Panel
     Friend WithEvents btnShowViewQuery As Button
     Friend WithEvents btnShowProcedure As Button
+    Friend WithEvents btnTableOption As Button
 
 End Class

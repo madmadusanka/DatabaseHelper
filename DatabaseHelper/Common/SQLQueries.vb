@@ -20,5 +20,11 @@
 
     Public Const ProcedureDetailQuery As String = "SELECT OBJECT_DEFINITION(OBJECT_ID('{0}')) AS ProcedureDefinition;"
 
+    Public Const TriggerDetailQuery As String = "SELECT OBJECT_DEFINITION(OBJECT_ID('{0}')) AS TriggerDefinition;"
+
+    Public Const TriggerNamesQuery As String = "USE [{0}];SELECT name AS TriggerName FROM sys.triggers WHERE parent_class_desc = 'OBJECT_OR_COLUMN' AND OBJECT_NAME(parent_id) = '{1}';"
+
+    Public Const TableSchemadesignQuery As String = "USE [{0}]; EXEC sp_help '{1}';"
+
 End Module
 
