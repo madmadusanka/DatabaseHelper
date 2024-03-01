@@ -26,16 +26,30 @@ Partial Class frmTableOption
         cmbSelectTrigger = New ComboBox()
         pnlSelectTriggerlbl = New Panel()
         lblSelectTriggerlbl = New Label()
+        dgvTableSchema1 = New DataGridView()
+        dgvTableSchema2 = New DataGridView()
+        dgvTableSchema3 = New DataGridView()
+        dgvTableSchema4 = New DataGridView()
+        dgvTableSchema5 = New DataGridView()
+        dgvTableSchema6 = New DataGridView()
+        dgvTableSchema7 = New DataGridView()
         pnlSelectTriggerlbl.SuspendLayout()
+        CType(dgvTableSchema1, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgvTableSchema2, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgvTableSchema3, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgvTableSchema4, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgvTableSchema5, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgvTableSchema6, ComponentModel.ISupportInitialize).BeginInit()
+        CType(dgvTableSchema7, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' btnViewTrigger
         ' 
-        btnViewTrigger.Location = New Point(57, 123)
+        btnViewTrigger.Location = New Point(817, 81)
         btnViewTrigger.Name = "btnViewTrigger"
         btnViewTrigger.Size = New Size(259, 23)
         btnViewTrigger.TabIndex = 19
-        btnViewTrigger.Text = "Show View Trigger"
+        btnViewTrigger.Text = "Show Trigger"
         btnViewTrigger.UseVisualStyleBackColor = True
         ' 
         ' cmbSelectTrigger
@@ -43,7 +57,7 @@ Partial Class frmTableOption
         cmbSelectTrigger.AutoCompleteMode = AutoCompleteMode.SuggestAppend
         cmbSelectTrigger.AutoCompleteSource = AutoCompleteSource.ListItems
         cmbSelectTrigger.FormattingEnabled = True
-        cmbSelectTrigger.Location = New Point(57, 94)
+        cmbSelectTrigger.Location = New Point(817, 52)
         cmbSelectTrigger.Name = "cmbSelectTrigger"
         cmbSelectTrigger.Size = New Size(260, 23)
         cmbSelectTrigger.TabIndex = 18
@@ -53,7 +67,7 @@ Partial Class frmTableOption
         pnlSelectTriggerlbl.BackColor = SystemColors.ControlDark
         pnlSelectTriggerlbl.Controls.Add(lblSelectTriggerlbl)
         pnlSelectTriggerlbl.ForeColor = SystemColors.ActiveCaptionText
-        pnlSelectTriggerlbl.Location = New Point(57, 54)
+        pnlSelectTriggerlbl.Location = New Point(817, 12)
         pnlSelectTriggerlbl.Name = "pnlSelectTriggerlbl"
         pnlSelectTriggerlbl.Size = New Size(260, 34)
         pnlSelectTriggerlbl.TabIndex = 17
@@ -68,11 +82,74 @@ Partial Class frmTableOption
         lblSelectTriggerlbl.TabIndex = 2
         lblSelectTriggerlbl.Text = "Select Trigger"
         ' 
+        ' dgvTableSchema1
+        ' 
+        dgvTableSchema1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvTableSchema1.Location = New Point(21, 12)
+        dgvTableSchema1.Name = "dgvTableSchema1"
+        dgvTableSchema1.Size = New Size(702, 78)
+        dgvTableSchema1.TabIndex = 20
+        ' 
+        ' dgvTableSchema2
+        ' 
+        dgvTableSchema2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvTableSchema2.Location = New Point(21, 94)
+        dgvTableSchema2.Name = "dgvTableSchema2"
+        dgvTableSchema2.Size = New Size(702, 131)
+        dgvTableSchema2.TabIndex = 21
+        ' 
+        ' dgvTableSchema3
+        ' 
+        dgvTableSchema3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvTableSchema3.Location = New Point(21, 228)
+        dgvTableSchema3.Name = "dgvTableSchema3"
+        dgvTableSchema3.Size = New Size(702, 102)
+        dgvTableSchema3.TabIndex = 22
+        ' 
+        ' dgvTableSchema4
+        ' 
+        dgvTableSchema4.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvTableSchema4.Location = New Point(21, 336)
+        dgvTableSchema4.Name = "dgvTableSchema4"
+        dgvTableSchema4.Size = New Size(702, 78)
+        dgvTableSchema4.TabIndex = 23
+        ' 
+        ' dgvTableSchema5
+        ' 
+        dgvTableSchema5.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvTableSchema5.Location = New Point(21, 419)
+        dgvTableSchema5.Name = "dgvTableSchema5"
+        dgvTableSchema5.Size = New Size(702, 78)
+        dgvTableSchema5.TabIndex = 24
+        ' 
+        ' dgvTableSchema6
+        ' 
+        dgvTableSchema6.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvTableSchema6.Location = New Point(21, 501)
+        dgvTableSchema6.Name = "dgvTableSchema6"
+        dgvTableSchema6.Size = New Size(702, 78)
+        dgvTableSchema6.TabIndex = 25
+        ' 
+        ' dgvTableSchema7
+        ' 
+        dgvTableSchema7.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        dgvTableSchema7.Location = New Point(21, 584)
+        dgvTableSchema7.Name = "dgvTableSchema7"
+        dgvTableSchema7.Size = New Size(702, 129)
+        dgvTableSchema7.TabIndex = 26
+        ' 
         ' frmTableOption
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(1089, 749)
+        Controls.Add(dgvTableSchema7)
+        Controls.Add(dgvTableSchema6)
+        Controls.Add(dgvTableSchema5)
+        Controls.Add(dgvTableSchema4)
+        Controls.Add(dgvTableSchema3)
+        Controls.Add(dgvTableSchema2)
+        Controls.Add(dgvTableSchema1)
         Controls.Add(btnViewTrigger)
         Controls.Add(cmbSelectTrigger)
         Controls.Add(pnlSelectTriggerlbl)
@@ -81,6 +158,13 @@ Partial Class frmTableOption
         WindowState = FormWindowState.Maximized
         pnlSelectTriggerlbl.ResumeLayout(False)
         pnlSelectTriggerlbl.PerformLayout()
+        CType(dgvTableSchema1, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgvTableSchema2, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgvTableSchema3, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgvTableSchema4, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgvTableSchema5, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgvTableSchema6, ComponentModel.ISupportInitialize).EndInit()
+        CType(dgvTableSchema7, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
 
@@ -88,4 +172,11 @@ Partial Class frmTableOption
     Friend WithEvents cmbSelectTrigger As ComboBox
     Friend WithEvents pnlSelectTriggerlbl As Panel
     Friend WithEvents lblSelectTriggerlbl As Label
+    Friend WithEvents dgvTableSchema1 As DataGridView
+    Friend WithEvents dgvTableSchema2 As DataGridView
+    Friend WithEvents dgvTableSchema3 As DataGridView
+    Friend WithEvents dgvTableSchema4 As DataGridView
+    Friend WithEvents dgvTableSchema5 As DataGridView
+    Friend WithEvents dgvTableSchema6 As DataGridView
+    Friend WithEvents dgvTableSchema7 As DataGridView
 End Class
