@@ -25,10 +25,10 @@ Partial Class frmLandingPage
         pnlSqlServer = New Panel()
         pnlMain = New Panel()
         pnlSelectDetails = New Panel()
+        cmbSelectTable = New ComboBox()
         btnTableOption = New Button()
         btnShowProcedure = New Button()
         btnShowViewQuery = New Button()
-        cmbSelectTable = New ComboBox()
         pnlSelectViewlbl = New Panel()
         lblSelectViewlbl = New Label()
         cmbSelectProcedure = New ComboBox()
@@ -108,10 +108,10 @@ Partial Class frmLandingPage
         ' 
         ' pnlSelectDetails
         ' 
+        pnlSelectDetails.Controls.Add(cmbSelectTable)
         pnlSelectDetails.Controls.Add(btnTableOption)
         pnlSelectDetails.Controls.Add(btnShowProcedure)
         pnlSelectDetails.Controls.Add(btnShowViewQuery)
-        pnlSelectDetails.Controls.Add(cmbSelectTable)
         pnlSelectDetails.Controls.Add(pnlSelectViewlbl)
         pnlSelectDetails.Controls.Add(cmbSelectProcedure)
         pnlSelectDetails.Controls.Add(pnlSelectProcedurelbl)
@@ -123,9 +123,18 @@ Partial Class frmLandingPage
         pnlSelectDetails.TabIndex = 11
         pnlSelectDetails.Visible = False
         ' 
+        ' cmbSelectTable
+        ' 
+        cmbSelectTable.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        cmbSelectTable.FormattingEnabled = True
+        cmbSelectTable.Location = New Point(12, 59)
+        cmbSelectTable.Name = "cmbSelectTable"
+        cmbSelectTable.Size = New Size(258, 23)
+        cmbSelectTable.TabIndex = 15
+        ' 
         ' btnTableOption
         ' 
-        btnTableOption.Location = New Point(10, 86)
+        btnTableOption.Location = New Point(12, 86)
         btnTableOption.Name = "btnTableOption"
         btnTableOption.Size = New Size(259, 23)
         btnTableOption.TabIndex = 14
@@ -149,16 +158,6 @@ Partial Class frmLandingPage
         btnShowViewQuery.TabIndex = 12
         btnShowViewQuery.Text = "Show View "
         btnShowViewQuery.UseVisualStyleBackColor = True
-        ' 
-        ' cmbSelectTable
-        ' 
-        cmbSelectTable.AutoCompleteMode = AutoCompleteMode.SuggestAppend
-        cmbSelectTable.AutoCompleteSource = AutoCompleteSource.ListItems
-        cmbSelectTable.FormattingEnabled = True
-        cmbSelectTable.Location = New Point(11, 58)
-        cmbSelectTable.Name = "cmbSelectTable"
-        cmbSelectTable.Size = New Size(260, 23)
-        cmbSelectTable.TabIndex = 8
         ' 
         ' pnlSelectViewlbl
         ' 
@@ -454,11 +453,11 @@ Partial Class frmLandingPage
         pnlDashBoardMain.TabIndex = 4
         pnlDashBoardMain.Visible = False
         ' 
-        ' QueryControl1
+        ' QueryExecuterLandingPage
         ' 
         QueryExecuterLandingPage.Connection = Nothing
         QueryExecuterLandingPage.Location = New Point(12, 146)
-        QueryExecuterLandingPage.Name = "QueryControl1"
+        QueryExecuterLandingPage.Name = "QueryExecuterLandingPage"
         QueryExecuterLandingPage.Size = New Size(1011, 538)
         QueryExecuterLandingPage.TabIndex = 6
         ' 
@@ -549,11 +548,11 @@ Partial Class frmLandingPage
     Friend WithEvents lblselectTablelbl As Label
     Friend WithEvents cmbSelectView As ComboBox
     Friend WithEvents cmbSelectProcedure As ComboBox
-    Friend WithEvents cmbSelectTable As ComboBox
     Friend WithEvents pnlSelectDetails As Panel
     Friend WithEvents btnShowViewQuery As Button
     Friend WithEvents btnShowProcedure As Button
     Friend WithEvents btnTableOption As Button
     Friend WithEvents QueryExecuterLandingPage As CustomControllers.QueryControl
+    Friend WithEvents cmbSelectTable As ComboBox
 
 End Class
