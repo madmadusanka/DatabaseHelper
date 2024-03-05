@@ -33,6 +33,7 @@ Partial Class frmTableOption
         dgvTableSchema5 = New DataGridView()
         dgvTableSchema6 = New DataGridView()
         dgvTableSchema7 = New DataGridView()
+        QueryExecuterTableOption = New CustomControllers.QueryControl()
         pnlSelectTriggerlbl.SuspendLayout()
         CType(dgvTableSchema1, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvTableSchema2, ComponentModel.ISupportInitialize).BeginInit()
@@ -45,7 +46,7 @@ Partial Class frmTableOption
         ' 
         ' btnViewTrigger
         ' 
-        btnViewTrigger.Location = New Point(817, 81)
+        btnViewTrigger.Location = New Point(1079, 81)
         btnViewTrigger.Name = "btnViewTrigger"
         btnViewTrigger.Size = New Size(259, 23)
         btnViewTrigger.TabIndex = 19
@@ -57,7 +58,7 @@ Partial Class frmTableOption
         cmbSelectTrigger.AutoCompleteMode = AutoCompleteMode.SuggestAppend
         cmbSelectTrigger.AutoCompleteSource = AutoCompleteSource.ListItems
         cmbSelectTrigger.FormattingEnabled = True
-        cmbSelectTrigger.Location = New Point(817, 52)
+        cmbSelectTrigger.Location = New Point(1079, 52)
         cmbSelectTrigger.Name = "cmbSelectTrigger"
         cmbSelectTrigger.Size = New Size(260, 23)
         cmbSelectTrigger.TabIndex = 18
@@ -67,7 +68,7 @@ Partial Class frmTableOption
         pnlSelectTriggerlbl.BackColor = SystemColors.ControlDark
         pnlSelectTriggerlbl.Controls.Add(lblSelectTriggerlbl)
         pnlSelectTriggerlbl.ForeColor = SystemColors.ActiveCaptionText
-        pnlSelectTriggerlbl.Location = New Point(817, 12)
+        pnlSelectTriggerlbl.Location = New Point(1079, 12)
         pnlSelectTriggerlbl.Name = "pnlSelectTriggerlbl"
         pnlSelectTriggerlbl.Size = New Size(260, 34)
         pnlSelectTriggerlbl.TabIndex = 17
@@ -138,11 +139,20 @@ Partial Class frmTableOption
         dgvTableSchema7.Size = New Size(702, 129)
         dgvTableSchema7.TabIndex = 26
         ' 
+        ' QueryExecuter
+        ' 
+        QueryExecuterTableOption.Connection = Nothing
+        QueryExecuterTableOption.Location = New Point(739, 121)
+        QueryExecuterTableOption.Name = "QueryExecuter"
+        QueryExecuterTableOption.Size = New Size(599, 592)
+        QueryExecuterTableOption.TabIndex = 27
+        ' 
         ' frmTableOption
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1089, 749)
+        ClientSize = New Size(1356, 749)
+        Controls.Add(QueryExecuterTableOption)
         Controls.Add(dgvTableSchema7)
         Controls.Add(dgvTableSchema6)
         Controls.Add(dgvTableSchema5)
@@ -179,4 +189,5 @@ Partial Class frmTableOption
     Friend WithEvents dgvTableSchema5 As DataGridView
     Friend WithEvents dgvTableSchema6 As DataGridView
     Friend WithEvents dgvTableSchema7 As DataGridView
+    Friend WithEvents QueryExecuterTableOption As CustomControllers.QueryControl
 End Class
