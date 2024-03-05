@@ -43,7 +43,6 @@ Partial Class QueryControl
         fastColoredTextBox.CharHeight = 14
         fastColoredTextBox.CharWidth = 8
         fastColoredTextBox.DisabledColor = Color.FromArgb(CByte(100), CByte(180), CByte(180), CByte(180))
-        fastColoredTextBox.Font = New Font("Courier New", 9.75F)
         fastColoredTextBox.Hotkeys = resources.GetString("fastColoredTextBox.Hotkeys")
         fastColoredTextBox.IsReplaceMode = False
         fastColoredTextBox.Location = New Point(0, 0)
@@ -79,7 +78,7 @@ Partial Class QueryControl
         ExecuteQueryButton.Name = "ExecuteQueryButton"
         ExecuteQueryButton.Size = New Size(109, 23)
         ExecuteQueryButton.TabIndex = 3
-        ExecuteQueryButton.Text = "Query Execute"
+        ExecuteQueryButton.Text = "Execute"
         ExecuteQueryButton.UseVisualStyleBackColor = True
         ' 
         ' QueryControl
