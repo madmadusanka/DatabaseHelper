@@ -33,6 +33,10 @@ Partial Class frmTableOption
         dgvTableSchema5 = New DataGridView()
         dgvTableSchema6 = New DataGridView()
         dgvTableSchema7 = New DataGridView()
+        QueryExecuterTableOption = New CustomControllers.QueryControl()
+        pnlTableStructure = New Panel()
+        pnlTableStructurelbl = New Panel()
+        lblTableStructurelbl = New Label()
         pnlSelectTriggerlbl.SuspendLayout()
         CType(dgvTableSchema1, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvTableSchema2, ComponentModel.ISupportInitialize).BeginInit()
@@ -41,11 +45,13 @@ Partial Class frmTableOption
         CType(dgvTableSchema5, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvTableSchema6, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvTableSchema7, ComponentModel.ISupportInitialize).BeginInit()
+        pnlTableStructure.SuspendLayout()
+        pnlTableStructurelbl.SuspendLayout()
         SuspendLayout()
         ' 
         ' btnViewTrigger
         ' 
-        btnViewTrigger.Location = New Point(817, 81)
+        btnViewTrigger.Location = New Point(19, 90)
         btnViewTrigger.Name = "btnViewTrigger"
         btnViewTrigger.Size = New Size(259, 23)
         btnViewTrigger.TabIndex = 19
@@ -57,7 +63,7 @@ Partial Class frmTableOption
         cmbSelectTrigger.AutoCompleteMode = AutoCompleteMode.SuggestAppend
         cmbSelectTrigger.AutoCompleteSource = AutoCompleteSource.ListItems
         cmbSelectTrigger.FormattingEnabled = True
-        cmbSelectTrigger.Location = New Point(817, 52)
+        cmbSelectTrigger.Location = New Point(19, 61)
         cmbSelectTrigger.Name = "cmbSelectTrigger"
         cmbSelectTrigger.Size = New Size(260, 23)
         cmbSelectTrigger.TabIndex = 18
@@ -67,7 +73,7 @@ Partial Class frmTableOption
         pnlSelectTriggerlbl.BackColor = SystemColors.ControlDark
         pnlSelectTriggerlbl.Controls.Add(lblSelectTriggerlbl)
         pnlSelectTriggerlbl.ForeColor = SystemColors.ActiveCaptionText
-        pnlSelectTriggerlbl.Location = New Point(817, 12)
+        pnlSelectTriggerlbl.Location = New Point(19, 21)
         pnlSelectTriggerlbl.Name = "pnlSelectTriggerlbl"
         pnlSelectTriggerlbl.Size = New Size(260, 34)
         pnlSelectTriggerlbl.TabIndex = 17
@@ -85,7 +91,7 @@ Partial Class frmTableOption
         ' dgvTableSchema1
         ' 
         dgvTableSchema1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvTableSchema1.Location = New Point(21, 12)
+        dgvTableSchema1.Location = New Point(7, 5)
         dgvTableSchema1.Name = "dgvTableSchema1"
         dgvTableSchema1.Size = New Size(702, 78)
         dgvTableSchema1.TabIndex = 20
@@ -93,7 +99,7 @@ Partial Class frmTableOption
         ' dgvTableSchema2
         ' 
         dgvTableSchema2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvTableSchema2.Location = New Point(21, 94)
+        dgvTableSchema2.Location = New Point(8, 89)
         dgvTableSchema2.Name = "dgvTableSchema2"
         dgvTableSchema2.Size = New Size(702, 131)
         dgvTableSchema2.TabIndex = 21
@@ -101,7 +107,7 @@ Partial Class frmTableOption
         ' dgvTableSchema3
         ' 
         dgvTableSchema3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvTableSchema3.Location = New Point(21, 228)
+        dgvTableSchema3.Location = New Point(7, 223)
         dgvTableSchema3.Name = "dgvTableSchema3"
         dgvTableSchema3.Size = New Size(702, 102)
         dgvTableSchema3.TabIndex = 22
@@ -109,7 +115,7 @@ Partial Class frmTableOption
         ' dgvTableSchema4
         ' 
         dgvTableSchema4.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvTableSchema4.Location = New Point(21, 336)
+        dgvTableSchema4.Location = New Point(7, 329)
         dgvTableSchema4.Name = "dgvTableSchema4"
         dgvTableSchema4.Size = New Size(702, 78)
         dgvTableSchema4.TabIndex = 23
@@ -117,7 +123,7 @@ Partial Class frmTableOption
         ' dgvTableSchema5
         ' 
         dgvTableSchema5.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvTableSchema5.Location = New Point(21, 419)
+        dgvTableSchema5.Location = New Point(7, 412)
         dgvTableSchema5.Name = "dgvTableSchema5"
         dgvTableSchema5.Size = New Size(702, 78)
         dgvTableSchema5.TabIndex = 24
@@ -125,7 +131,7 @@ Partial Class frmTableOption
         ' dgvTableSchema6
         ' 
         dgvTableSchema6.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvTableSchema6.Location = New Point(21, 501)
+        dgvTableSchema6.Location = New Point(7, 495)
         dgvTableSchema6.Name = "dgvTableSchema6"
         dgvTableSchema6.Size = New Size(702, 78)
         dgvTableSchema6.TabIndex = 25
@@ -133,26 +139,65 @@ Partial Class frmTableOption
         ' dgvTableSchema7
         ' 
         dgvTableSchema7.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        dgvTableSchema7.Location = New Point(21, 584)
+        dgvTableSchema7.Location = New Point(7, 579)
         dgvTableSchema7.Name = "dgvTableSchema7"
         dgvTableSchema7.Size = New Size(702, 129)
         dgvTableSchema7.TabIndex = 26
         ' 
+        ' QueryExecuterTableOption
+        ' 
+        QueryExecuterTableOption.Connection = Nothing
+        QueryExecuterTableOption.Location = New Point(747, 12)
+        QueryExecuterTableOption.Name = "QueryExecuterTableOption"
+        QueryExecuterTableOption.Size = New Size(591, 701)
+        QueryExecuterTableOption.TabIndex = 27
+        ' 
+        ' pnlTableStructure
+        ' 
+        pnlTableStructure.AutoScroll = True
+        pnlTableStructure.Controls.Add(dgvTableSchema2)
+        pnlTableStructure.Controls.Add(dgvTableSchema7)
+        pnlTableStructure.Controls.Add(dgvTableSchema1)
+        pnlTableStructure.Controls.Add(dgvTableSchema6)
+        pnlTableStructure.Controls.Add(dgvTableSchema3)
+        pnlTableStructure.Controls.Add(dgvTableSchema5)
+        pnlTableStructure.Controls.Add(dgvTableSchema4)
+        pnlTableStructure.Location = New Point(12, 192)
+        pnlTableStructure.Name = "pnlTableStructure"
+        pnlTableStructure.Size = New Size(729, 562)
+        pnlTableStructure.TabIndex = 28
+        ' 
+        ' pnlTableStructurelbl
+        ' 
+        pnlTableStructurelbl.BackColor = SystemColors.ControlDark
+        pnlTableStructurelbl.Controls.Add(lblTableStructurelbl)
+        pnlTableStructurelbl.ForeColor = SystemColors.ActiveCaptionText
+        pnlTableStructurelbl.Location = New Point(20, 132)
+        pnlTableStructurelbl.Name = "pnlTableStructurelbl"
+        pnlTableStructurelbl.Size = New Size(721, 54)
+        pnlTableStructurelbl.TabIndex = 18
+        ' 
+        ' lblTableStructurelbl
+        ' 
+        lblTableStructurelbl.AutoSize = True
+        lblTableStructurelbl.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblTableStructurelbl.Location = New Point(294, 18)
+        lblTableStructurelbl.Name = "lblTableStructurelbl"
+        lblTableStructurelbl.Size = New Size(147, 25)
+        lblTableStructurelbl.TabIndex = 2
+        lblTableStructurelbl.Text = "Table Structure"
+        ' 
         ' frmTableOption
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1089, 749)
-        Controls.Add(dgvTableSchema7)
-        Controls.Add(dgvTableSchema6)
-        Controls.Add(dgvTableSchema5)
-        Controls.Add(dgvTableSchema4)
-        Controls.Add(dgvTableSchema3)
-        Controls.Add(dgvTableSchema2)
-        Controls.Add(dgvTableSchema1)
+        ClientSize = New Size(1356, 691)
+        Controls.Add(pnlTableStructurelbl)
+        Controls.Add(QueryExecuterTableOption)
         Controls.Add(btnViewTrigger)
         Controls.Add(cmbSelectTrigger)
         Controls.Add(pnlSelectTriggerlbl)
+        Controls.Add(pnlTableStructure)
         Name = "frmTableOption"
         Text = "Table Options"
         WindowState = FormWindowState.Maximized
@@ -165,6 +210,9 @@ Partial Class frmTableOption
         CType(dgvTableSchema5, ComponentModel.ISupportInitialize).EndInit()
         CType(dgvTableSchema6, ComponentModel.ISupportInitialize).EndInit()
         CType(dgvTableSchema7, ComponentModel.ISupportInitialize).EndInit()
+        pnlTableStructure.ResumeLayout(False)
+        pnlTableStructurelbl.ResumeLayout(False)
+        pnlTableStructurelbl.PerformLayout()
         ResumeLayout(False)
     End Sub
 
@@ -179,4 +227,8 @@ Partial Class frmTableOption
     Friend WithEvents dgvTableSchema5 As DataGridView
     Friend WithEvents dgvTableSchema6 As DataGridView
     Friend WithEvents dgvTableSchema7 As DataGridView
+    Friend WithEvents QueryExecuterTableOption As CustomControllers.QueryControl
+    Friend WithEvents pnlTableStructure As Panel
+    Friend WithEvents pnlTableStructurelbl As Panel
+    Friend WithEvents lblTableStructurelbl As Label
 End Class

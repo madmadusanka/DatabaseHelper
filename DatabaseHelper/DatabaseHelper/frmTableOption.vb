@@ -45,14 +45,24 @@ Public Class frmTableOption
     End Sub
 
     Private Async Sub btnViewTrigger_Click(sender As Object, e As EventArgs) Handles btnViewTrigger.Click
-        ' Get the selected trigger name
-        Dim selectedTriggerName As String = cmbSelectTrigger.SelectedItem.ToString()
+        Try
+            If cmbSelectTrigger.SelectedItem IsNot Nothing Then
+                ' Get the selected trigger name
+                Dim selectedTriggerName As String = cmbSelectTrigger.SelectedItem.ToString()
 
-        ' Query to retrieve the trigger definition
-        Dim query As String = String.Format(TriggerDetailQuery, selectedTriggerName)
+                ' Query to retrieve the trigger definition
+                Dim query As String = String.Format(TriggerDetailQuery, selectedTriggerName)
 
-        Await frmLandingPage.ShowQuery(query, connection, selectedTriggerName)
+                Await frmLandingPage.ShowQuery(query, connection, selectedTriggerName)
+            Else
+                MessageBox.Show("Please select a trigger.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        Catch ex As Exception
+            ' Handle any exceptions
+            MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
+
 
     Private Async Function PopulateTriggersComboBoxWithQuery(ByVal databaseName As String, ByVal selectedTableName As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
         Try
@@ -110,4 +120,7 @@ Public Class frmTableOption
         Return schemaTables
     End Function
 
+    Private Sub frmTableOption_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        QueryExecuterTableOption.Connection = connection
+    End Sub
 End Class

@@ -16,7 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FastColoredTextBox.Net5" Version="2.16.26" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CustomComponents\CustomControllers.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

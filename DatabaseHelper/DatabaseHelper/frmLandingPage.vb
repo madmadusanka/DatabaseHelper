@@ -1,5 +1,8 @@
 ﻿Imports System.Data.SqlClient
 Imports Common
+Imports CustomControllers
+
+
 
 Public Class frmLandingPage
     Private isConnected As Boolean = False
@@ -38,6 +41,8 @@ Public Class frmLandingPage
                     pnlSelectDetails.Visible = False
                     selectedDatabaseName = ""
                     pnlDashBoardMain.Visible = False
+                    pnlDashBoardMain.Visible = False
+
 
                 Else
                     ' Connect to the server
@@ -55,6 +60,10 @@ Public Class frmLandingPage
                         ' Retrieve database names and populate ComboBox
                         Dim getDBquery As String = SQLQueries.DBNamesQuery
                         Await PopulateComboBoxWithQuery(getDBquery, connection, cmbDatabases)
+
+                        QueryExecuterLandingPage.Connection = connection
+                        pnlDashBoardMain.Visible = True
+
                     End If
                 End If
             Else
@@ -301,6 +310,7 @@ Public Class frmLandingPage
             Dim query As String = String.Format(ViewDetailQuery, selectedViewName)
 
             Await ShowQuery(query, connection, selectedViewName)
+
         Else
             MessageBox.Show("Please select a view.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
@@ -347,16 +357,15 @@ Public Class frmLandingPage
     Private Sub btnTableOption_Click(sender As Object, e As EventArgs) Handles btnTableOption.Click
         Try
             If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
-                ' Check if an item is selected in cmbDatabases
-                Dim selectedTableName As String = cmbSelectTable.SelectedItem.ToString()
-
                 ' Check if an item is selected in cmbSelectTable
-                If selectedTableName IsNot Nothing Then
-                    ' Populate the ComboBox with trigger names
+                Dim selectedTableName As String = cmbSelectTable.SelectedItem?.ToString()
 
+                If selectedTableName IsNot Nothing Then
+                    ' An item is selected, so proceed with its value
                     Dim TableOptionForm As New frmTableOption(selectedDatabaseName, selectedTableName, connection)
                     TableOptionForm.Show()
                 Else
+                    ' No item is selected in cmbSelectTable, show an error message
                     MessageBox.Show("Please select a table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
             Else
