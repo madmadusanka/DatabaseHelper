@@ -27,6 +27,7 @@ Partial Class QueryControl
         fastColoredTextBox = New FastColoredTextBoxNS.FastColoredTextBox()
         QueryResultDataGridView = New DataGridView()
         ExecuteQueryButton = New Button()
+        btnDeleteThis = New Button()
         CType(fastColoredTextBox, ComponentModel.ISupportInitialize).BeginInit()
         CType(QueryResultDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
@@ -41,7 +42,6 @@ Partial Class QueryControl
         fastColoredTextBox.CharHeight = 14
         fastColoredTextBox.CharWidth = 8
         fastColoredTextBox.DisabledColor = Color.FromArgb(CByte(100), CByte(180), CByte(180), CByte(180))
-        fastColoredTextBox.Font = New Font("Courier New", 9.75F)
         fastColoredTextBox.Hotkeys = resources.GetString("fastColoredTextBox.Hotkeys")
         fastColoredTextBox.IsReplaceMode = False
         fastColoredTextBox.Location = New Point(0, 0)
@@ -73,10 +73,22 @@ Partial Class QueryControl
         ExecuteQueryButton.Text = "Execute"
         ExecuteQueryButton.UseVisualStyleBackColor = True
         ' 
+        ' btnDeleteThis
+        ' 
+        btnDeleteThis.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        btnDeleteThis.Location = New Point(17, 289)
+        btnDeleteThis.Name = "btnDeleteThis"
+        btnDeleteThis.Size = New Size(109, 23)
+        btnDeleteThis.TabIndex = 4
+        btnDeleteThis.Text = "Delete this"
+        btnDeleteThis.UseVisualStyleBackColor = True
+        btnDeleteThis.Visible = False
+        ' 
         ' QueryControl
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        Controls.Add(btnDeleteThis)
         Controls.Add(ExecuteQueryButton)
         Controls.Add(QueryResultDataGridView)
         Controls.Add(fastColoredTextBox)
@@ -91,5 +103,6 @@ Partial Class QueryControl
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents QueryResultDataGridView As DataGridView
     Friend WithEvents ExecuteQueryButton As Button
+    Friend WithEvents btnDeleteThis As Button
 
 End Class

@@ -51,4 +51,19 @@ Public Class QueryControl
     Private Sub frmQueryExecutor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
+
+    Private Sub btnDeleteThis_Click(sender As Object, e As EventArgs) Handles btnDeleteThis.Click
+        If Me.Parent IsNot Nothing Then
+            Me.Parent.Controls.Remove(Me)
+        End If
+    End Sub
+
+    Public Property IsDeleteButtonVisible As Boolean
+        Get
+            Return btnDeleteThis.Visible
+        End Get
+        Set(value As Boolean)
+            btnDeleteThis.Visible = value
+        End Set
+    End Property
 End Class
