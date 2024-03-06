@@ -25,11 +25,9 @@ Partial Class QueryControl
         components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(QueryControl))
         fastColoredTextBox = New FastColoredTextBoxNS.FastColoredTextBox()
-        DataGridView1 = New DataGridView()
         QueryResultDataGridView = New DataGridView()
         ExecuteQueryButton = New Button()
         CType(fastColoredTextBox, ComponentModel.ISupportInitialize).BeginInit()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).BeginInit()
         CType(QueryResultDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -43,6 +41,7 @@ Partial Class QueryControl
         fastColoredTextBox.CharHeight = 14
         fastColoredTextBox.CharWidth = 8
         fastColoredTextBox.DisabledColor = Color.FromArgb(CByte(100), CByte(180), CByte(180), CByte(180))
+        fastColoredTextBox.Font = New Font("Courier New", 9.75F)
         fastColoredTextBox.Hotkeys = resources.GetString("fastColoredTextBox.Hotkeys")
         fastColoredTextBox.IsReplaceMode = False
         fastColoredTextBox.Location = New Point(0, 0)
@@ -51,30 +50,23 @@ Partial Class QueryControl
         fastColoredTextBox.SelectionColor = Color.FromArgb(CByte(60), CByte(0), CByte(0), CByte(255))
         fastColoredTextBox.ServiceColors = CType(resources.GetObject("fastColoredTextBox.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
         fastColoredTextBox.ServiceLinesColor = Color.Gray
-        fastColoredTextBox.Size = New Size(501, 168)
+        fastColoredTextBox.Size = New Size(660, 278)
         fastColoredTextBox.TabIndex = 0
         fastColoredTextBox.Zoom = 100
-        ' 
-        ' DataGridView1
-        ' 
-        DataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridView1.Location = New Point(84, 254)
-        DataGridView1.Name = "DataGridView1"
-        DataGridView1.Size = New Size(240, 150)
-        DataGridView1.TabIndex = 1
         ' 
         ' QueryResultDataGridView
         ' 
         QueryResultDataGridView.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         QueryResultDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        QueryResultDataGridView.Location = New Point(0, 214)
+        QueryResultDataGridView.Location = New Point(0, 318)
         QueryResultDataGridView.Name = "QueryResultDataGridView"
-        QueryResultDataGridView.Size = New Size(501, 150)
+        QueryResultDataGridView.Size = New Size(660, 255)
         QueryResultDataGridView.TabIndex = 2
         ' 
         ' ExecuteQueryButton
         ' 
-        ExecuteQueryButton.Location = New Point(17, 180)
+        ExecuteQueryButton.Anchor = AnchorStyles.Top Or AnchorStyles.Right
+        ExecuteQueryButton.Location = New Point(531, 287)
         ExecuteQueryButton.Name = "ExecuteQueryButton"
         ExecuteQueryButton.Size = New Size(109, 23)
         ExecuteQueryButton.TabIndex = 3
@@ -87,12 +79,10 @@ Partial Class QueryControl
         AutoScaleMode = AutoScaleMode.Font
         Controls.Add(ExecuteQueryButton)
         Controls.Add(QueryResultDataGridView)
-        Controls.Add(DataGridView1)
         Controls.Add(fastColoredTextBox)
         Name = "QueryControl"
-        Size = New Size(501, 366)
+        Size = New Size(660, 573)
         CType(fastColoredTextBox, ComponentModel.ISupportInitialize).EndInit()
-        CType(DataGridView1, ComponentModel.ISupportInitialize).EndInit()
         CType(QueryResultDataGridView, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub

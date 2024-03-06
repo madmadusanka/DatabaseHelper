@@ -55,7 +55,7 @@ Partial Class frmLandingPage
         txtServerName = New TextBox()
         pnlSqlServerlbl = New Panel()
         lblsqlserver = New Label()
-        Button1 = New Button()
+        btnfrmQueryCompare = New Button()
         Button2 = New Button()
         Button3 = New Button()
         pnlDashBoardMain = New Panel()
@@ -263,7 +263,7 @@ Partial Class frmLandingPage
         ' lblviewlbl
         ' 
         lblviewlbl.AutoSize = True
-        lblviewlbl.Font = New Font("Segoe UI Semibold", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblviewlbl.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lblviewlbl.Location = New Point(18, 4)
         lblviewlbl.Name = "lblviewlbl"
         lblviewlbl.Size = New Size(0, 15)
@@ -292,7 +292,7 @@ Partial Class frmLandingPage
         ' lblsplbl
         ' 
         lblsplbl.AutoSize = True
-        lblsplbl.Font = New Font("Segoe UI Semibold", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblsplbl.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lblsplbl.Location = New Point(6, 5)
         lblsplbl.Name = "lblsplbl"
         lblsplbl.Size = New Size(0, 15)
@@ -331,7 +331,7 @@ Partial Class frmLandingPage
         ' lbltbllbl
         ' 
         lbltbllbl.AutoSize = True
-        lbltbllbl.Font = New Font("Segoe UI Semibold", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lbltbllbl.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lbltbllbl.Location = New Point(17, 5)
         lbltbllbl.Name = "lbltbllbl"
         lbltbllbl.Size = New Size(0, 15)
@@ -403,7 +403,7 @@ Partial Class frmLandingPage
         ' lblsqlserver
         ' 
         lblsqlserver.AutoSize = True
-        lblsqlserver.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblsqlserver.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lblsqlserver.ForeColor = SystemColors.ButtonFace
         lblsqlserver.Location = New Point(99, 12)
         lblsqlserver.Name = "lblsqlserver"
@@ -411,14 +411,14 @@ Partial Class frmLandingPage
         lblsqlserver.TabIndex = 0
         lblsqlserver.Text = "SQL Server"
         ' 
-        ' Button1
+        ' btnfrmQueryCompare
         ' 
-        Button1.Location = New Point(23, 26)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(177, 106)
-        Button1.TabIndex = 1
-        Button1.Text = "Table Joins"
-        Button1.UseVisualStyleBackColor = True
+        btnfrmQueryCompare.Location = New Point(23, 26)
+        btnfrmQueryCompare.Name = "btnfrmQueryCompare"
+        btnfrmQueryCompare.Size = New Size(177, 106)
+        btnfrmQueryCompare.TabIndex = 1
+        btnfrmQueryCompare.Text = "Query Compare"
+        btnfrmQueryCompare.UseVisualStyleBackColor = True
         ' 
         ' Button2
         ' 
@@ -443,7 +443,7 @@ Partial Class frmLandingPage
         pnlDashBoardMain.Controls.Add(QueryExecuterLandingPage)
         pnlDashBoardMain.Controls.Add(Button5)
         pnlDashBoardMain.Controls.Add(Button4)
-        pnlDashBoardMain.Controls.Add(Button1)
+        pnlDashBoardMain.Controls.Add(btnfrmQueryCompare)
         pnlDashBoardMain.Controls.Add(Button2)
         pnlDashBoardMain.Controls.Add(Button3)
         pnlDashBoardMain.Dock = DockStyle.Right
@@ -481,7 +481,7 @@ Partial Class frmLandingPage
         ' 
         ' frmLandingPage
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1370, 738)
         Controls.Add(pnlSqlServer)
@@ -522,7 +522,7 @@ Partial Class frmLandingPage
     Friend WithEvents btnToggleConnection As Button
     Friend WithEvents pnlMain As Panel
     Friend WithEvents cmbDatabases As ComboBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btnfrmQueryCompare As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
     Friend WithEvents pnlDashBoardMain As Panel

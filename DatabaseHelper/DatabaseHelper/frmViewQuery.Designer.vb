@@ -59,7 +59,7 @@ Partial Class frmViewQuery
         ' QueryControlfrmViewQuery
         ' 
         QueryControlfrmViewQuery.Connection = Nothing
-        QueryControlfrmViewQuery.Location = New Point(726, 24)
+        QueryControlfrmViewQuery.Location = New Point(726, 35)
         QueryControlfrmViewQuery.Name = "QueryControlfrmViewQuery"
         QueryControlfrmViewQuery.Size = New Size(632, 646)
         QueryControlfrmViewQuery.TabIndex = 4

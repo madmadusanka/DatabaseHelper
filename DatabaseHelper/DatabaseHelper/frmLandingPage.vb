@@ -377,4 +377,8 @@ Public Class frmLandingPage
         End Try
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnfrmQueryCompare.Click
+        Dim queryCompareForm As New frmQueryCompare(connection)
+        queryCompareForm.Show()
+    End Sub
 End Class
