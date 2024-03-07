@@ -1,8 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports Common
-Imports CustomControllers
-
-
+Imports DatabaseHelper.DataCache
 
 Public Class frmLandingPage
     Private isConnected As Boolean = False
@@ -10,9 +8,9 @@ Public Class frmLandingPage
     Private ConnectionManager As New Connection()
     Private originalComboBoxItems As New List(Of Object)()
     Private selectedDatabaseName As String
+    Private serverNames As New List(Of String)()
 
     Dim TableOptionForm As String
-
 
     Private Async Sub btnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
         Try
@@ -43,10 +41,10 @@ Public Class frmLandingPage
                     pnlDashBoardMain.Visible = False
                     pnlDashBoardMain.Visible = False
 
-
                 Else
                     ' Connect to the server
                     connection = Await ConnectionManager.ConnectServer(txtServerName.Text)
+                    ServerNameCache.CacheServerName(txtServerName.Text)
 
                     ' Update the button text based on the connection status
                     If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
@@ -64,6 +62,8 @@ Public Class frmLandingPage
                         QueryExecuterLandingPage.Connection = connection
                         pnlDashBoardMain.Visible = True
 
+                        ' Save configuration
+                        'SaveConfig()
                     End If
                 End If
             Else
@@ -177,7 +177,6 @@ Public Class frmLandingPage
             If connection.State = ConnectionState.Open Then
                 ' Query to retrieve the count of tables in the database
                 Dim query As String = String.Format(StoredProceduresCountQuery, databaseName)
-
 
                 ' Create command
                 Using command As New SqlCommand(query, connection)
@@ -305,7 +304,6 @@ Public Class frmLandingPage
         If cmbSelectView.SelectedItem IsNot Nothing Then
             Dim selectedViewName As String = cmbSelectView.SelectedItem.ToString()
 
-
             ' Query to retrieve the view definition
             Dim query As String = String.Format(ViewDetailQuery, selectedViewName)
 
@@ -381,4 +379,11 @@ Public Class frmLandingPage
         Dim queryCompareForm As New frmQueryCompare(connection)
         queryCompareForm.Show()
     End Sub
+
+    Private Sub frmLandingPage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Call the LoadConfig method when the form loads to populate the server names in the textbox
+        Dim cachedServerName As String = ServerNameCache.GetCachedServerName()
+        txtServerName.Text = cachedServerName
+    End Sub
+
 End Class

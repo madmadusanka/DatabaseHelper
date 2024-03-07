@@ -386,6 +386,7 @@ Partial Class frmLandingPage
         ' 
         ' txtServerName
         ' 
+        txtServerName.AutoCompleteMode = AutoCompleteMode.SuggestAppend
         txtServerName.Location = New Point(12, 81)
         txtServerName.Name = "txtServerName"
         txtServerName.Size = New Size(287, 23)
@@ -456,6 +457,7 @@ Partial Class frmLandingPage
         ' QueryExecuterLandingPage
         ' 
         QueryExecuterLandingPage.Connection = Nothing
+        QueryExecuterLandingPage.IsDeleteButtonVisible = False
         QueryExecuterLandingPage.Location = New Point(12, 146)
         QueryExecuterLandingPage.Name = "QueryExecuterLandingPage"
         QueryExecuterLandingPage.Size = New Size(1011, 538)
