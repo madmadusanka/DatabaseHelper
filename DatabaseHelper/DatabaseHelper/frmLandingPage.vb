@@ -4,7 +4,7 @@ Imports DatabaseHelper.DataCache
 
 Public Class frmLandingPage
     Private isConnected As Boolean = False
-    Private connection As SqlConnection
+    Private _connection As SqlConnection
     Private ConnectionManager As New Connection()
     Private originalComboBoxItems As New List(Of Object)()
     Private selectedDatabaseName As String
@@ -12,67 +12,20 @@ Public Class frmLandingPage
 
     Dim TableOptionForm As String
 
-    Private Async Sub btnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
-        Try
-            If Not String.IsNullOrEmpty(txtServerName.Text) Then
-                If isConnected Then
-                    ' Disconnect from the server
-                    ConnectionManager.DisconnectServer(connection)
-                    btnToggleConnection.Text = "Connect"
-                    isConnected = False
-                    lblDBCount.Text = ""
-                    cmbDatabases.SelectedIndex = -1
-                    cmbDatabases.Items.Clear()
-                    cmbSelectTable.Items.Clear()
-                    cmbSelectProcedure.Items.Clear()
-                    cmbSelectView.Items.Clear()
-                    lblTableCount.Text = ""
-                    lblSpCount.Text = ""
-                    lblViewCount.Text = ""
-                    lbltbllbl.Text = ""
-                    lblsplbl.Text = ""
-                    lblviewlbl.Text = ""
-                    pnlShowTable.Visible = False
-                    pnlShowSp.Visible = False
-                    pnlShowView.Visible = False
-                    pnlMain.Visible = False
-                    pnlSelectDetails.Visible = False
-                    selectedDatabaseName = ""
-                    pnlDashBoardMain.Visible = False
-                    pnlDashBoardMain.Visible = False
+    Public Property Connection As SqlConnection
+        Get
+            Return _connection
+        End Get
+        Set(value As SqlConnection)
+            _connection = value
+            ' Use the connection object here
+        End Set
+    End Property
 
-                Else
-                    ' Connect to the server
-                    connection = Await ConnectionManager.ConnectServer(txtServerName.Text)
-                    ServerNameCache.CacheServerName(txtServerName.Text)
-
-                    ' Update the button text based on the connection status
-                    If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
-                        btnToggleConnection.Text = "Disconnect"
-                        isConnected = True
-                        pnlMain.Visible = True
-
-                        Dim countDBquery As String = SQLQueries.DbCountQuery
-                        Await ShowDBCount(countDBquery, connection, lblDBCount)
-
-                        ' Retrieve database names and populate ComboBox
-                        Dim getDBquery As String = SQLQueries.DBNamesQuery
-                        Await PopulateComboBoxWithQuery(getDBquery, connection, cmbDatabases)
-
-                        QueryExecuterLandingPage.Connection = connection
-                        pnlDashBoardMain.Visible = True
-
-                        ' Save configuration
-                        'SaveConfig()
-                    End If
-                End If
-            Else
-                MessageBox.Show("Server name is empty or null. Please enter a valid server name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End If
-        Catch ex As Exception
-            ' Handle any exceptions
-            MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+    Private Async Sub OnServerConnected(sender As Object, e As ServerConnectedEventArgs)
+        Connection = e.Connection
+        txtConnectedserverName.Text = e.Servername
+        Await ConnectToServer()
     End Sub
 
     Private Async Function PopulateComboBoxWithQuery(ByVal query As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
@@ -121,21 +74,21 @@ Public Class frmLandingPage
 
     Public Async Sub cmbDatabases_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDatabases.SelectedIndexChanged
         Try
-            If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
+            If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
                 ' Get the selected database name
                 selectedDatabaseName = cmbDatabases.SelectedItem.ToString()
 
                 Dim getDBquery As String = SQLQueries.DBNamesQuery
-                Await PopulateComboBoxWithQuery(getDBquery, connection, cmbDatabases)
+                Await PopulateComboBoxWithQuery(getDBquery, Connection, cmbDatabases)
 
                 ' Show the table count for the selected database
-                Await ShowTableCount(selectedDatabaseName, connection, lblTableCount)
-                Await ShowSpCount(selectedDatabaseName, connection, lblSpCount)
-                Await viewCount(selectedDatabaseName, connection, lblViewCount)
+                Await ShowTableCount(selectedDatabaseName, Connection, lblTableCount)
+                Await ShowSpCount(selectedDatabaseName, Connection, lblSpCount)
+                Await viewCount(selectedDatabaseName, Connection, lblViewCount)
 
-                Await PopulateTableComboBoxWithQuery(selectedDatabaseName, connection, cmbSelectTable)
-                Await PopulateProcedureComboBoxWithQuery(selectedDatabaseName, connection, cmbSelectProcedure)
-                Await PopulateViewComboBoxWithQuery(selectedDatabaseName, connection, cmbSelectView)
+                Await PopulateTableComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectTable)
+                Await PopulateProcedureComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectProcedure)
+                Await PopulateViewComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectView)
 
                 pnlSelectDetails.Visible = True
 
@@ -307,8 +260,7 @@ Public Class frmLandingPage
             ' Query to retrieve the view definition
             Dim query As String = String.Format(ViewDetailQuery, selectedViewName)
 
-            Await ShowQuery(query, connection, selectedViewName)
-
+            Await ShowQuery(query, Connection, selectedViewName)
         Else
             MessageBox.Show("Please select a view.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
@@ -346,7 +298,7 @@ Public Class frmLandingPage
             ' Query to retrieve the view definition
             Dim query As String = String.Format(ProcedureDetailQuery, selectedProcedureName)
 
-            Await ShowQuery(query, connection, selectedProcedureName)
+            Await ShowQuery(query, Connection, selectedProcedureName)
         Else
             MessageBox.Show("Please select a procedure.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
@@ -354,13 +306,13 @@ Public Class frmLandingPage
 
     Private Sub btnTableOption_Click(sender As Object, e As EventArgs) Handles btnTableOption.Click
         Try
-            If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
+            If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
                 ' Check if an item is selected in cmbSelectTable
                 Dim selectedTableName As String = cmbSelectTable.SelectedItem?.ToString()
 
                 If selectedTableName IsNot Nothing Then
                     ' An item is selected, so proceed with its value
-                    Dim TableOptionForm As New frmTableOption(selectedDatabaseName, selectedTableName, connection)
+                    Dim TableOptionForm As New frmTableOption(selectedDatabaseName, selectedTableName, Connection)
                     TableOptionForm.Show()
                 Else
                     ' No item is selected in cmbSelectTable, show an error message
@@ -376,14 +328,72 @@ Public Class frmLandingPage
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnfrmQueryCompare.Click
-        Dim queryCompareForm As New frmQueryCompare(connection)
+        Dim queryCompareForm As New frmQueryCompare(Connection)
         queryCompareForm.Show()
     End Sub
 
-    Private Sub frmLandingPage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Call the LoadConfig method when the form loads to populate the server names in the textbox
-        Dim cachedServerName As String = ServerNameCache.GetCachedServerName()
-        txtServerName.Text = cachedServerName
+    Public Async Function ConnectToServer() As Task
+        Try
+            If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
+                pnlMain.Visible = True
+
+                Dim countDBquery As String = SQLQueries.DbCountQuery
+                Await ShowDBCount(countDBquery, Connection, lblDBCount)
+
+                ' Retrieve database names and populate ComboBox
+                Dim getDBquery As String = SQLQueries.DBNamesQuery
+                Await PopulateComboBoxWithQuery(getDBquery, Connection, cmbDatabases)
+
+                QueryExecuterLandingPage.Connection = Connection
+                pnlDashBoardMain.Visible = True
+                txtConnectedserverName.Visible = True
+                btnConnection.Text = "Disconnect"
+
+            Else
+                lblDBCount.Text = ""
+                cmbDatabases.SelectedIndex = -1
+                cmbDatabases.Items.Clear()
+                cmbSelectTable.Items.Clear()
+                cmbSelectProcedure.Items.Clear()
+                cmbSelectView.Items.Clear()
+                lblTableCount.Text = ""
+                lblSpCount.Text = ""
+                lblViewCount.Text = ""
+                lbltbllbl.Text = ""
+                lblsplbl.Text = ""
+                lblviewlbl.Text = ""
+                pnlShowTable.Visible = False
+                pnlShowSp.Visible = False
+                pnlShowView.Visible = False
+                pnlMain.Visible = False
+                pnlSelectDetails.Visible = False
+                selectedDatabaseName = ""
+                pnlDashBoardMain.Visible = False
+                pnlDashBoardMain.Visible = False
+                btnConnection.Text = "Connect"
+                txtConnectedserverName.Text = ""
+                txtConnectedserverName.Visible = False
+            End If
+        Catch ex As Exception
+            ' Handle any exceptions
+            MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Function
+
+    Private Async Sub btnconnect_Click(sender As Object, e As EventArgs) Handles btnConnection.Click
+        Dim frmConnectServerInstance As frmConnectServer = Application.OpenForms.OfType(Of frmConnectServer).FirstOrDefault()
+
+        If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
+            ConnectionManager.DisconnectServer(Connection)
+            btnConnection.Text = "Connect"
+            isConnected = False
+            Await ConnectToServer()
+
+        Else
+            Dim newFrmConnectServer As New frmConnectServer()
+            AddHandler newFrmConnectServer.ServerConnected, AddressOf OnServerConnected
+            newFrmConnectServer.Show()
+        End If
     End Sub
 
 End Class

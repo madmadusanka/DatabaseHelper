@@ -23,6 +23,7 @@ Partial Class frmLandingPage
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         pnlSqlServer = New Panel()
+        txtConnectedserverName = New TextBox()
         pnlMain = New Panel()
         pnlSelectDetails = New Panel()
         cmbSelectTable = New ComboBox()
@@ -50,9 +51,7 @@ Partial Class frmLandingPage
         lblTableCount = New Label()
         pnlselectYourDatabaselbl = New Panel()
         lblSelectyourDatabaselbl = New Label()
-        btnToggleConnection = New Button()
-        lblServerName = New Label()
-        txtServerName = New TextBox()
+        btnConnection = New Button()
         pnlSqlServerlbl = New Panel()
         lblsqlserver = New Label()
         btnfrmQueryCompare = New Button()
@@ -79,16 +78,23 @@ Partial Class frmLandingPage
         ' pnlSqlServer
         ' 
         pnlSqlServer.BackColor = SystemColors.ActiveBorder
+        pnlSqlServer.Controls.Add(txtConnectedserverName)
         pnlSqlServer.Controls.Add(pnlMain)
-        pnlSqlServer.Controls.Add(btnToggleConnection)
-        pnlSqlServer.Controls.Add(lblServerName)
-        pnlSqlServer.Controls.Add(txtServerName)
+        pnlSqlServer.Controls.Add(btnConnection)
         pnlSqlServer.Controls.Add(pnlSqlServerlbl)
         pnlSqlServer.Dock = DockStyle.Left
         pnlSqlServer.Location = New Point(0, 0)
         pnlSqlServer.Name = "pnlSqlServer"
         pnlSqlServer.Size = New Size(311, 738)
         pnlSqlServer.TabIndex = 0
+        ' 
+        ' txtConnectedserverName
+        ' 
+        txtConnectedserverName.Location = New Point(16, 60)
+        txtConnectedserverName.Name = "txtConnectedserverName"
+        txtConnectedserverName.Size = New Size(281, 23)
+        txtConnectedserverName.TabIndex = 6
+        txtConnectedserverName.Visible = False
         ' 
         ' pnlMain
         ' 
@@ -100,9 +106,9 @@ Partial Class frmLandingPage
         pnlMain.Controls.Add(cmbDatabases)
         pnlMain.Controls.Add(pnlShowTable)
         pnlMain.Controls.Add(pnlselectYourDatabaselbl)
-        pnlMain.Location = New Point(12, 146)
+        pnlMain.Location = New Point(12, 128)
         pnlMain.Name = "pnlMain"
-        pnlMain.Size = New Size(287, 538)
+        pnlMain.Size = New Size(287, 556)
         pnlMain.TabIndex = 5
         pnlMain.Visible = False
         ' 
@@ -366,31 +372,14 @@ Partial Class frmLandingPage
         lblSelectyourDatabaselbl.TabIndex = 2
         lblSelectyourDatabaselbl.Text = "Select your Database"
         ' 
-        ' btnToggleConnection
+        ' btnConnection
         ' 
-        btnToggleConnection.Location = New Point(12, 109)
-        btnToggleConnection.Name = "btnToggleConnection"
-        btnToggleConnection.Size = New Size(287, 23)
-        btnToggleConnection.TabIndex = 3
-        btnToggleConnection.Text = "Connect"
-        btnToggleConnection.UseVisualStyleBackColor = True
-        ' 
-        ' lblServerName
-        ' 
-        lblServerName.AutoSize = True
-        lblServerName.Location = New Point(12, 62)
-        lblServerName.Name = "lblServerName"
-        lblServerName.Size = New Size(104, 15)
-        lblServerName.TabIndex = 2
-        lblServerName.Text = "SQL Server Name :"
-        ' 
-        ' txtServerName
-        ' 
-        txtServerName.AutoCompleteMode = AutoCompleteMode.SuggestAppend
-        txtServerName.Location = New Point(12, 81)
-        txtServerName.Name = "txtServerName"
-        txtServerName.Size = New Size(287, 23)
-        txtServerName.TabIndex = 1
+        btnConnection.Location = New Point(16, 88)
+        btnConnection.Name = "btnConnection"
+        btnConnection.Size = New Size(280, 23)
+        btnConnection.TabIndex = 3
+        btnConnection.Text = "Connect"
+        btnConnection.UseVisualStyleBackColor = True
         ' 
         ' pnlSqlServerlbl
         ' 
@@ -517,11 +506,9 @@ Partial Class frmLandingPage
     End Sub
 
     Friend WithEvents pnlSqlServer As Panel
-    Friend WithEvents lblServerName As Label
-    Friend WithEvents txtServerName As TextBox
     Friend WithEvents pnlSqlServerlbl As Panel
     Friend WithEvents lblsqlserver As Label
-    Friend WithEvents btnToggleConnection As Button
+    Friend WithEvents btnConnection As Button
     Friend WithEvents pnlMain As Panel
     Friend WithEvents cmbDatabases As ComboBox
     Friend WithEvents btnfrmQueryCompare As Button
@@ -556,5 +543,6 @@ Partial Class frmLandingPage
     Friend WithEvents btnTableOption As Button
     Friend WithEvents QueryExecuterLandingPage As CustomControllers.QueryControl
     Friend WithEvents cmbSelectTable As ComboBox
+    Friend WithEvents txtConnectedserverName As TextBox
 
 End Class
