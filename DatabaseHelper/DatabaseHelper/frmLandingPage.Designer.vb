@@ -449,7 +449,7 @@ Partial Class frmLandingPage
         QueryExecuterLandingPage.IsDeleteButtonVisible = False
         QueryExecuterLandingPage.Location = New Point(12, 146)
         QueryExecuterLandingPage.Name = "QueryExecuterLandingPage"
-        QueryExecuterLandingPage.Size = New Size(1011, 538)
+        QueryExecuterLandingPage.Size = New Size(1029, 538)
         QueryExecuterLandingPage.TabIndex = 6
         ' 
         ' Button5

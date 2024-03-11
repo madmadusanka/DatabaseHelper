@@ -76,7 +76,13 @@ Public Class frmLandingPage
         Try
             If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
                 ' Get the selected database name
-                selectedDatabaseName = cmbDatabases.SelectedItem.ToString()
+                If cmbDatabases.SelectedItem IsNot Nothing Then
+                    selectedDatabaseName = cmbDatabases.SelectedItem.ToString()
+                    ' Proceed with your code that uses the selected database name
+                Else
+                    MessageBox.Show("Please select a database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+
 
                 Dim getDBquery As String = SQLQueries.DBNamesQuery
                 Await PopulateComboBoxWithQuery(getDBquery, Connection, cmbDatabases)
@@ -316,7 +322,7 @@ Public Class frmLandingPage
                     TableOptionForm.Show()
                 Else
                     ' No item is selected in cmbSelectTable, show an error message
-                    MessageBox.Show("Please select a table.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("Please select a table.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
             Else
                 MessageBox.Show("Database connection is closed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)

@@ -147,6 +147,7 @@ Partial Class frmTableOption
         ' QueryExecuterTableOption
         ' 
         QueryExecuterTableOption.Connection = Nothing
+        QueryExecuterTableOption.IsDeleteButtonVisible = False
         QueryExecuterTableOption.Location = New Point(747, 12)
         QueryExecuterTableOption.Name = "QueryExecuterTableOption"
         QueryExecuterTableOption.Size = New Size(591, 701)
@@ -181,7 +182,7 @@ Partial Class frmTableOption
         ' 
         lblTableStructurelbl.AutoSize = True
         lblTableStructurelbl.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblTableStructurelbl.Location = New Point(294, 18)
+        lblTableStructurelbl.Location = New Point(277, 16)
         lblTableStructurelbl.Name = "lblTableStructurelbl"
         lblTableStructurelbl.Size = New Size(147, 25)
         lblTableStructurelbl.TabIndex = 2
@@ -189,7 +190,7 @@ Partial Class frmTableOption
         ' 
         ' frmTableOption
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1356, 691)
         Controls.Add(pnlTableStructurelbl)

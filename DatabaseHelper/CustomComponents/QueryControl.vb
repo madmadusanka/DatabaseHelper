@@ -3,6 +3,7 @@
 Public Class QueryControl
     Private controller As New QueryExecutorController
     Private _connection As SqlConnection
+    Private adapter As SqlDataAdapter ' Declare SqlDataAdapter here
 
     Public Property Connection As SqlConnection
         Get
@@ -23,6 +24,7 @@ Public Class QueryControl
         Try
             ' Reinitialize the controller with the new connection
             controller = New QueryExecutorController(Connection)
+            adapter = New SqlDataAdapter() ' Initialize SqlDataAdapter
         Catch ex As Exception
             MessageBox.Show($"An error occurred while initializing the form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -35,12 +37,32 @@ Public Class QueryControl
                 ' Check if connection is set
                 If Connection IsNot Nothing Then
                     Dim query As String = fastColoredTextBox.Text.Trim()
-                    Dim dataTable As DataTable = controller.ExecuteQuery(query)
-                    If dataTable IsNot Nothing Then
-                        QueryResultDataGridView.DataSource = dataTable
+
+                    ' Set the SqlCommand for the SqlDataAdapter
+                    adapter.SelectCommand = New SqlCommand(query, Connection)
+
+                    Dim dataTable As New DataTable()
+                    adapter.Fill(dataTable)
+
+                    ' Bind DataTable to DataGridView
+                    QueryResultDataGridView.DataSource = dataTable
+
+                    ' Execute the SQL command and capture the number of rows affected
+                    Dim rowsAffected As Integer = adapter.SelectCommand.ExecuteNonQuery()
+
+                    ' Get the current date and time
+                    Dim completionTime As String = DateTime.Now.ToString()
+
+                    txtQueryMessage.Text = ""
+                    txtQueryMessage.Text = $"( {rowsAffected} row affected ){Environment.NewLine}Completion time: {completionTime} Operation Completed"
+
+                    If QueryResultDataGridView.Rows.Count > 0 Then
+                        tabControlQuery.SelectedTab = tabResult
                     Else
-                        MessageBox.Show("Failed to execute the query.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        ' Handle the case where QueryResultDataGridView has no rows
+                        tabControlQuery.SelectedTab = tabMessage
                     End If
+
                 Else
                     MessageBox.Show("Connection property is not set.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
@@ -50,10 +72,7 @@ Public Class QueryControl
         Else
             MessageBox.Show("Query is Empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
-    End Sub
 
-
-    Private Sub frmQueryExecutor_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 

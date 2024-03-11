@@ -28,8 +28,15 @@ Partial Class QueryControl
         QueryResultDataGridView = New DataGridView()
         ExecuteQueryButton = New Button()
         btnDeleteThis = New Button()
+        tabControlQuery = New TabControl()
+        tabResult = New TabPage()
+        tabMessage = New TabPage()
+        txtQueryMessage = New TextBox()
         CType(fastColoredTextBox, ComponentModel.ISupportInitialize).BeginInit()
         CType(QueryResultDataGridView, ComponentModel.ISupportInitialize).BeginInit()
+        tabControlQuery.SuspendLayout()
+        tabResult.SuspendLayout()
+        tabMessage.SuspendLayout()
         SuspendLayout()
         ' 
         ' fastColoredTextBox
@@ -50,7 +57,7 @@ Partial Class QueryControl
         fastColoredTextBox.SelectionColor = Color.FromArgb(CByte(60), CByte(0), CByte(0), CByte(255))
         fastColoredTextBox.ServiceColors = CType(resources.GetObject("fastColoredTextBox.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
         fastColoredTextBox.ServiceLinesColor = Color.Gray
-        fastColoredTextBox.Size = New Size(660, 278)
+        fastColoredTextBox.Size = New Size(660, 237)
         fastColoredTextBox.TabIndex = 0
         fastColoredTextBox.Zoom = 100
         ' 
@@ -58,15 +65,15 @@ Partial Class QueryControl
         ' 
         QueryResultDataGridView.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         QueryResultDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        QueryResultDataGridView.Location = New Point(0, 318)
+        QueryResultDataGridView.Location = New Point(0, 0)
         QueryResultDataGridView.Name = "QueryResultDataGridView"
-        QueryResultDataGridView.Size = New Size(660, 255)
+        QueryResultDataGridView.Size = New Size(634, 256)
         QueryResultDataGridView.TabIndex = 2
         ' 
         ' ExecuteQueryButton
         ' 
         ExecuteQueryButton.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        ExecuteQueryButton.Location = New Point(531, 287)
+        ExecuteQueryButton.Location = New Point(542, 245)
         ExecuteQueryButton.Name = "ExecuteQueryButton"
         ExecuteQueryButton.Size = New Size(109, 23)
         ExecuteQueryButton.TabIndex = 3
@@ -76,7 +83,7 @@ Partial Class QueryControl
         ' btnDeleteThis
         ' 
         btnDeleteThis.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        btnDeleteThis.Location = New Point(17, 289)
+        btnDeleteThis.Location = New Point(18, 243)
         btnDeleteThis.Name = "btnDeleteThis"
         btnDeleteThis.Size = New Size(109, 23)
         btnDeleteThis.TabIndex = 4
@@ -84,18 +91,65 @@ Partial Class QueryControl
         btnDeleteThis.UseVisualStyleBackColor = True
         btnDeleteThis.Visible = False
         ' 
+        ' tabControlQuery
+        ' 
+        tabControlQuery.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        tabControlQuery.Controls.Add(tabResult)
+        tabControlQuery.Controls.Add(tabMessage)
+        tabControlQuery.Location = New Point(18, 271)
+        tabControlQuery.Name = "tabControlQuery"
+        tabControlQuery.SelectedIndex = 0
+        tabControlQuery.Size = New Size(642, 284)
+        tabControlQuery.TabIndex = 5
+        ' 
+        ' tabResult
+        ' 
+        tabResult.AccessibleRole = AccessibleRole.None
+        tabResult.Controls.Add(QueryResultDataGridView)
+        tabResult.Location = New Point(4, 24)
+        tabResult.Name = "tabResult"
+        tabResult.Padding = New Padding(3)
+        tabResult.Size = New Size(634, 256)
+        tabResult.TabIndex = 0
+        tabResult.Text = "Results"
+        tabResult.UseVisualStyleBackColor = True
+        ' 
+        ' tabMessage
+        ' 
+        tabMessage.Controls.Add(txtQueryMessage)
+        tabMessage.Location = New Point(4, 24)
+        tabMessage.Name = "tabMessage"
+        tabMessage.Padding = New Padding(3)
+        tabMessage.Size = New Size(634, 256)
+        tabMessage.TabIndex = 1
+        tabMessage.Text = "Message"
+        tabMessage.UseVisualStyleBackColor = True
+        ' 
+        ' txtQueryMessage
+        ' 
+        txtQueryMessage.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        txtQueryMessage.Location = New Point(0, 0)
+        txtQueryMessage.Multiline = True
+        txtQueryMessage.Name = "txtQueryMessage"
+        txtQueryMessage.Size = New Size(635, 256)
+        txtQueryMessage.TabIndex = 0
+        ' 
         ' QueryControl
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        Controls.Add(tabControlQuery)
         Controls.Add(btnDeleteThis)
         Controls.Add(ExecuteQueryButton)
-        Controls.Add(QueryResultDataGridView)
         Controls.Add(fastColoredTextBox)
         Name = "QueryControl"
         Size = New Size(660, 573)
         CType(fastColoredTextBox, ComponentModel.ISupportInitialize).EndInit()
         CType(QueryResultDataGridView, ComponentModel.ISupportInitialize).EndInit()
+        tabControlQuery.ResumeLayout(False)
+        tabResult.ResumeLayout(False)
+        tabMessage.ResumeLayout(False)
+        tabMessage.PerformLayout()
         ResumeLayout(False)
     End Sub
 
@@ -104,5 +158,9 @@ Partial Class QueryControl
     Friend WithEvents QueryResultDataGridView As DataGridView
     Friend WithEvents ExecuteQueryButton As Button
     Friend WithEvents btnDeleteThis As Button
+    Friend WithEvents tabControlQuery As TabControl
+    Friend WithEvents tabResult As TabPage
+    Friend WithEvents tabMessage As TabPage
+    Friend WithEvents txtQueryMessage As TextBox
 
 End Class

@@ -27,7 +27,7 @@ Public Class frmConnectServer
     Private Async Sub btnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
         If selectedEnumNumber = 1 Then
             Await ConnectToServer(selectedEnumNumber)
-
+            Me.Close()
         ElseIf selectedEnumNumber = 2 Then
             ServerUserName = txtServerUserName.Text
             ServerUserPassword = txtServerUserPassword.Text
@@ -36,12 +36,12 @@ Public Class frmConnectServer
                 MessageBox.Show("Server username or password is empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Else
                 Await ConnectToServer(selectedEnumNumber)
+                Me.Close()
             End If
         Else
             MessageBox.Show("Select Auth.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
-
 
     Private Async Function ConnectToServer(ByVal selectedEnumNumber As Integer) As Task
         Try

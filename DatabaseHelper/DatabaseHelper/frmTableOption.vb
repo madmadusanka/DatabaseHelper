@@ -122,5 +122,6 @@ Public Class frmTableOption
 
     Private Sub frmTableOption_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         QueryExecuterTableOption.Connection = connection
+        lblTableStructurelbl.Text = $"{selectedTableName} Table Stucture"
     End Sub
 End Class
