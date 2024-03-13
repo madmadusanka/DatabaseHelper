@@ -62,7 +62,9 @@ Public Class frmConnectServer
                 Else
                     ' Connect to the server
                     If selectedEnumNumber = 1 Then
+                        btnToggleConnection.Text = "Please Wait.."
                         connection = Await ConnectionManager.ConnectServer(txtServerName.Text)
+
                         ServerNameCache.CacheServerName(txtServerName.Text)
 
                         ' Update the button text based on the connection status
@@ -75,6 +77,7 @@ Public Class frmConnectServer
 
                         End If
                     ElseIf selectedEnumNumber = 2 Then
+                        btnToggleConnection.Text = "Please Wait.."
                         connection = Await ConnectionManager.ConnectServer(txtServerName.Text, ServerUserName, ServerUserPassword)
                         ServerNameCache.CacheServerName(txtServerName.Text)
 

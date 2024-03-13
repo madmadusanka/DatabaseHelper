@@ -56,7 +56,7 @@ Partial Class frmLandingPage
         lblsqlserver = New Label()
         btnfrmQueryCompare = New Button()
         Button2 = New Button()
-        Button3 = New Button()
+        btnQueryTemplate = New Button()
         pnlDashBoardMain = New Panel()
         QueryExecuterLandingPage = New CustomControllers.QueryControl()
         Button5 = New Button()
@@ -407,7 +407,7 @@ Partial Class frmLandingPage
         btnfrmQueryCompare.Name = "btnfrmQueryCompare"
         btnfrmQueryCompare.Size = New Size(177, 106)
         btnfrmQueryCompare.TabIndex = 1
-        btnfrmQueryCompare.Text = "Query Compare"
+        btnfrmQueryCompare.Text = "Multiple Query Execution"
         btnfrmQueryCompare.UseVisualStyleBackColor = True
         ' 
         ' Button2
@@ -418,15 +418,16 @@ Partial Class frmLandingPage
         Button2.TabIndex = 2
         Button2.Text = "Button2"
         Button2.UseVisualStyleBackColor = True
+        Button2.Visible = False
         ' 
-        ' Button3
+        ' btnQueryTemplate
         ' 
-        Button3.Location = New Point(230, 26)
-        Button3.Name = "Button3"
-        Button3.Size = New Size(177, 106)
-        Button3.TabIndex = 3
-        Button3.Text = "Button3"
-        Button3.UseVisualStyleBackColor = True
+        btnQueryTemplate.Location = New Point(230, 26)
+        btnQueryTemplate.Name = "btnQueryTemplate"
+        btnQueryTemplate.Size = New Size(177, 106)
+        btnQueryTemplate.TabIndex = 3
+        btnQueryTemplate.Text = "Query Template"
+        btnQueryTemplate.UseVisualStyleBackColor = True
         ' 
         ' pnlDashBoardMain
         ' 
@@ -435,7 +436,7 @@ Partial Class frmLandingPage
         pnlDashBoardMain.Controls.Add(Button4)
         pnlDashBoardMain.Controls.Add(btnfrmQueryCompare)
         pnlDashBoardMain.Controls.Add(Button2)
-        pnlDashBoardMain.Controls.Add(Button3)
+        pnlDashBoardMain.Controls.Add(btnQueryTemplate)
         pnlDashBoardMain.Dock = DockStyle.Right
         pnlDashBoardMain.Location = New Point(317, 0)
         pnlDashBoardMain.Name = "pnlDashBoardMain"
@@ -460,6 +461,7 @@ Partial Class frmLandingPage
         Button5.TabIndex = 5
         Button5.Text = "Button5"
         Button5.UseVisualStyleBackColor = True
+        Button5.Visible = False
         ' 
         ' Button4
         ' 
@@ -469,6 +471,7 @@ Partial Class frmLandingPage
         Button4.TabIndex = 4
         Button4.Text = "Button4"
         Button4.UseVisualStyleBackColor = True
+        Button4.Visible = False
         ' 
         ' frmLandingPage
         ' 
@@ -513,7 +516,7 @@ Partial Class frmLandingPage
     Friend WithEvents cmbDatabases As ComboBox
     Friend WithEvents btnfrmQueryCompare As Button
     Friend WithEvents Button2 As Button
-    Friend WithEvents Button3 As Button
+    Friend WithEvents btnQueryTemplate As Button
     Friend WithEvents pnlDashBoardMain As Panel
     Friend WithEvents Button4 As Button
     Friend WithEvents Button5 As Button

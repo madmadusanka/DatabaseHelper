@@ -402,4 +402,7 @@ Public Class frmLandingPage
         End If
     End Sub
 
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btnQueryTemplate.Click
+    End Sub
+
 End Class

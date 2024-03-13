@@ -60,7 +60,7 @@ Partial Class frmQueryCompare
         ' 
         lblQueryCompare.AutoSize = True
         lblQueryCompare.Font = New Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblQueryCompare.Location = New Point(497, 12)
+        lblQueryCompare.Location = New Point(457, 10)
         lblQueryCompare.Name = "lblQueryCompare"
         lblQueryCompare.Size = New Size(166, 30)
         lblQueryCompare.TabIndex = 8

@@ -32,6 +32,9 @@ Partial Class QueryControl
         tabResult = New TabPage()
         tabMessage = New TabPage()
         txtQueryMessage = New TextBox()
+        btnsavequery = New Button()
+        cmbSavedQueries = New ComboBox()
+        flpCustomComponent = New FlowLayoutPanel()
         CType(fastColoredTextBox, ComponentModel.ISupportInitialize).BeginInit()
         CType(QueryResultDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         tabControlQuery.SuspendLayout()
@@ -49,15 +52,16 @@ Partial Class QueryControl
         fastColoredTextBox.CharHeight = 14
         fastColoredTextBox.CharWidth = 8
         fastColoredTextBox.DisabledColor = Color.FromArgb(CByte(100), CByte(180), CByte(180), CByte(180))
+        fastColoredTextBox.Font = New Font("Courier New", 9.75F)
         fastColoredTextBox.Hotkeys = resources.GetString("fastColoredTextBox.Hotkeys")
         fastColoredTextBox.IsReplaceMode = False
-        fastColoredTextBox.Location = New Point(0, 0)
+        fastColoredTextBox.Location = New Point(0, 97)
         fastColoredTextBox.Name = "fastColoredTextBox"
         fastColoredTextBox.Paddings = New Padding(0)
         fastColoredTextBox.SelectionColor = Color.FromArgb(CByte(60), CByte(0), CByte(0), CByte(255))
         fastColoredTextBox.ServiceColors = CType(resources.GetObject("fastColoredTextBox.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
         fastColoredTextBox.ServiceLinesColor = Color.Gray
-        fastColoredTextBox.Size = New Size(660, 237)
+        fastColoredTextBox.Size = New Size(660, 200)
         fastColoredTextBox.TabIndex = 0
         fastColoredTextBox.Zoom = 100
         ' 
@@ -67,13 +71,13 @@ Partial Class QueryControl
         QueryResultDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
         QueryResultDataGridView.Location = New Point(0, 0)
         QueryResultDataGridView.Name = "QueryResultDataGridView"
-        QueryResultDataGridView.Size = New Size(634, 256)
+        QueryResultDataGridView.Size = New Size(634, 194)
         QueryResultDataGridView.TabIndex = 2
         ' 
         ' ExecuteQueryButton
         ' 
         ExecuteQueryButton.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        ExecuteQueryButton.Location = New Point(542, 245)
+        ExecuteQueryButton.Location = New Point(542, 304)
         ExecuteQueryButton.Name = "ExecuteQueryButton"
         ExecuteQueryButton.Size = New Size(109, 23)
         ExecuteQueryButton.TabIndex = 3
@@ -83,7 +87,7 @@ Partial Class QueryControl
         ' btnDeleteThis
         ' 
         btnDeleteThis.Anchor = AnchorStyles.Top Or AnchorStyles.Right
-        btnDeleteThis.Location = New Point(18, 243)
+        btnDeleteThis.Location = New Point(18, 303)
         btnDeleteThis.Name = "btnDeleteThis"
         btnDeleteThis.Size = New Size(109, 23)
         btnDeleteThis.TabIndex = 4
@@ -96,10 +100,10 @@ Partial Class QueryControl
         tabControlQuery.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
         tabControlQuery.Controls.Add(tabResult)
         tabControlQuery.Controls.Add(tabMessage)
-        tabControlQuery.Location = New Point(18, 271)
+        tabControlQuery.Location = New Point(18, 333)
         tabControlQuery.Name = "tabControlQuery"
         tabControlQuery.SelectedIndex = 0
-        tabControlQuery.Size = New Size(642, 284)
+        tabControlQuery.Size = New Size(642, 222)
         tabControlQuery.TabIndex = 5
         ' 
         ' tabResult
@@ -109,7 +113,7 @@ Partial Class QueryControl
         tabResult.Location = New Point(4, 24)
         tabResult.Name = "tabResult"
         tabResult.Padding = New Padding(3)
-        tabResult.Size = New Size(634, 256)
+        tabResult.Size = New Size(634, 194)
         tabResult.TabIndex = 0
         tabResult.Text = "Results"
         tabResult.UseVisualStyleBackColor = True
@@ -120,7 +124,7 @@ Partial Class QueryControl
         tabMessage.Location = New Point(4, 24)
         tabMessage.Name = "tabMessage"
         tabMessage.Padding = New Padding(3)
-        tabMessage.Size = New Size(634, 256)
+        tabMessage.Size = New Size(634, 194)
         tabMessage.TabIndex = 1
         tabMessage.Text = "Message"
         tabMessage.UseVisualStyleBackColor = True
@@ -131,17 +135,46 @@ Partial Class QueryControl
         txtQueryMessage.Location = New Point(0, 0)
         txtQueryMessage.Multiline = True
         txtQueryMessage.Name = "txtQueryMessage"
-        txtQueryMessage.Size = New Size(635, 256)
+        txtQueryMessage.Size = New Size(635, 239)
         txtQueryMessage.TabIndex = 0
+        ' 
+        ' btnsavequery
+        ' 
+        btnsavequery.Location = New Point(22, 7)
+        btnsavequery.Name = "btnsavequery"
+        btnsavequery.Size = New Size(105, 23)
+        btnsavequery.TabIndex = 6
+        btnsavequery.Text = "Save Query"
+        btnsavequery.UseVisualStyleBackColor = True
+        ' 
+        ' cmbSavedQueries
+        ' 
+        cmbSavedQueries.FormattingEnabled = True
+        cmbSavedQueries.Location = New Point(22, 33)
+        cmbSavedQueries.Name = "cmbSavedQueries"
+        cmbSavedQueries.Size = New Size(105, 23)
+        cmbSavedQueries.TabIndex = 7
+        ' 
+        ' flpCustomComponent
+        ' 
+        flpCustomComponent.Anchor = AnchorStyles.Top Or AnchorStyles.Bottom Or AnchorStyles.Left Or AnchorStyles.Right
+        flpCustomComponent.AutoScroll = True
+        flpCustomComponent.Location = New Point(133, 3)
+        flpCustomComponent.Name = "flpCustomComponent"
+        flpCustomComponent.Size = New Size(524, 112)
+        flpCustomComponent.TabIndex = 8
         ' 
         ' QueryControl
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        Controls.Add(fastColoredTextBox)
+        Controls.Add(flpCustomComponent)
+        Controls.Add(cmbSavedQueries)
+        Controls.Add(btnsavequery)
         Controls.Add(tabControlQuery)
         Controls.Add(btnDeleteThis)
         Controls.Add(ExecuteQueryButton)
-        Controls.Add(fastColoredTextBox)
         Name = "QueryControl"
         Size = New Size(660, 573)
         CType(fastColoredTextBox, ComponentModel.ISupportInitialize).EndInit()
@@ -162,5 +195,8 @@ Partial Class QueryControl
     Friend WithEvents tabResult As TabPage
     Friend WithEvents tabMessage As TabPage
     Friend WithEvents txtQueryMessage As TextBox
+    Friend WithEvents btnsavequery As Button
+    Friend WithEvents cmbSavedQueries As ComboBox
+    Friend WithEvents flpCustomComponent As FlowLayoutPanel
 
 End Class
