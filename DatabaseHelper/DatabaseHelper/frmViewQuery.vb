@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Common
 
-Public Class frmViewQuery
+Public Class FrmViewQuery
 
     Private connection As SqlConnection
     Public Sub New(ByVal viewName As String, ByVal viewDefinition As String, ByVal connection As SqlConnection)
@@ -13,7 +13,7 @@ Public Class frmViewQuery
         txtViewDefinition.Text = viewDefinition
     End Sub
 
-    Private Sub frmViewQuery_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmViewQuery_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         QueryControlfrmViewQuery.Connection = connection
     End Sub
 End Class

@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports Common
 
-Public Class frmTableOption
+Public Class FrmTableOption
     Private selectedDatabaseName As String
     Private selectedTableName As String
     Private connection As SqlConnection
@@ -44,7 +44,7 @@ Public Class frmTableOption
         End Try
     End Sub
 
-    Private Async Sub btnViewTrigger_Click(sender As Object, e As EventArgs) Handles btnViewTrigger.Click
+    Private Async Sub BtnViewTrigger_Click(sender As Object, e As EventArgs) Handles btnViewTrigger.Click
         Try
             If cmbSelectTrigger.SelectedItem IsNot Nothing Then
                 ' Get the selected trigger name
@@ -53,7 +53,7 @@ Public Class frmTableOption
                 ' Query to retrieve the trigger definition
                 Dim query As String = String.Format(TriggerDetailQuery, selectedTriggerName)
 
-                Await frmLandingPage.ShowQuery(query, connection, selectedTriggerName)
+                Await FrmLandingPage.ShowQuery(query, connection, selectedTriggerName)
             Else
                 MessageBox.Show("Please select a trigger.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
             End If
@@ -120,7 +120,7 @@ Public Class frmTableOption
         Return schemaTables
     End Function
 
-    Private Sub frmTableOption_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmTableOption_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         QueryExecuterTableOption.Connection = connection
         lblTableStructurelbl.Text = $"{selectedTableName} Table Stucture"
     End Sub

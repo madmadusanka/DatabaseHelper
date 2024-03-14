@@ -6,6 +6,7 @@ Imports System.Windows.Forms
 Imports System.Text
 
 Public Class QueryControl
+    Private Const QueryParam As String = "@"
     Private controller As New QueryExecutorController
     Private _connection As SqlConnection
     Private adapter As SqlDataAdapter
@@ -38,6 +39,8 @@ Public Class QueryControl
             btnDeleteThis.Visible = value
         End Set
     End Property
+
+    Private Shared ReadOnly separator As Char() = {" "c, ","c, ";"c}
 
     Public Sub New()
         InitializeComponent()
@@ -100,13 +103,13 @@ Public Class QueryControl
         End If
     End Sub
 
-    Private Sub btnDeleteThis_Click(sender As Object, e As EventArgs) Handles btnDeleteThis.Click
+    Private Sub BtnDeleteThis_Click(sender As Object, e As EventArgs) Handles btnDeleteThis.Click
         If Me.Parent IsNot Nothing Then
-            Me.Parent.Controls.Remove(Me)
+            Parent.Controls.Remove(Me)
         End If
     End Sub
 
-    Private Sub btnsavequery_Click(sender As Object, e As EventArgs) Handles btnsavequery.Click
+    Private Sub Btnsavequery_Click(sender As Object, e As EventArgs) Handles btnsavequery.Click
         If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
 
             Dim queryText As String = fastColoredTextBox.Text
@@ -123,12 +126,13 @@ Public Class QueryControl
             End If
 
             ' Display SaveFileDialog with the default directory
-            Dim saveDialog As New SaveFileDialog
-            saveDialog.InitialDirectory = defaultDirectory
-            saveDialog.Filter = "SQL Files (*.sql)|*.sql|All files (*.*)|*.*"
-            saveDialog.Title = "Save SQL Query"
+            Dim saveDialog As New SaveFileDialog With {
+            .InitialDirectory = defaultDirectory,
+            .Filter = "SQL Files (*.sql)|*.sql|All files (*.*)|*.*",
+            .Title = "Save SQL Query"
+            }
 
-            If (queryText.Contains("@")) Then
+            If (queryText.Contains(QueryParam)) Then
 
                 If saveDialog.ShowDialog = DialogResult.OK Then
                     ' Get the chosen file path
@@ -242,36 +246,39 @@ Public Class QueryControl
 
     Private Sub GenerateTextBoxesForParameters(query As String)
         ' Split the query into individual words
-        Dim words As String() = query.Split({" "c, ","c, ";"c}, StringSplitOptions.RemoveEmptyEntries)
+        Dim words As String() = query.Split(separator, StringSplitOptions.RemoveEmptyEntries)
 
         ' Loop through each word to find parameters starting with @
         For Each word As String In words
-            If word.StartsWith("@") Then
+            If word.StartsWith(QueryParam) Then
                 ' Remove any non-alphanumeric characters from the parameter name
                 Dim parameterName As String = Regex.Replace(word, "[^\w]", "")
 
                 ' Generate a new TextBox control
-                Dim textBox As New TextBox()
-                textBox.Name = "txt_" & parameterName ' Set a unique name for the TextBox
-                textBox.Width = 150
+                Dim textBox As New TextBox() With {
+                .Name = "txt_" & parameterName, ' Set a unique name for the TextBox
+                .Width = 150
+                }
 
                 ' Add the TextBox to the flow layout panel
                 flpCustomComponent.Controls.Add(textBox)
 
                 ' Optionally, you can add labels to describe each parameter
-                Dim label As New Label()
-                label.Text = parameterName
+                Dim label As New Label() With {
+                .Text = parameterName
+                }
                 ' Add the Label to the flow layout panel
                 flpCustomComponent.Controls.Add(label)
             End If
         Next
 
-        If (query.Contains("@")) Then
+        If (query.Contains(QueryParam)) Then
             ' Create a button dynamically
-            Dim btnSetData As New Button()
-            btnSetData.Text = "Execute"
-            btnSetData.Width = 100
-            AddHandler btnSetData.Click, AddressOf btnSetData_Click
+            Dim btnSetData As New Button() With {
+            .Text = "Execute",
+            .Width = 100
+            }
+            AddHandler btnSetData.Click, AddressOf BtnSetData_Click
 
             ' Add the button to the flow layout panel
             flpCustomComponent.Controls.Add(btnSetData)
@@ -279,7 +286,7 @@ Public Class QueryControl
 
     End Sub
 
-    Private Sub btnSetData_Click(sender As Object, e As EventArgs)
+    Private Sub BtnSetData_Click(sender As Object, e As EventArgs)
         Dim updatedQuery As String = CompleteQueryWithParameters(QueryTextBox.Text)
         QueryTextBox.Text = updatedQuery
         QueryExecute()
@@ -297,7 +304,7 @@ Public Class QueryControl
                 Dim parameterValue As String = DirectCast(control, TextBox).Text
 
                 ' Replace the parameter placeholder in the query string with the parameter value
-                completedQuery = completedQuery.Replace("@" & parameterName, parameterValue)
+                completedQuery = completedQuery.Replace(QueryParam & parameterName, parameterValue)
             End If
         Next
 

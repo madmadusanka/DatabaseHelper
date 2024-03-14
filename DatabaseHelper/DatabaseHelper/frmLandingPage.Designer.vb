@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class frmLandingPage
+Partial Class FrmLandingPage
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -428,6 +428,7 @@ Partial Class frmLandingPage
         btnQueryTemplate.TabIndex = 3
         btnQueryTemplate.Text = "Query Template"
         btnQueryTemplate.UseVisualStyleBackColor = True
+        btnQueryTemplate.Visible = False
         ' 
         ' pnlDashBoardMain
         ' 
@@ -473,14 +474,14 @@ Partial Class frmLandingPage
         Button4.UseVisualStyleBackColor = True
         Button4.Visible = False
         ' 
-        ' frmLandingPage
+        ' FrmLandingPage
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1370, 738)
         Controls.Add(pnlSqlServer)
         Controls.Add(pnlDashBoardMain)
-        Name = "frmLandingPage"
+        Name = "FrmLandingPage"
         Text = "Landing Page"
         WindowState = FormWindowState.Maximized
         pnlSqlServer.ResumeLayout(False)

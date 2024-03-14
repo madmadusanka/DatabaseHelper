@@ -17,14 +17,14 @@ Public Class frmConnectServer
     Private originalComboBoxItems As New List(Of Object)()
     Private selectedDatabaseName As String
     Private serverNames As New List(Of String)()
-    Dim fm As frmLandingPage
+    Dim fm As FrmLandingPage
     Private ServerUserName As String
     Private ServerUserPassword As String
 
     Dim TableOptionForm As String
     Private selectedEnumNumber As Integer = -1
 
-    Private Async Sub btnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
+    Private Async Sub BtnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
         If selectedEnumNumber = 1 Then
             Await ConnectToServer(selectedEnumNumber)
             Me.Close()
@@ -101,7 +101,7 @@ Public Class frmConnectServer
         End Try
     End Function
 
-    Private Sub frmConnectServer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmConnectServer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim cachedServerName As String = ServerNameCache.GetCachedServerName()
         txtServerName.Text = cachedServerName
         LoadComboBoxFromEnum()
@@ -119,7 +119,7 @@ Public Class frmConnectServer
         Next
     End Sub
 
-    Private Sub cmbAuthselect_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAuthselect.SelectedIndexChanged
+    Private Sub CmbAuthselect_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAuthselect.SelectedIndexChanged
         ' Get the selected index of the ComboBox
         Dim selectedIndex As Integer = cmbAuthselect.SelectedIndex
 

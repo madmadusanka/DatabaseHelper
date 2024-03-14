@@ -72,7 +72,7 @@ Public Class frmLandingPage
         End Try
     End Function
 
-    Public Async Sub cmbDatabases_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDatabases.SelectedIndexChanged
+    Public Async Sub CmbDatabases_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDatabases.SelectedIndexChanged
         Try
             If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
                 ' Get the selected database name
@@ -90,7 +90,7 @@ Public Class frmLandingPage
                 ' Show the table count for the selected database
                 Await ShowTableCount(selectedDatabaseName, Connection, lblTableCount)
                 Await ShowSpCount(selectedDatabaseName, Connection, lblSpCount)
-                Await viewCount(selectedDatabaseName, Connection, lblViewCount)
+                Await ViewCount(selectedDatabaseName, Connection, lblViewCount)
 
                 Await PopulateTableComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectTable)
                 Await PopulateProcedureComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectProcedure)
@@ -112,7 +112,6 @@ Public Class frmLandingPage
             If connection.State = ConnectionState.Open Then
                 ' Query to retrieve the count of tables in the database
                 Dim query As String = String.Format(TablesCountQuery, databaseName)
-
 
                 ' Create command
                 Using command As New SqlCommand(query, connection)
@@ -154,7 +153,7 @@ Public Class frmLandingPage
         End Try
     End Function
 
-    Private Async Function viewCount(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
+    Private Async Function ViewCount(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
         Try
             If connection.State = ConnectionState.Open Then
                 ' Query to retrieve the count of tables in the database
@@ -258,7 +257,7 @@ Public Class frmLandingPage
         End Try
     End Function
 
-    Private Async Sub btnShowViewQuery_Click(sender As Object, e As EventArgs) Handles btnShowViewQuery.Click
+    Private Async Sub BtnShowViewQuery_Click(sender As Object, e As EventArgs) Handles btnShowViewQuery.Click
         ' Get the selected view name
         If cmbSelectView.SelectedItem IsNot Nothing Then
             Dim selectedViewName As String = cmbSelectView.SelectedItem.ToString()
@@ -272,7 +271,7 @@ Public Class frmLandingPage
         End If
     End Sub
 
-    Public Function ShowQuery(ByVal query As String, ByVal connection As SqlConnection, ByVal selectedName As String) As Task
+    Public Shared Function ShowQuery(ByVal query As String, ByVal connection As SqlConnection, ByVal selectedName As String) As Task
         Try
             If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
 
@@ -281,7 +280,7 @@ Public Class frmLandingPage
                     Dim QueryDefinition As String = command.ExecuteScalar()?.ToString()
 
                     ' Open the ViewQueryForm and pass the view query
-                    Dim viewQueryForm As New frmViewQuery(selectedName, QueryDefinition, connection)
+                    Dim viewQueryForm As New FrmViewQuery(selectedName, QueryDefinition, connection)
                     viewQueryForm.Show()
                 End Using
             Else
@@ -296,7 +295,7 @@ Public Class frmLandingPage
         Return Task.CompletedTask
     End Function
 
-    Private Async Sub btnShowProcedure_Click(sender As Object, e As EventArgs) Handles btnShowProcedure.Click
+    Private Async Sub BtnShowProcedure_Click(sender As Object, e As EventArgs) Handles btnShowProcedure.Click
         ' Get the selected view name
         If cmbSelectProcedure.SelectedItem IsNot Nothing Then
             Dim selectedProcedureName As String = cmbSelectProcedure.SelectedItem.ToString()
@@ -310,7 +309,7 @@ Public Class frmLandingPage
         End If
     End Sub
 
-    Private Sub btnTableOption_Click(sender As Object, e As EventArgs) Handles btnTableOption.Click
+    Private Sub BtnTableOption_Click(sender As Object, e As EventArgs) Handles btnTableOption.Click
         Try
             If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
                 ' Check if an item is selected in cmbSelectTable
@@ -318,7 +317,7 @@ Public Class frmLandingPage
 
                 If selectedTableName IsNot Nothing Then
                     ' An item is selected, so proceed with its value
-                    Dim TableOptionForm As New frmTableOption(selectedDatabaseName, selectedTableName, Connection)
+                    Dim TableOptionForm As New FrmTableOption(selectedDatabaseName, selectedTableName, Connection)
                     TableOptionForm.Show()
                 Else
                     ' No item is selected in cmbSelectTable, show an error message
@@ -334,7 +333,7 @@ Public Class frmLandingPage
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnfrmQueryCompare.Click
-        Dim queryCompareForm As New frmQueryCompare(Connection)
+        Dim queryCompareForm As New FrmQueryCompare(Connection)
         queryCompareForm.Show()
     End Sub
 
@@ -356,29 +355,7 @@ Public Class frmLandingPage
                 btnConnection.Text = "Disconnect"
 
             Else
-                lblDBCount.Text = ""
-                cmbDatabases.SelectedIndex = -1
-                cmbDatabases.Items.Clear()
-                cmbSelectTable.Items.Clear()
-                cmbSelectProcedure.Items.Clear()
-                cmbSelectView.Items.Clear()
-                lblTableCount.Text = ""
-                lblSpCount.Text = ""
-                lblViewCount.Text = ""
-                lbltbllbl.Text = ""
-                lblsplbl.Text = ""
-                lblviewlbl.Text = ""
-                pnlShowTable.Visible = False
-                pnlShowSp.Visible = False
-                pnlShowView.Visible = False
-                pnlMain.Visible = False
-                pnlSelectDetails.Visible = False
-                selectedDatabaseName = ""
-                pnlDashBoardMain.Visible = False
-                pnlDashBoardMain.Visible = False
-                btnConnection.Text = "Connect"
-                txtConnectedserverName.Text = ""
-                txtConnectedserverName.Visible = False
+                ClearDate()
             End If
         Catch ex As Exception
             ' Handle any exceptions
@@ -386,7 +363,36 @@ Public Class frmLandingPage
         End Try
     End Function
 
-    Private Async Sub btnconnect_Click(sender As Object, e As EventArgs) Handles btnConnection.Click
+    Private Sub ClearDate()
+        lblDBCount.Text = ""
+        cmbDatabases.SelectedIndex = -1
+        cmbSelectTable.SelectedIndex = -1
+        cmbSelectProcedure.SelectedIndex = -1
+        cmbSelectView.SelectedIndex = -1
+        cmbDatabases.Items.Clear()
+        cmbSelectTable.Items.Clear()
+        cmbSelectProcedure.Items.Clear()
+        cmbSelectView.Items.Clear()
+        lblTableCount.Text = ""
+        lblSpCount.Text = ""
+        lblViewCount.Text = ""
+        lbltbllbl.Text = ""
+        lblsplbl.Text = ""
+        lblviewlbl.Text = ""
+        pnlShowTable.Visible = False
+        pnlShowSp.Visible = False
+        pnlShowView.Visible = False
+        pnlMain.Visible = False
+        pnlSelectDetails.Visible = False
+        selectedDatabaseName = ""
+        pnlDashBoardMain.Visible = False
+        pnlDashBoardMain.Visible = False
+        btnConnection.Text = "Connect"
+        txtConnectedserverName.Text = ""
+        txtConnectedserverName.Visible = False
+    End Sub
+
+    Private Async Sub Btnconnect_Click(sender As Object, e As EventArgs) Handles btnConnection.Click
         Dim frmConnectServerInstance As frmConnectServer = Application.OpenForms.OfType(Of frmConnectServer).FirstOrDefault()
 
         If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
@@ -400,9 +406,6 @@ Public Class frmLandingPage
             AddHandler newFrmConnectServer.ServerConnected, AddressOf OnServerConnected
             newFrmConnectServer.Show()
         End If
-    End Sub
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btnQueryTemplate.Click
     End Sub
 
 End Class
