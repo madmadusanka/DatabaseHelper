@@ -35,6 +35,7 @@ Public Class QueryExecutorController
                 adapter.Fill(dataTable)
                 Return dataTable
             End Using
+
         Catch ex As Exception
             MessageBox.Show($"An error occurred while executing the query: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Return Nothing

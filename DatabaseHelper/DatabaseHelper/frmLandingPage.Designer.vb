@@ -474,14 +474,14 @@ Partial Class FrmLandingPage
         Button4.UseVisualStyleBackColor = True
         Button4.Visible = False
         ' 
-        ' FrmLandingPage
+        ' frmLandingPage
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1370, 738)
         Controls.Add(pnlSqlServer)
         Controls.Add(pnlDashBoardMain)
-        Name = "FrmLandingPage"
+        Name = "frmLandingPage"
         Text = "Landing Page"
         WindowState = FormWindowState.Maximized
         pnlSqlServer.ResumeLayout(False)

@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Data.SqlClient
+﻿Imports System.Data.SqlClient
 
 Public Class ServerConnectedEventArgs
     Inherits EventArgs

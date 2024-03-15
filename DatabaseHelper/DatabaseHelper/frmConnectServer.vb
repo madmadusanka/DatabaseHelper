@@ -4,31 +4,30 @@ Imports DatabaseHelper.DataCache
 
 Public Class frmConnectServer
 
+    Private isConnected As Boolean = False
+    Private connection As SqlConnection
+    Dim frmlandingpage As FrmLandingPage
+    Private ServerUserName As String
+    Private ServerUserPassword As String
+    Private selectedEnumNumber As Integer = -1
+    Public Event ServerConnected As EventHandler(Of ServerConnectedEventArgs)
+
+    ' Authenticaton types enum
     Enum AuthType
         Windows_Authentication = 1
         SQL_Server_Authentication = 2
     End Enum
 
-    Public Event ServerConnected As EventHandler(Of ServerConnectedEventArgs)
-
-    Private isConnected As Boolean = False
-    Private connection As SqlConnection
-    Private ConnectionManager As New Connection()
-    Private originalComboBoxItems As New List(Of Object)()
-    Private selectedDatabaseName As String
-    Private serverNames As New List(Of String)()
-    Dim fm As FrmLandingPage
-    Private ServerUserName As String
-    Private ServerUserPassword As String
-
-    Dim TableOptionForm As String
-    Private selectedEnumNumber As Integer = -1
-
+    ' Server Connection button
     Private Async Sub BtnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
+
         If selectedEnumNumber = 1 Then
+
             Await ConnectToServer(selectedEnumNumber)
             Me.Close()
+
         ElseIf selectedEnumNumber = 2 Then
+
             ServerUserName = txtServerUserName.Text
             ServerUserPassword = txtServerUserPassword.Text
 
@@ -43,27 +42,23 @@ Public Class frmConnectServer
         End If
     End Sub
 
+    ' Connect to the server function
     Private Async Function ConnectToServer(ByVal selectedEnumNumber As Integer) As Task
         Try
             If Not String.IsNullOrEmpty(txtServerName.Text) Then
                 If isConnected Then
-                    ' Disconnect from the server
-                    ConnectionManager.DisconnectServer(connection)
+                    Common.Connection.DisconnectServer(connection)
                     btnToggleConnection.Text = "Connect"
                     isConnected = False
 
-                    ' Return connection to already open form
-                    If fm IsNot Nothing Then
-                        fm.Connection = connection
-                    End If
-
+                    ' Raise the ServerConnected event
                     RaiseEvent ServerConnected(Me, New ServerConnectedEventArgs(connection, txtServerName.Text))
-
                 Else
+
                     ' Connect to the server
                     If selectedEnumNumber = 1 Then
                         btnToggleConnection.Text = "Please Wait.."
-                        connection = Await ConnectionManager.ConnectServer(txtServerName.Text)
+                        Connection = Await Common.Connection.ConnectServer(txtServerName.Text)
 
                         ServerNameCache.CacheServerName(txtServerName.Text)
 
@@ -74,20 +69,20 @@ Public Class frmConnectServer
 
                             ' Raise the ServerConnected event
                             RaiseEvent ServerConnected(Me, New ServerConnectedEventArgs(connection, txtServerName.Text))
-
                         End If
+
                     ElseIf selectedEnumNumber = 2 Then
                         btnToggleConnection.Text = "Please Wait.."
-                        connection = Await ConnectionManager.ConnectServer(txtServerName.Text, ServerUserName, ServerUserPassword)
+                        Connection = Await Common.Connection.ConnectServer(txtServerName.Text, ServerUserName, ServerUserPassword)
                         ServerNameCache.CacheServerName(txtServerName.Text)
 
                         ' Update the button text based on the connection status
-                        If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
+                        If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
                             btnToggleConnection.Text = "Disconnect"
                             isConnected = True
 
                             ' Raise the ServerConnected event
-                            RaiseEvent ServerConnected(Me, New ServerConnectedEventArgs(connection, txtServerName.Text))
+                            RaiseEvent ServerConnected(Me, New ServerConnectedEventArgs(Connection, txtServerName.Text))
 
                         End If
                     End If
@@ -96,7 +91,6 @@ Public Class frmConnectServer
                 MessageBox.Show("Server name is empty or null. Please enter a valid server name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
         Catch ex As Exception
-            ' Handle any exceptions
             MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Function
@@ -107,7 +101,6 @@ Public Class frmConnectServer
         LoadComboBoxFromEnum()
         cmbAuthselect.SelectedIndex = 0
     End Sub
-
 
     Private Sub LoadComboBoxFromEnum()
         ' Clear existing items in the ComboBox

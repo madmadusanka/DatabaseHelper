@@ -2,16 +2,13 @@
 Imports System.Data.SqlClient
 
 Public Class FrmQueryCompare
-    ' Declare a List to store references to the dynamically generated QueryControl instances
     Private queryControls As New List(Of QueryControl)
 
     Private _connection As SqlConnection
 
-    ' Constructor modified to accept an existing SqlConnection
     Public Sub New(ByVal connection As SqlConnection)
         InitializeComponent()
 
-        ' Set the connection
         _connection = connection
 
     End Sub

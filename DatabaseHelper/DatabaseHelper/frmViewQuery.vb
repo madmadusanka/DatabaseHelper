@@ -8,7 +8,6 @@ Public Class FrmViewQuery
         InitializeComponent()
 
         Me.connection = connection
-        ' Display view name and definition
         lblViewName.Text = viewName
         txtViewDefinition.Text = viewDefinition
     End Sub

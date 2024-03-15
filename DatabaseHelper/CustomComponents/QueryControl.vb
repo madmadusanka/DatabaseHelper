@@ -2,14 +2,13 @@
 Imports FastColoredTextBoxNS
 Imports System.IO
 Imports System.Text.RegularExpressions
-Imports System.Windows.Forms
-Imports System.Text
 
 Public Class QueryControl
     Private Const QueryParam As String = "@"
     Private controller As New QueryExecutorController
     Private _connection As SqlConnection
     Private adapter As SqlDataAdapter
+    Private Shared ReadOnly separator As Char() = {" "c, ","c, ";"c}
 
     Public Property Connection As SqlConnection
         Get
@@ -17,7 +16,6 @@ Public Class QueryControl
         End Get
         Set(ByVal value As SqlConnection)
             _connection = value
-            ' Reinitialize the controller with the new connection
             Initialize()
         End Set
     End Property
@@ -40,7 +38,6 @@ Public Class QueryControl
         End Set
     End Property
 
-    Private Shared ReadOnly separator As Char() = {" "c, ","c, ";"c}
 
     Public Sub New()
         InitializeComponent()
@@ -48,7 +45,6 @@ Public Class QueryControl
 
     Public Sub Initialize()
         Try
-            ' Reinitialize the controller with the new connection
             controller = New QueryExecutorController(Connection)
             adapter = New SqlDataAdapter()
         Catch ex As Exception
@@ -56,6 +52,7 @@ Public Class QueryControl
         End Try
     End Sub
 
+    'Query execute button
     Private Sub ExecuteQueryButton_Click(sender As Object, e As EventArgs) Handles ExecuteQueryButton.Click
         QueryExecute()
     End Sub
@@ -109,6 +106,7 @@ Public Class QueryControl
         End If
     End Sub
 
+    ' Button for save query
     Private Sub Btnsavequery_Click(sender As Object, e As EventArgs) Handles btnsavequery.Click
         If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
 
@@ -165,7 +163,7 @@ Public Class QueryControl
                         ' Write the text from the TextBox to the chosen file using System.IO.File.WriteAllText
                         File.WriteAllText(filePath, QueryTextBox.Text)
                         MessageBox.Show("SQL query saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        Me.Refresh()
+                        LoadSavedQueries()
                     Catch ex As Exception
                         MessageBox.Show("An error occurred while saving the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
@@ -180,15 +178,13 @@ Public Class QueryControl
                         ' Write the text from the TextBox to the chosen file using System.IO.File.WriteAllText
                         File.WriteAllText(filePath, QueryTextBox.Text)
                         MessageBox.Show("SQL query saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        Me.Refresh()
+                        LoadSavedQueries()
                     Catch ex As Exception
                         MessageBox.Show("An error occurred while saving the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     End Try
                 End If
 
             End If
-
-            LoadSavedQueries()
 
         Else
             MessageBox.Show("Query is Empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -230,6 +226,7 @@ Public Class QueryControl
     End Sub
 
     Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSavedQueries.SelectedIndexChanged
+
         ' Get the selected query file path
         Dim selectedQuery As String = cmbSavedQueries.SelectedItem.ToString()
         Dim queryFilePath As String = Path.Combine(Application.StartupPath, "Queries", selectedQuery & ".sql")
@@ -240,7 +237,6 @@ Public Class QueryControl
     End Sub
 
     Private Sub Form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Call the method to load saved queries when the form is loaded
         LoadSavedQueries()
     End Sub
 
@@ -293,9 +289,8 @@ Public Class QueryControl
     End Sub
 
     Private Function CompleteQueryWithParameters(query As String) As String
-        Dim completedQuery As String = query
 
-        ' Loop through each control in the flow layout panel
+        Dim completedQuery As String = query
         For Each control As Control In flpCustomComponent.Controls
             If TypeOf control Is TextBox Then
                 ' Get the parameter name from the TextBox name
