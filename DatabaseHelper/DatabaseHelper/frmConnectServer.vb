@@ -1,8 +1,7 @@
 ﻿Imports System.Data.SqlClient
-Imports Common
 Imports DatabaseHelper.DataCache
 
-Public Class frmConnectServer
+Public Class FrmConnectServer
 
     Private isConnected As Boolean = False
     Private connection As SqlConnection
@@ -58,7 +57,7 @@ Public Class frmConnectServer
                     ' Connect to the server
                     If selectedEnumNumber = 1 Then
                         btnToggleConnection.Text = "Please Wait.."
-                        Connection = Await Common.Connection.ConnectServer(txtServerName.Text)
+                        connection = Await Common.Connection.ConnectServer(txtServerName.Text)
 
                         ServerNameCache.CacheServerName(txtServerName.Text)
 
@@ -73,16 +72,16 @@ Public Class frmConnectServer
 
                     ElseIf selectedEnumNumber = 2 Then
                         btnToggleConnection.Text = "Please Wait.."
-                        Connection = Await Common.Connection.ConnectServer(txtServerName.Text, ServerUserName, ServerUserPassword)
+                        connection = Await Common.Connection.ConnectServer(txtServerName.Text, ServerUserName, ServerUserPassword)
                         ServerNameCache.CacheServerName(txtServerName.Text)
 
                         ' Update the button text based on the connection status
-                        If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
+                        If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
                             btnToggleConnection.Text = "Disconnect"
                             isConnected = True
 
                             ' Raise the ServerConnected event
-                            RaiseEvent ServerConnected(Me, New ServerConnectedEventArgs(Connection, txtServerName.Text))
+                            RaiseEvent ServerConnected(Me, New ServerConnectedEventArgs(connection, txtServerName.Text))
 
                         End If
                     End If

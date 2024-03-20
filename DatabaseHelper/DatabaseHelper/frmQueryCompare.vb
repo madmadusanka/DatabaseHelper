@@ -2,50 +2,47 @@
 Imports System.Data.SqlClient
 
 Public Class FrmQueryCompare
-    Private queryControls As New List(Of QueryControl)
-
+    Private queryControls As New List(Of QueryControl)()
     Private _connection As SqlConnection
 
     Public Sub New(ByVal connection As SqlConnection)
         InitializeComponent()
-
         _connection = connection
-
+        InitializeForm()
     End Sub
 
-    Private Sub FrmQueryCompare_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Public Sub SetConnection(ByVal connection As SqlConnection)
+        _connection = connection
+        For Each control In queryControls
+            control.Connection = _connection
+        Next
+    End Sub
+
+    Private Sub InitializeForm()
         ' Add two permanently added items
         Dim permanentItem1 As New QueryControl() With {
         .Connection = _connection ' Use the existing connection
         }
-
         FlowLayoutPanel1.Controls.Add(permanentItem1)
         queryControls.Add(permanentItem1)
 
         Dim permanentItem2 As New QueryControl() With {
-        .Connection = _connection ' Use the existing connection
+            .Connection = _connection ' Use the existing connection
         }
         FlowLayoutPanel1.Controls.Add(permanentItem2)
         queryControls.Add(permanentItem2)
-
-        ' Update the ComboBox to reflect the added permanent items
     End Sub
 
     Private Sub BtnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-        If queryControls.Count >= 2 Then
-            ' You can't add more than two permanent items
-            Dim QC1 As New CustomControllers.QueryControl() With {
-            .Connection = _connection,
-            .IsDeleteButtonVisible = True
+        If queryControls.Count < 6 Then
+            Dim newQueryControl As New QueryControl() With {
+                .Connection = _connection,
+                .IsDeleteButtonVisible = True
             }
-
-            ' Add b1 to the list of QueryControl instances
-            queryControls.Add(QC1)
-
-            FlowLayoutPanel1.Controls.Add(QC1)
-
+            FlowLayoutPanel1.Controls.Add(newQueryControl)
+            queryControls.Add(newQueryControl)
         Else
-            MessageBox.Show("You can't add more than two permanent items.")
+            MessageBox.Show("You can't add more than 6 items.")
         End If
     End Sub
 

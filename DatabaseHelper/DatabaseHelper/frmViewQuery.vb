@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports Common
 
 Public Class FrmViewQuery
 

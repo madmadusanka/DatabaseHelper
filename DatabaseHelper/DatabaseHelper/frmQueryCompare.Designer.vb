@@ -75,7 +75,7 @@ Partial Class FrmQueryCompare
         btnAdd.Text = "Add New"
         btnAdd.UseVisualStyleBackColor = True
         ' 
-        ' frmQueryCompare
+        ' FrmQueryCompare
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
@@ -83,8 +83,8 @@ Partial Class FrmQueryCompare
         Controls.Add(btnAdd)
         Controls.Add(pnlQueryCompare)
         Controls.Add(FlowLayoutPanel1)
-        Name = "frmQueryCompare"
-        Text = "Form1"
+        Name = "FrmQueryCompare"
+        Text = "Query Compare"
         WindowState = FormWindowState.Maximized
         FlowLayoutPanel1.ResumeLayout(False)
         pnlQueryCompare.ResumeLayout(False)

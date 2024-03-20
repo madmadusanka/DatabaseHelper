@@ -2,8 +2,10 @@
 Imports Common
 
 Public Class FrmLandingPage
+
     Private _connection As SqlConnection
     Private selectedDatabaseName As String
+    Private reconnect As Boolean = False
 
     ' Get And Set Connection from property
     Public Property Connection As SqlConnection
@@ -14,6 +16,11 @@ Public Class FrmLandingPage
             _connection = value
         End Set
     End Property
+
+    Public Sub ProgrammaticallyClickConnectButton()
+        btnConnection.PerformClick()
+        reconnect = True
+    End Sub
 
     ' server connect button 
     Private Async Sub Btnconnect_Click(sender As Object, e As EventArgs) Handles btnConnection.Click
@@ -54,6 +61,26 @@ Public Class FrmLandingPage
                 pnlDashBoardMain.Visible = True
                 txtConnectedserverName.Visible = True
                 btnConnection.Text = "Disconnect"
+
+                Dim formToOpen As FrmQueryCompare = Nothing
+
+                ' Iterate through the open forms collection
+                For Each frm As Form In Application.OpenForms
+                    If TypeOf frm Is FrmQueryCompare Then
+                        ' The form is already open, set formToOpen and exit the loop
+                        formToOpen = DirectCast(frm, FrmQueryCompare)
+                        Exit For
+                    End If
+                Next
+
+                If reconnect Then
+                    If formToOpen.Visible Then
+                        formToOpen.SetConnection(Connection)
+                        formToOpen.BringToFront()
+                        reconnect = False
+                    End If
+                End If
+
 
             Else
                 ClearDate()

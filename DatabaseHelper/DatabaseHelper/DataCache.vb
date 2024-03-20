@@ -1,5 +1,4 @@
-﻿
-Imports System.IO
+﻿Imports System.IO
 Public Class DataCache
 
     Public Class ServerNameCache

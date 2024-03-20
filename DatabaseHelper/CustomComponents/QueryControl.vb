@@ -4,11 +4,14 @@ Imports System.IO
 Imports System.Text.RegularExpressions
 
 Public Class QueryControl
-    Private Const QueryParam As String = "@"
+
+    Private Const QueryParam As String = "<@"
     Private controller As New QueryExecutorController
     Private _connection As SqlConnection
     Private adapter As SqlDataAdapter
     Private Shared ReadOnly separator As Char() = {" "c, ","c, ";"c}
+    Private _showForm As IFormViewer = New FormViewer()
+    Private updatedQuery As String
 
     Public Property Connection As SqlConnection
         Get
@@ -38,7 +41,6 @@ Public Class QueryControl
         End Set
     End Property
 
-
     Public Sub New()
         InitializeComponent()
     End Sub
@@ -47,6 +49,7 @@ Public Class QueryControl
         Try
             controller = New QueryExecutorController(Connection)
             adapter = New SqlDataAdapter()
+
         Catch ex As Exception
             MessageBox.Show($"An error occurred while initializing the form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -56,12 +59,11 @@ Public Class QueryControl
     Private Sub ExecuteQueryButton_Click(sender As Object, e As EventArgs) Handles ExecuteQueryButton.Click
         QueryExecute()
     End Sub
-
     Private Sub QueryExecute()
         If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
             Try
                 ' Check if connection is set
-                If Connection IsNot Nothing Then
+                If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
                     Dim query As String = fastColoredTextBox.Text.Trim()
 
                     ' Set the SqlCommand for the SqlDataAdapter
@@ -90,7 +92,14 @@ Public Class QueryControl
                     End If
 
                 Else
-                    MessageBox.Show("Connection property is not set.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Dim result As DialogResult = MessageBox.Show("Connection is closed, You want Reconnect?", "Confirmation", MessageBoxButtons.YesNo)
+
+                    If result = DialogResult.Yes Then
+                        _showForm.ShowLandingPageIfNotOpen()
+                    Else
+                        MessageBox.Show("Connection property is not set.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End If
+
                 End If
             Catch ex As Exception
                 MessageBox.Show($"An error occurred while executing the query: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -283,10 +292,61 @@ Public Class QueryControl
     End Sub
 
     Private Sub BtnSetData_Click(sender As Object, e As EventArgs)
-        Dim updatedQuery As String = CompleteQueryWithParameters(QueryTextBox.Text)
-        QueryTextBox.Text = updatedQuery
-        QueryExecute()
+        updatedQuery = CompleteQueryWithParameters(QueryTextBox.Text)
+        QueryTemplateExecute()
     End Sub
+
+    Private Sub QueryTemplateExecute()
+        If Not String.IsNullOrEmpty(updatedQuery) Then
+            Try
+                ' Check if connection is set
+                If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
+
+                    ' Set the SqlCommand for the SqlDataAdapter
+                    adapter.SelectCommand = New SqlCommand(updatedQuery, Connection)
+
+                    Dim dataTable As New DataTable()
+                    adapter.Fill(dataTable)
+
+                    ' Bind DataTable to DataGridView
+                    QueryResultDataGridView.DataSource = dataTable
+
+                    ' Execute the SQL command and capture the number of rows affected
+                    Dim rowsAffected As Integer = adapter.SelectCommand.ExecuteNonQuery()
+
+                    ' Get the current date and time
+                    Dim completionTime As String = DateTime.Now.ToString()
+
+                    txtQueryMessage.Text = ""
+                    txtQueryMessage.Text = $"( {rowsAffected} row affected ){Environment.NewLine}Completion time: {completionTime} Operation Completed"
+
+                    If QueryResultDataGridView.Rows.Count > 0 Then
+                        tabControlQuery.SelectedTab = tabResult
+                    Else
+                        ' Handle the case where QueryResultDataGridView has no rows
+                        tabControlQuery.SelectedTab = tabMessage
+                    End If
+
+                Else
+                    Dim result As DialogResult = MessageBox.Show("Connection is closed, You want Reconnect?", "Confirmation", MessageBoxButtons.YesNo)
+
+                    If result = DialogResult.Yes Then
+                        _showForm.ShowLandingPageIfNotOpen()
+                    Else
+                        MessageBox.Show("Connection property is not set.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+                    End If
+                End If
+            Catch ex As Exception
+                MessageBox.Show($"An error occurred while executing the query: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            End Try
+        Else
+            MessageBox.Show("Query is Empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
+
+
 
     Private Function CompleteQueryWithParameters(query As String) As String
 
