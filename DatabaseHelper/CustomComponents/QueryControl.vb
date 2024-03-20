@@ -5,7 +5,8 @@ Imports System.Text.RegularExpressions
 
 Public Class QueryControl
 
-    Private Const QueryParam As String = "<@"
+    Private Const QueryParamStart As String = "<@"
+    Private Const QueryParamEnd As String = ">"
     Private controller As New QueryExecutorController
     Private _connection As SqlConnection
     Private adapter As SqlDataAdapter
@@ -59,6 +60,7 @@ Public Class QueryControl
     Private Sub ExecuteQueryButton_Click(sender As Object, e As EventArgs) Handles ExecuteQueryButton.Click
         QueryExecute()
     End Sub
+
     Private Sub QueryExecute()
         If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
             Try
@@ -139,7 +141,7 @@ Public Class QueryControl
             .Title = "Save SQL Query"
             }
 
-            If (queryText.Contains(QueryParam)) Then
+            If (queryText.Contains(QueryParamStart)) Then
 
                 If saveDialog.ShowDialog = DialogResult.OK Then
                     ' Get the chosen file path
@@ -153,7 +155,7 @@ Public Class QueryControl
 
                         ' Check if the file has an extension
                         If Not String.IsNullOrEmpty(extension) Then
-                            ' Rename the file by appending "_pasindu" to the file name
+                            ' Rename the file by appending "Template_" to the file name
                             fileName = "Template_" + fileName
                             ' Construct the new file path
                             filePath = Path.Combine(directory, fileName & extension)
@@ -179,6 +181,7 @@ Public Class QueryControl
                 End If
 
             Else
+
                 If saveDialog.ShowDialog = DialogResult.OK Then
                     ' Get the chosen file path
                     Dim filePath As String = saveDialog.FileName
@@ -255,7 +258,7 @@ Public Class QueryControl
 
         ' Loop through each word to find parameters starting with @
         For Each word As String In words
-            If word.StartsWith(QueryParam) Then
+            If word.StartsWith(QueryParamStart) And word.EndsWith(QueryParamEnd) Then
                 ' Remove any non-alphanumeric characters from the parameter name
                 Dim parameterName As String = Regex.Replace(word, "[^\w]", "")
 
@@ -277,7 +280,7 @@ Public Class QueryControl
             End If
         Next
 
-        If (query.Contains(QueryParam)) Then
+        If (query.Contains(QueryParamStart)) Then
             ' Create a button dynamically
             Dim btnSetData As New Button() With {
             .Text = "Execute",
@@ -359,7 +362,7 @@ Public Class QueryControl
                 Dim parameterValue As String = DirectCast(control, TextBox).Text
 
                 ' Replace the parameter placeholder in the query string with the parameter value
-                completedQuery = completedQuery.Replace(QueryParam & parameterName, parameterValue)
+                completedQuery = completedQuery.Replace(QueryParamStart & parameterName, parameterValue).Replace(QueryParamEnd, "")
             End If
         Next
 
