@@ -24,7 +24,6 @@ Partial Class QueryControl
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(QueryControl))
-        fastColoredTextBox = New FastColoredTextBoxNS.FastColoredTextBox()
         QueryResultDataGridView = New DataGridView()
         ExecuteQueryButton = New Button()
         btnDeleteThis = New Button()
@@ -33,36 +32,15 @@ Partial Class QueryControl
         tabMessage = New TabPage()
         txtQueryMessage = New TextBox()
         btnsavequery = New Button()
-        cmbSavedQueries = New ComboBox()
         flpCustomComponent = New FlowLayoutPanel()
-        CType(fastColoredTextBox, ComponentModel.ISupportInitialize).BeginInit()
+        fastColoredTextBox = New FastColoredTextBoxNS.FastColoredTextBox()
+        BtnQueryList = New Button()
         CType(QueryResultDataGridView, ComponentModel.ISupportInitialize).BeginInit()
         tabControlQuery.SuspendLayout()
         tabResult.SuspendLayout()
         tabMessage.SuspendLayout()
+        CType(fastColoredTextBox, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
-        ' 
-        ' fastColoredTextBox
-        ' 
-        fastColoredTextBox.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        fastColoredTextBox.AutoCompleteBracketsList = New Char() {"("c, ")"c, "{"c, "}"c, "["c, "]"c, """"c, """"c, "'"c, "'"c}
-        fastColoredTextBox.AutoIndentCharsPatterns = "^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>[^;=]+);" & vbCrLf & "^\s*(case|default)\s*[^:]*(?<range>:)\s*(?<range>[^;]+);"
-        fastColoredTextBox.AutoScrollMinSize = New Size(27, 14)
-        fastColoredTextBox.BackBrush = Nothing
-        fastColoredTextBox.CharHeight = 14
-        fastColoredTextBox.CharWidth = 8
-        fastColoredTextBox.DisabledColor = Color.FromArgb(CByte(100), CByte(180), CByte(180), CByte(180))
-        fastColoredTextBox.Hotkeys = resources.GetString("fastColoredTextBox.Hotkeys")
-        fastColoredTextBox.IsReplaceMode = False
-        fastColoredTextBox.Location = New Point(0, 97)
-        fastColoredTextBox.Name = "fastColoredTextBox"
-        fastColoredTextBox.Paddings = New Padding(0)
-        fastColoredTextBox.SelectionColor = Color.FromArgb(CByte(60), CByte(0), CByte(0), CByte(255))
-        fastColoredTextBox.ServiceColors = CType(resources.GetObject("fastColoredTextBox.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
-        fastColoredTextBox.ServiceLinesColor = Color.Gray
-        fastColoredTextBox.Size = New Size(660, 200)
-        fastColoredTextBox.TabIndex = 0
-        fastColoredTextBox.Zoom = 100
         ' 
         ' QueryResultDataGridView
         ' 
@@ -139,20 +117,12 @@ Partial Class QueryControl
         ' 
         ' btnsavequery
         ' 
-        btnsavequery.Location = New Point(22, 7)
+        btnsavequery.Location = New Point(22, 5)
         btnsavequery.Name = "btnsavequery"
-        btnsavequery.Size = New Size(105, 23)
+        btnsavequery.Size = New Size(105, 24)
         btnsavequery.TabIndex = 6
         btnsavequery.Text = "Save Query"
         btnsavequery.UseVisualStyleBackColor = True
-        ' 
-        ' cmbSavedQueries
-        ' 
-        cmbSavedQueries.FormattingEnabled = True
-        cmbSavedQueries.Location = New Point(22, 33)
-        cmbSavedQueries.Name = "cmbSavedQueries"
-        cmbSavedQueries.Size = New Size(105, 23)
-        cmbSavedQueries.TabIndex = 7
         ' 
         ' flpCustomComponent
         ' 
@@ -163,29 +133,59 @@ Partial Class QueryControl
         flpCustomComponent.Size = New Size(524, 112)
         flpCustomComponent.TabIndex = 8
         ' 
+        ' fastColoredTextBox
+        ' 
+        fastColoredTextBox.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        fastColoredTextBox.AutoCompleteBracketsList = New Char() {"("c, ")"c, "{"c, "}"c, "["c, "]"c, """"c, """"c, "'"c, "'"c}
+        fastColoredTextBox.AutoIndentCharsPatterns = "^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>[^;=]+);" & vbCrLf & "^\s*(case|default)\s*[^:]*(?<range>:)\s*(?<range>[^;]+);"
+        fastColoredTextBox.AutoScrollMinSize = New Size(27, 14)
+        fastColoredTextBox.BackBrush = Nothing
+        fastColoredTextBox.CharHeight = 14
+        fastColoredTextBox.CharWidth = 8
+        fastColoredTextBox.DisabledColor = Color.FromArgb(CByte(100), CByte(180), CByte(180), CByte(180))
+        fastColoredTextBox.Font = New Font("Courier New", 9.75F)
+        fastColoredTextBox.Hotkeys = resources.GetString("fastColoredTextBox.Hotkeys")
+        fastColoredTextBox.IsReplaceMode = False
+        fastColoredTextBox.Location = New Point(0, 75)
+        fastColoredTextBox.Name = "fastColoredTextBox"
+        fastColoredTextBox.Paddings = New Padding(0)
+        fastColoredTextBox.SelectionColor = Color.FromArgb(CByte(60), CByte(0), CByte(0), CByte(255))
+        fastColoredTextBox.ServiceColors = CType(resources.GetObject("fastColoredTextBox.ServiceColors"), FastColoredTextBoxNS.ServiceColors)
+        fastColoredTextBox.ServiceLinesColor = Color.Gray
+        fastColoredTextBox.Size = New Size(660, 222)
+        fastColoredTextBox.TabIndex = 0
+        fastColoredTextBox.Zoom = 100
+        ' 
+        ' BtnQueryList
+        ' 
+        BtnQueryList.Location = New Point(22, 33)
+        BtnQueryList.Name = "BtnQueryList"
+        BtnQueryList.Size = New Size(105, 24)
+        BtnQueryList.TabIndex = 9
+        BtnQueryList.Text = "Query List"
+        BtnQueryList.UseVisualStyleBackColor = True
+        ' 
         ' QueryControl
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        Controls.Add(BtnQueryList)
         Controls.Add(fastColoredTextBox)
         Controls.Add(flpCustomComponent)
-        Controls.Add(cmbSavedQueries)
         Controls.Add(btnsavequery)
         Controls.Add(tabControlQuery)
         Controls.Add(btnDeleteThis)
         Controls.Add(ExecuteQueryButton)
         Name = "QueryControl"
         Size = New Size(660, 573)
-        CType(fastColoredTextBox, ComponentModel.ISupportInitialize).EndInit()
         CType(QueryResultDataGridView, ComponentModel.ISupportInitialize).EndInit()
         tabControlQuery.ResumeLayout(False)
         tabResult.ResumeLayout(False)
         tabMessage.ResumeLayout(False)
         tabMessage.PerformLayout()
+        CType(fastColoredTextBox, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
     End Sub
-
-    Friend WithEvents fastColoredTextBox As FastColoredTextBoxNS.FastColoredTextBox
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents QueryResultDataGridView As DataGridView
     Friend WithEvents ExecuteQueryButton As Button
@@ -195,7 +195,8 @@ Partial Class QueryControl
     Friend WithEvents tabMessage As TabPage
     Friend WithEvents txtQueryMessage As TextBox
     Friend WithEvents btnsavequery As Button
-    Friend WithEvents cmbSavedQueries As ComboBox
     Friend WithEvents flpCustomComponent As FlowLayoutPanel
+    Friend WithEvents fastColoredTextBox As FastColoredTextBoxNS.FastColoredTextBox
+    Friend WithEvents BtnQueryList As Button
 
 End Class

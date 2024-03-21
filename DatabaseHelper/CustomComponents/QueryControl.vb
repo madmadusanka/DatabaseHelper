@@ -2,6 +2,7 @@
 Imports FastColoredTextBoxNS
 Imports System.IO
 Imports System.Text.RegularExpressions
+Imports DatabaseHelper
 
 Public Class QueryControl
 
@@ -13,6 +14,12 @@ Public Class QueryControl
     Private Shared ReadOnly separator As Char() = {" "c, ","c, ";"c}
     Private _showForm As IFormViewer = New FormViewer()
     Private updatedQuery As String
+    Private customComponentInstance As QueryControl
+    Private queryFilePath As String
+    Private selectedFolderName As String
+    Private NewDefaultDirectory As String
+    Private frmQuerySave As FrmSelectSavePath
+    Private frmQueryList As FrmSavedQuery
 
     Public Property Connection As SqlConnection
         Get
@@ -119,109 +126,19 @@ Public Class QueryControl
 
     ' Button for save query
     Private Sub Btnsavequery_Click(sender As Object, e As EventArgs) Handles btnsavequery.Click
+
         If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
-
-            Dim queryText As String = fastColoredTextBox.Text
-
-            ' Get the application's startup path
-            Dim defaultDirectory As String = Application.StartupPath
-
-            ' Combine the startup path with a subfolder to store the queries, if desired
-            defaultDirectory = Path.Combine(defaultDirectory, "Queries")
-
-            ' Check if the subfolder exists, create it if it doesn't
-            If Not Directory.Exists(defaultDirectory) Then
-                Directory.CreateDirectory(defaultDirectory)
-            End If
-
-            ' Display SaveFileDialog with the default directory
-            Dim saveDialog As New SaveFileDialog With {
-            .InitialDirectory = defaultDirectory,
-            .Filter = "SQL Files (*.sql)|*.sql|All files (*.*)|*.*",
-            .Title = "Save SQL Query"
-            }
-
-            If (queryText.Contains(QueryParamStart)) Then
-
-                If saveDialog.ShowDialog = DialogResult.OK Then
-                    ' Get the chosen file path
-                    Dim filePath As String = saveDialog.FileName
-
-                    If Not String.IsNullOrEmpty(filePath) Then
-                        ' Extract the directory and file name from the file path
-                        Dim directory As String = Path.GetDirectoryName(filePath)
-                        Dim fileName As String = Path.GetFileNameWithoutExtension(filePath)
-                        Dim extension As String = Path.GetExtension(filePath)
-
-                        ' Check if the file has an extension
-                        If Not String.IsNullOrEmpty(extension) Then
-                            ' Rename the file by appending "Template_" to the file name
-                            fileName = "Template_" + fileName
-                            ' Construct the new file path
-                            filePath = Path.Combine(directory, fileName & extension)
-                        Else
-                            ' Handle the case when the file path does not have an extension
-                            ' You may choose to do something else in this case
-                            Console.WriteLine("File path does not have an extension.")
-                        End If
-                    Else
-                        ' Handle the case when the file path is empty
-                        ' You may choose to do something else in this case
-                        Console.WriteLine("File path is empty.")
-                    End If
-
-                    Try
-                        ' Write the text from the TextBox to the chosen file using System.IO.File.WriteAllText
-                        File.WriteAllText(filePath, QueryTextBox.Text)
-                        MessageBox.Show("SQL query saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        LoadSavedQueries()
-                    Catch ex As Exception
-                        MessageBox.Show("An error occurred while saving the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
-                End If
-
+            If frmQuerySave IsNot Nothing AndAlso Not frmQuerySave.IsDisposed Then
+                frmQuerySave.BringToFront()
             Else
-
-                If saveDialog.ShowDialog = DialogResult.OK Then
-                    ' Get the chosen file path
-                    Dim filePath As String = saveDialog.FileName
-
-                    Try
-                        ' Write the text from the TextBox to the chosen file using System.IO.File.WriteAllText
-                        File.WriteAllText(filePath, QueryTextBox.Text)
-                        MessageBox.Show("SQL query saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        LoadSavedQueries()
-                    Catch ex As Exception
-                        MessageBox.Show("An error occurred while saving the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End Try
-                End If
-
+                frmQuerySave = New FrmSelectSavePath
+                AddHandler frmQuerySave.SelectFolder, AddressOf OnSelectFolder
+                frmQuerySave.Show()
             End If
-
         Else
             MessageBox.Show("Query is Empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
-    End Sub
-
-    Private Sub LoadSavedQueries()
-        ' Get the directory where the saved queries are stored
-        Dim queryDirectory As String = Path.Combine(Application.StartupPath, "Queries")
-
-        ' Check if the directory exists
-        If Directory.Exists(queryDirectory) Then
-            ' Get the list of SQL query files in the directory
-            Dim queryFiles As String() = Directory.GetFiles(queryDirectory, "*.sql")
-
-            ' Clear the existing items in the ComboBox
-            cmbSavedQueries.Items.Clear()
-
-            ' Add each query file to the ComboBox items
-            For Each queryFile As String In queryFiles
-                ' Add the file name (without the path) to the ComboBox items
-                cmbSavedQueries.Items.Add(Path.GetFileNameWithoutExtension(queryFile))
-            Next
-        End If
     End Sub
 
     Private Sub LoadQueryFromFile(filePath As String)
@@ -233,26 +150,11 @@ Public Class QueryControl
             QueryTextBox.Text = queryContent
             GenerateTextBoxesForParameters(queryContent)
         Catch ex As Exception
-            MessageBox.Show("An error occurred while loading the query: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Please double Click a Sql File")
         End Try
     End Sub
 
-    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSavedQueries.SelectedIndexChanged
-
-        ' Get the selected query file path
-        Dim selectedQuery As String = cmbSavedQueries.SelectedItem.ToString()
-        Dim queryFilePath As String = Path.Combine(Application.StartupPath, "Queries", selectedQuery & ".sql")
-
-        ' Load the selected query into the TextBox
-        flpCustomComponent.Controls.Clear()
-        LoadQueryFromFile(queryFilePath)
-    End Sub
-
-    Private Sub Form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadSavedQueries()
-    End Sub
-
-    Private Sub GenerateTextBoxesForParameters(query As String)
+    Public Sub GenerateTextBoxesForParameters(query As String)
         ' Split the query into individual words
         Dim words As String() = query.Split(separator, StringSplitOptions.RemoveEmptyEntries)
 
@@ -349,8 +251,6 @@ Public Class QueryControl
         End If
     End Sub
 
-
-
     Private Function CompleteQueryWithParameters(query As String) As String
 
         Dim completedQuery As String = query
@@ -369,5 +269,69 @@ Public Class QueryControl
         ' Return the completed query
         Return completedQuery
     End Function
+
+    Private Sub BtnQueryList_Click(sender As Object, e As EventArgs) Handles BtnQueryList.Click
+        If frmQueryList IsNot Nothing AndAlso Not frmQueryList.IsDisposed Then
+            frmQueryList.BringToFront()
+        Else
+            frmQueryList = New FrmSavedQuery
+            AddHandler frmQueryList.ShowQuery, AddressOf OnShowQuery
+            frmQueryList.Show()
+        End If
+
+    End Sub
+
+    Private Sub OnShowQuery(sender As Object, e As ShowQueryEventArgs)
+        queryFilePath = e.QueryFilePath
+        flpCustomComponent.Controls.Clear()
+        LoadQueryFromFile(queryFilePath)
+    End Sub
+
+    Private Sub OnSelectFolder(sender As Object, e As SelectedFolderNameEventArgs)
+        selectedFolderName = e.SelectedFolderName
+        SaveQueryFile(selectedFolderName)
+    End Sub
+
+    Private Sub SaveQueryFile(ByRef selectedFolderName As String)
+        If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
+
+            Dim queryText As String = fastColoredTextBox.Text
+
+            ' Get the application's startup path
+            Dim DefaultDirectory As String = Application.StartupPath
+            DefaultDirectory = Path.Combine(DefaultDirectory, "Queries")
+
+            ' Combine the startup path with a subfolder to store the queries, if desired
+            NewDefaultDirectory = Path.Combine(DefaultDirectory, selectedFolderName)
+
+            ' Check if the subfolder exists, create it if it doesn't
+            If Not Directory.Exists(NewDefaultDirectory) Then
+                Directory.CreateDirectory(NewDefaultDirectory)
+            End If
+
+            ' Display SaveFileDialog with the default directory
+            Dim saveDialog As New SaveFileDialog With {
+            .InitialDirectory = NewDefaultDirectory,
+            .Filter = "SQL Files (*.sql)|*.sql|All files (*.*)|*.*",
+            .Title = "Save SQL Query"
+            }
+
+            If saveDialog.ShowDialog = DialogResult.OK Then
+                ' Get the chosen file path
+                Dim filePath As String = saveDialog.FileName
+
+                Try
+                    ' Write the text from the TextBox to the chosen file using System.IO.File.WriteAllText
+                    File.WriteAllText(filePath, QueryTextBox.Text)
+                    MessageBox.Show("SQL query saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Catch ex As Exception
+                    MessageBox.Show("An error occurred while saving the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+
+        Else
+            MessageBox.Show("Query is Empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
 
 End Class
