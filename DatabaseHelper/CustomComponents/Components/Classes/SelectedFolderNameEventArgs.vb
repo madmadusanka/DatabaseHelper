@@ -1,14 +1,4 @@
-﻿
-Public Class ShowQueryEventArgs
-    Inherits EventArgs
-
-    Public Property QueryFilePath As String
-
-    Public Sub New(queryFilePath As String)
-        Me.QueryFilePath = queryFilePath
-    End Sub
-End Class
-
+﻿' Event arguments for selected folder name
 Public Class SelectedFolderNameEventArgs
     Inherits EventArgs
 
@@ -18,5 +8,3 @@ Public Class SelectedFolderNameEventArgs
         Me.SelectedFolderName = selectedFolderName
     End Sub
 End Class
-
-

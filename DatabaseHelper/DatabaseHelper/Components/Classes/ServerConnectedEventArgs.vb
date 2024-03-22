@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
+' Event arguments for server connection
 Public Class ServerConnectedEventArgs
     Inherits EventArgs
 

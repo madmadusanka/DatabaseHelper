@@ -22,23 +22,23 @@ Partial Class FrmQueryCompare
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        FlowLayoutPanel1 = New FlowLayoutPanel()
+        FLPAddCustomComponents = New FlowLayoutPanel()
         FlowLayoutPanel2 = New FlowLayoutPanel()
         pnlQueryCompare = New Panel()
         lblQueryCompare = New Label()
         btnAdd = New Button()
-        FlowLayoutPanel1.SuspendLayout()
+        FLPAddCustomComponents.SuspendLayout()
         pnlQueryCompare.SuspendLayout()
         SuspendLayout()
         ' 
         ' FlowLayoutPanel1
         ' 
-        FlowLayoutPanel1.AutoScroll = True
-        FlowLayoutPanel1.Controls.Add(FlowLayoutPanel2)
-        FlowLayoutPanel1.Location = New Point(9, 68)
-        FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        FlowLayoutPanel1.Size = New Size(1346, 656)
-        FlowLayoutPanel1.TabIndex = 2
+        FLPAddCustomComponents.AutoScroll = True
+        FLPAddCustomComponents.Controls.Add(FlowLayoutPanel2)
+        FLPAddCustomComponents.Location = New Point(9, 68)
+        FLPAddCustomComponents.Name = "FlowLayoutPanel1"
+        FLPAddCustomComponents.Size = New Size(1346, 656)
+        FLPAddCustomComponents.TabIndex = 2
         ' 
         ' FlowLayoutPanel2
         ' 
@@ -82,18 +82,18 @@ Partial Class FrmQueryCompare
         ClientSize = New Size(1370, 736)
         Controls.Add(btnAdd)
         Controls.Add(pnlQueryCompare)
-        Controls.Add(FlowLayoutPanel1)
+        Controls.Add(FLPAddCustomComponents)
         Name = "FrmQueryCompare"
         Text = "Query Compare"
         WindowState = FormWindowState.Maximized
-        FlowLayoutPanel1.ResumeLayout(False)
+        FLPAddCustomComponents.ResumeLayout(False)
         pnlQueryCompare.ResumeLayout(False)
         pnlQueryCompare.PerformLayout()
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents pnlQueryCompare As Panel
-    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+    Friend WithEvents FLPAddCustomComponents As FlowLayoutPanel
     Friend WithEvents lblQueryCompare As Label
     Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
     Friend WithEvents btnAdd As Button

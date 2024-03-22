@@ -31,12 +31,15 @@ Partial Class FrmConnectServer
         Label2 = New Label()
         pnlUserName = New Panel()
         txtServerUserPassword = New TextBox()
+        pnlTitle = New Panel()
+        lblTitle = New Label()
         pnlUserName.SuspendLayout()
+        pnlTitle.SuspendLayout()
         SuspendLayout()
         ' 
         ' btnToggleConnection
         ' 
-        btnToggleConnection.Location = New Point(89, 191)
+        btnToggleConnection.Location = New Point(69, 241)
         btnToggleConnection.Name = "btnToggleConnection"
         btnToggleConnection.Size = New Size(287, 23)
         btnToggleConnection.TabIndex = 6
@@ -46,16 +49,16 @@ Partial Class FrmConnectServer
         ' lblServerName
         ' 
         lblServerName.AutoSize = True
-        lblServerName.Location = New Point(89, 47)
+        lblServerName.Location = New Point(67, 97)
         lblServerName.Name = "lblServerName"
-        lblServerName.Size = New Size(104, 15)
+        lblServerName.Size = New Size(80, 15)
         lblServerName.TabIndex = 5
-        lblServerName.Text = "SQL Server Name :"
+        lblServerName.Text = "Server Name :"
         ' 
         ' txtServerName
         ' 
         txtServerName.AutoCompleteMode = AutoCompleteMode.SuggestAppend
-        txtServerName.Location = New Point(89, 66)
+        txtServerName.Location = New Point(69, 116)
         txtServerName.Name = "txtServerName"
         txtServerName.Size = New Size(287, 23)
         txtServerName.TabIndex = 4
@@ -63,7 +66,7 @@ Partial Class FrmConnectServer
         ' cmbAuthselect
         ' 
         cmbAuthselect.FormattingEnabled = True
-        cmbAuthselect.Location = New Point(89, 95)
+        cmbAuthselect.Location = New Point(69, 145)
         cmbAuthselect.Name = "cmbAuthselect"
         cmbAuthselect.Size = New Size(287, 23)
         cmbAuthselect.TabIndex = 8
@@ -99,7 +102,7 @@ Partial Class FrmConnectServer
         pnlUserName.Controls.Add(txtServerUserName)
         pnlUserName.Controls.Add(Label2)
         pnlUserName.Controls.Add(txtServerUserPassword)
-        pnlUserName.Location = New Point(89, 120)
+        pnlUserName.Location = New Point(69, 170)
         pnlUserName.Name = "pnlUserName"
         pnlUserName.Size = New Size(287, 68)
         pnlUserName.TabIndex = 14
@@ -113,21 +116,43 @@ Partial Class FrmConnectServer
         txtServerUserPassword.TabIndex = 11
         txtServerUserPassword.UseSystemPasswordChar = True
         ' 
-        ' frmConnectServer
+        ' pnlTitle
+        ' 
+        pnlTitle.BackColor = SystemColors.ActiveBorder
+        pnlTitle.Controls.Add(lblTitle)
+        pnlTitle.Location = New Point(69, 29)
+        pnlTitle.Name = "pnlTitle"
+        pnlTitle.Size = New Size(287, 63)
+        pnlTitle.TabIndex = 15
+        ' 
+        ' lblTitle
+        ' 
+        lblTitle.AutoSize = True
+        lblTitle.Font = New Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblTitle.Location = New Point(79, 18)
+        lblTitle.Name = "lblTitle"
+        lblTitle.Size = New Size(134, 30)
+        lblTitle.TabIndex = 0
+        lblTitle.Text = "SQL SERVER"
+        ' 
+        ' FrmConnectServer
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(465, 287)
+        ClientSize = New Size(428, 294)
+        Controls.Add(pnlTitle)
         Controls.Add(pnlUserName)
         Controls.Add(cmbAuthselect)
         Controls.Add(btnToggleConnection)
         Controls.Add(lblServerName)
         Controls.Add(txtServerName)
-        Name = "frmConnectServer"
+        Name = "FrmConnectServer"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Connect To Server"
         pnlUserName.ResumeLayout(False)
         pnlUserName.PerformLayout()
+        pnlTitle.ResumeLayout(False)
+        pnlTitle.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -141,4 +166,6 @@ Partial Class FrmConnectServer
     Friend WithEvents Label2 As Label
     Friend WithEvents pnlUserName As Panel
     Friend WithEvents txtServerUserPassword As TextBox
+    Friend WithEvents pnlTitle As Panel
+    Friend WithEvents lblTitle As Label
 End Class

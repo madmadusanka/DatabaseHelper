@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports Common
+Imports CustomControllers
 
 Public Class FrmLandingPage
 
@@ -7,49 +8,66 @@ Public Class FrmLandingPage
     Private selectedDatabaseName As String
     Private reconnect As Boolean = False
 
-    ' Get And Set Connection from property
+    ' Property representing the connection state or status
     Public Property Connection As SqlConnection
+
         Get
             Return _connection
         End Get
         Set(value As SqlConnection)
             _connection = value
         End Set
+
     End Property
 
+    ' Programmatically trigger the Connect Button to reconnect to the server
     Public Sub ProgrammaticallyClickConnectButton()
+
         btnConnection.PerformClick()
         reconnect = True
+
     End Sub
 
-    ' server connect button 
+    ' Button to establish connection with the server
     Private Async Sub Btnconnect_Click(sender As Object, e As EventArgs) Handles btnConnection.Click
-        Dim frmConnectServerInstance As frmConnectServer = Application.OpenForms.OfType(Of frmConnectServer).FirstOrDefault()
+
+        Dim frmConnectServerInstance As FrmConnectServer = Application.OpenForms.OfType(Of FrmConnectServer).FirstOrDefault()
 
         If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
+
             Common.Connection.DisconnectServer(Connection)
             btnConnection.Text = "Connect"
             Await ConnectToServer()
 
         Else
-            Dim newFrmConnectServer As New frmConnectServer()
-            AddHandler newFrmConnectServer.ServerConnected, AddressOf OnServerConnected
-            newFrmConnectServer.Show()
+
+            If frmConnectServerInstance IsNot Nothing Then
+                frmConnectServerInstance.BringToFront()
+            Else
+                Dim newFrmConnectServer As New FrmConnectServer()
+                AddHandler newFrmConnectServer.ServerConnected, AddressOf OnServerConnected
+                newFrmConnectServer.Show()
+            End If
+
         End If
+
     End Sub
 
-    ' Load form with event handeler
+    ' Event handler for when a server is successfully connected
     Private Async Sub OnServerConnected(sender As Object, e As ServerConnectedEventArgs)
+
         Connection = e.Connection
         txtConnectedserverName.Text = e.Servername
         Await ConnectToServer()
+
     End Sub
 
-    ' connect server and show/hide fetures
+    ' connect server Function
     Public Async Function ConnectToServer() As Task
+
         Try
+
             If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
-                pnlMain.Visible = True
 
                 Dim countDBquery As String = SQLQueries.DbCountQuery
                 Await ShowDBCount(countDBquery, Connection, lblDBCount)
@@ -61,57 +79,71 @@ Public Class FrmLandingPage
                 pnlDashBoardMain.Visible = True
                 txtConnectedserverName.Visible = True
                 btnConnection.Text = "Disconnect"
+                pnlMain.Visible = True
 
                 Dim formToOpen As FrmQueryCompare = Nothing
 
                 ' Iterate through the open forms collection
                 For Each frm As Form In Application.OpenForms
+
                     If TypeOf frm Is FrmQueryCompare Then
                         ' The form is already open, set formToOpen and exit the loop
                         formToOpen = DirectCast(frm, FrmQueryCompare)
                         Exit For
                     End If
+
                 Next
 
+                ' If the request is for reconnection, display the already open form
                 If reconnect Then
+
                     If formToOpen.Visible Then
                         formToOpen.SetConnection(Connection)
                         formToOpen.BringToFront()
                         reconnect = False
                     End If
+
                 End If
 
-
             Else
-                ClearDate()
+                ClearData()
             End If
+
         Catch ex As Exception
             MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Function
 
-    ' Show Database count
+    ' Display the count of database records
     Private Async Function ShowDBCount(ByVal query As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
+
         Try
+
             If connection.State = ConnectionState.Open Then
 
                 Using command As New SqlCommand(query, connection)
-
                     Dim count As Integer = Convert.ToInt32(Await command.ExecuteScalarAsync())
                     lbl.Text = "Total databases : " & count.ToString()
                 End Using
+
             End If
+
         Catch ex As Exception
             lbl.Text = "Error retrieving database count: " & ex.Message
         End Try
+
     End Function
 
-    ' Select Database form combo box 
+    ' Select a database from the combobox
     Public Async Sub CmbDatabaseNames_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDatabases.SelectedIndexChanged
+
         Try
+
             If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
 
                 If cmbDatabases.SelectedItem IsNot Nothing Then
+
                     selectedDatabaseName = cmbDatabases.SelectedItem.ToString()
 
                     Dim getDBNamesquery As String = SQLQueries.DBNamesQuery
@@ -127,21 +159,28 @@ Public Class FrmLandingPage
                     Await PopulateViewComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectView)
 
                     pnlSelectDetails.Visible = True
+
                 Else
                     MessageBox.Show("Please select a database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End If
+
             Else
                 MessageBox.Show("Database connection is closed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
+
         Catch ex As Exception
             MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Sub
 
-    ' Show Database names
+    ' Display the names of available databases
     Private Async Function ShowDbNames(ByVal query As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
+
         Try
+
             If connection.State = ConnectionState.Open Then
+
                 Using command As New SqlCommand(query, connection)
 
                     Dim reader As SqlDataReader = Await command.ExecuteReaderAsync()
@@ -153,18 +192,24 @@ Public Class FrmLandingPage
 
                     reader.Close()
                 End Using
+
             End If
+
         Catch ex As Exception
             MessageBox.Show("An error occurred while populating the ComboBox: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Function
 
-    ' Show Table counts by Databases
+    ' Display the counts of tables for each database
     Private Async Function ShowTableCount(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
+
         Try
+
             If connection.State = ConnectionState.Open Then
 
                 Dim query As String = String.Format(TablesCountQuery, databaseName)
+
                 Using command As New SqlCommand(query, connection)
 
                     Dim tableCount As Integer = Convert.ToInt32(Await command.ExecuteScalarAsync())
@@ -172,19 +217,26 @@ Public Class FrmLandingPage
                     pnlShowTable.Visible = True
                     lbltbllbl.Text = "Table"
                     lbl.Text = tableCount.ToString()
+
                 End Using
+
             End If
+
         Catch ex As Exception
             MessageBox.Show("Error retrieving table count: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Function
 
-    ' Show SP counts by Databases
+    ' Display the counts of stored procedures for each database
     Private Async Function ShowSpCount(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
+
         Try
+
             If connection.State = ConnectionState.Open Then
 
                 Dim query As String = String.Format(StoredProceduresCountQuery, databaseName)
+
                 Using command As New SqlCommand(query, connection)
 
                     Dim tableCount As Integer = Convert.ToInt32(Await command.ExecuteScalarAsync())
@@ -192,19 +244,26 @@ Public Class FrmLandingPage
                     pnlShowSp.Visible = True
                     lblsplbl.Text = "Procedure"
                     lbl.Text = tableCount.ToString()
+
                 End Using
+
             End If
+
         Catch ex As Exception
             MessageBox.Show("Error retrieving table count: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Function
 
-    ' Show View counts by Databases
+    ' Display the counts of views for each database
     Private Async Function ViewCount(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
+
         Try
+
             If connection.State = ConnectionState.Open Then
 
                 Dim query As String = String.Format(ViewsCountQuery, databaseName)
+
                 Using command As New SqlCommand(query, connection)
 
                     Dim tableCount As Integer = Convert.ToInt32(Await command.ExecuteScalarAsync())
@@ -213,18 +272,24 @@ Public Class FrmLandingPage
                     lblviewlbl.Text = "View"
                     lbl.Text = tableCount.ToString()
                 End Using
+
             End If
+
         Catch ex As Exception
             MessageBox.Show("Error retrieving table count: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Function
 
-    ' Show Table Names by Databases
+    ' Display the names of tables for each database
     Private Async Function PopulateTableComboBoxWithQuery(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
+
         Try
+
             If connection.State = ConnectionState.Open Then
 
                 Dim query As String = String.Format(TablesNamesQuery, databaseName)
+
                 Using command As New SqlCommand(query, connection)
 
                     Using reader As SqlDataReader = Await command.ExecuteReaderAsync()
@@ -234,20 +299,28 @@ Public Class FrmLandingPage
                         While reader.Read()
                             cmb.Items.Add(reader("TABLE_NAME").ToString())
                         End While
+
                     End Using
+
                 End Using
+
             End If
+
         Catch ex As Exception
             MessageBox.Show($"An error occurred while populating the ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Function
 
-    ' Show SP Names by Databases
+    ' Display the names of stored procedures for each database
     Private Async Function PopulateProcedureComboBoxWithQuery(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
+
         Try
+
             If connection.State = ConnectionState.Open Then
 
                 Dim query As String = String.Format(StoredProceduresNamesQuery, databaseName)
+
                 Using command As New SqlCommand(query, connection)
 
                     Using reader As SqlDataReader = Await command.ExecuteReaderAsync()
@@ -257,20 +330,28 @@ Public Class FrmLandingPage
                         While reader.Read()
                             cmb.Items.Add(reader("StoredProcedureName").ToString())
                         End While
+
                     End Using
+
                 End Using
+
             End If
+
         Catch ex As Exception
             MessageBox.Show($"An error occurred while populating the ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Function
 
-    ' Show View Names by Databases
+    'Display the names of views for each database
     Private Async Function PopulateViewComboBoxWithQuery(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
+
         Try
+
             If connection.State = ConnectionState.Open Then
 
                 Dim query As String = String.Format(ViewsNamesQuery, databaseName)
+
                 Using command As New SqlCommand(query, connection)
 
                     Using reader As SqlDataReader = Await command.ExecuteReaderAsync()
@@ -280,66 +361,81 @@ Public Class FrmLandingPage
                         While reader.Read()
                             cmb.Items.Add(reader("ViewName").ToString())
                         End While
+
                     End Using
+
                 End Using
+
             End If
+
         Catch ex As Exception
             MessageBox.Show($"An error occurred while populating the ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Function
 
-    ' Show a query
+    ' Display SQL query
     Public Shared Function ShowQuery(ByVal query As String, ByVal connection As SqlConnection, ByVal selectedName As String) As Task
+
         Try
+
             If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
 
                 Using command As New SqlCommand(query, connection)
-                    Dim QueryDefinition As String = command.ExecuteScalar()?.ToString()
 
+                    Dim QueryDefinition As String = command.ExecuteScalar()?.ToString()
                     Dim viewQueryForm As New FrmViewQuery(selectedName, QueryDefinition, connection)
                     viewQueryForm.Show()
+
                 End Using
+
             Else
                 MessageBox.Show("Database connection is closed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
+
         Catch ex As Exception
             MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
         Return Task.CompletedTask
+
     End Function
 
-
-    ' Show view query
+    ' Display the SQL query for the selected view
     Private Async Sub BtnShowViewQuery_Click(sender As Object, e As EventArgs) Handles btnShowViewQuery.Click
 
         If cmbSelectView.SelectedItem IsNot Nothing Then
+
             Dim selectedViewName As String = cmbSelectView.SelectedItem.ToString()
-
             Dim query As String = String.Format(ViewDetailQuery, selectedViewName)
-
             Await ShowQuery(query, Connection, selectedViewName)
+
         Else
             MessageBox.Show("Please select a view.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+
     End Sub
 
-    ' Show SP query
+    ' Display the SQL query for the selected Stored Procedure
     Private Async Sub BtnShowProcedure_Click(sender As Object, e As EventArgs) Handles btnShowProcedure.Click
 
         If cmbSelectProcedure.SelectedItem IsNot Nothing Then
+
             Dim selectedProcedureName As String = cmbSelectProcedure.SelectedItem.ToString()
-
             Dim query As String = String.Format(ProcedureDetailQuery, selectedProcedureName)
-
             Await ShowQuery(query, Connection, selectedProcedureName)
+
         Else
             MessageBox.Show("Please select a procedure.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
+
     End Sub
 
-    ' show Table options
+    ' Show selected Table options
     Private Sub BtnTableOption_Click(sender As Object, e As EventArgs) Handles btnTableOption.Click
+
         Try
+
             If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
 
                 Dim selectedTableName As String = cmbSelectTable.SelectedItem?.ToString()
@@ -348,25 +444,38 @@ Public Class FrmLandingPage
 
                     Dim TableOptionForm As New FrmTableOption(selectedDatabaseName, selectedTableName, Connection)
                     TableOptionForm.Show()
+
                 Else
                     MessageBox.Show("Please select a table.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
+
             Else
                 MessageBox.Show("Database connection is closed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
+
         Catch ex As Exception
             MessageBox.Show("An error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Sub
 
-    ' open query compare screen
+    ' Open Query Compare screen
     Private Sub BtnfrmQueryCompare_Click(sender As Object, e As EventArgs) Handles btnfrmQueryCompare.Click
-        Dim queryCompareForm As New FrmQueryCompare(Connection)
-        queryCompareForm.Show()
+
+        Dim queryCompareFormInstance As FrmQueryCompare = Application.OpenForms.OfType(Of FrmQueryCompare).FirstOrDefault()
+
+        If queryCompareFormInstance IsNot Nothing Then
+            queryCompareFormInstance.BringToFront()
+        Else
+            Dim queryCompareForm As New FrmQueryCompare(Connection)
+            queryCompareForm.Show()
+        End If
+
     End Sub
 
-    ' clear items
-    Private Sub ClearDate()
+    ' Clear all items after Desconnect
+    Private Sub ClearData()
+
         lblDBCount.Text = ""
         cmbDatabases.SelectedIndex = -1
         cmbSelectTable.SelectedIndex = -1
@@ -393,6 +502,7 @@ Public Class FrmLandingPage
         btnConnection.Text = "Connect"
         txtConnectedserverName.Text = ""
         txtConnectedserverName.Visible = False
+
     End Sub
 
 End Class

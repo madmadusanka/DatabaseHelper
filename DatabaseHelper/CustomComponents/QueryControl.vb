@@ -6,13 +6,13 @@ Imports DatabaseHelper
 
 Public Class QueryControl
 
+    Private Shared ReadOnly separator As Char() = {" "c, ","c, ";"c}
     Private Const QueryParamStart As String = "<@"
     Private Const QueryParamEnd As String = ">"
-    Private controller As New QueryExecutorController
-    Private _connection As SqlConnection
-    Private adapter As SqlDataAdapter
-    Private Shared ReadOnly separator As Char() = {" "c, ","c, ";"c}
     Private _showForm As IFormViewer = New FormViewer()
+    Private _connection As SqlConnection
+    Private controller As New QueryExecutorController
+    Private adapter As SqlDataAdapter
     Private updatedQuery As String
     Private customComponentInstance As QueryControl
     Private queryFilePath As String
@@ -21,7 +21,9 @@ Public Class QueryControl
     Private frmQuerySave As FrmSelectSavePath
     Private frmQueryList As FrmSavedQuery
 
+    ' Property for managing the SqlConnection object, initializes upon setting
     Public Property Connection As SqlConnection
+
         Get
             Return _connection
         End Get
@@ -29,31 +31,41 @@ Public Class QueryControl
             _connection = value
             Initialize()
         End Set
+
     End Property
 
+    ' Property for managing the query text box control
     Public Property QueryTextBox As FastColoredTextBox
+
         Get
             Return fastColoredTextBox
         End Get
         Set(ByVal value As FastColoredTextBox)
             fastColoredTextBox = value
         End Set
+
     End Property
 
+    ' Property for managing the visibility of the delete button
     Public Property IsDeleteButtonVisible As Boolean
+
         Get
             Return btnDeleteThis.Visible
         End Get
         Set(value As Boolean)
             btnDeleteThis.Visible = value
         End Set
+
     End Property
 
+    ' Default constructor to initialize components
     Public Sub New()
         InitializeComponent()
     End Sub
 
+    ' Initializes the QueryExecutorController and SqlDataAdapter
     Public Sub Initialize()
+
         Try
             controller = New QueryExecutorController(Connection)
             adapter = New SqlDataAdapter()
@@ -61,46 +73,43 @@ Public Class QueryControl
         Catch ex As Exception
             MessageBox.Show($"An error occurred while initializing the form: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
+
     End Sub
 
     'Query execute button
     Private Sub ExecuteQueryButton_Click(sender As Object, e As EventArgs) Handles ExecuteQueryButton.Click
-        QueryExecute()
+        Dim query As String = fastColoredTextBox.Text.Trim()
+        QueryExecute(query)
     End Sub
 
-    Private Sub QueryExecute()
-        If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
-            Try
-                ' Check if connection is set
-                If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
-                    Dim query As String = fastColoredTextBox.Text.Trim()
+    ' Executes the SQL query and displays the result in QueryResultDataGridView
+    Private Sub QueryExecute(ByVal Query As String)
 
-                    ' Set the SqlCommand for the SqlDataAdapter
-                    adapter.SelectCommand = New SqlCommand(query, Connection)
+        If Not String.IsNullOrEmpty(Query) Then
+
+            Try
+
+                If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
 
                     Dim dataTable As New DataTable()
-                    adapter.Fill(dataTable)
-
-                    ' Bind DataTable to DataGridView
-                    QueryResultDataGridView.DataSource = dataTable
-
-                    ' Execute the SQL command and capture the number of rows affected
-                    Dim rowsAffected As Integer = adapter.SelectCommand.ExecuteNonQuery()
-
-                    ' Get the current date and time
                     Dim completionTime As String = DateTime.Now.ToString()
 
+                    adapter.SelectCommand = New SqlCommand(Query, Connection)
+                    adapter.Fill(dataTable)
+                    Dim rowsAffected As Integer = adapter.SelectCommand.ExecuteNonQuery()
+
+                    QueryResultDataGridView.DataSource = dataTable
                     txtQueryMessage.Text = ""
                     txtQueryMessage.Text = $"( {rowsAffected} row affected ){Environment.NewLine}Completion time: {completionTime} Operation Completed"
 
                     If QueryResultDataGridView.Rows.Count > 0 Then
                         tabControlQuery.SelectedTab = tabResult
                     Else
-                        ' Handle the case where QueryResultDataGridView has no rows
                         tabControlQuery.SelectedTab = tabMessage
                     End If
 
                 Else
+
                     Dim result As DialogResult = MessageBox.Show("Connection is closed, You want Reconnect?", "Confirmation", MessageBoxButtons.YesNo)
 
                     If result = DialogResult.Yes Then
@@ -110,6 +119,7 @@ Public Class QueryControl
                     End If
 
                 End If
+
             Catch ex As Exception
                 MessageBox.Show($"An error occurred while executing the query: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try
@@ -118,30 +128,39 @@ Public Class QueryControl
         End If
     End Sub
 
+    ' Handles the click event for the delete button
     Private Sub BtnDeleteThis_Click(sender As Object, e As EventArgs) Handles btnDeleteThis.Click
+
         If Me.Parent IsNot Nothing Then
             Parent.Controls.Remove(Me)
         End If
+
     End Sub
 
-    ' Button for save query
+    ' Handles the click event for the save query button
     Private Sub Btnsavequery_Click(sender As Object, e As EventArgs) Handles btnsavequery.Click
 
         If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
+
             If frmQuerySave IsNot Nothing AndAlso Not frmQuerySave.IsDisposed Then
                 frmQuerySave.BringToFront()
             Else
+
                 frmQuerySave = New FrmSelectSavePath
                 AddHandler frmQuerySave.SelectFolder, AddressOf OnSelectFolder
                 frmQuerySave.Show()
+
             End If
+
         Else
             MessageBox.Show("Query is Empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
     End Sub
 
+    ' Loads a query from a file and displays it in the QueryTextBox
     Private Sub LoadQueryFromFile(filePath As String)
+
         Try
             ' Read the content of the selected query file
             Dim queryContent As String = File.ReadAllText(filePath)
@@ -149,11 +168,14 @@ Public Class QueryControl
             ' Display the query content in the TextBox
             QueryTextBox.Text = queryContent
             GenerateTextBoxesForParameters(queryContent)
+
         Catch ex As Exception
             MessageBox.Show("Please double Click a Sql File")
         End Try
+
     End Sub
 
+    ' Generates TextBox controls for parameters in the query
     Public Sub GenerateTextBoxesForParameters(query As String)
         ' Split the query into individual words
         Dim words As String() = query.Split(separator, StringSplitOptions.RemoveEmptyEntries)
@@ -196,103 +218,73 @@ Public Class QueryControl
 
     End Sub
 
+    ' Handles the click event for setting data
     Private Sub BtnSetData_Click(sender As Object, e As EventArgs)
+
         updatedQuery = CompleteQueryWithParameters(QueryTextBox.Text)
-        QueryTemplateExecute()
+        QueryExecute(updatedQuery)
+
     End Sub
 
-    Private Sub QueryTemplateExecute()
-        If Not String.IsNullOrEmpty(updatedQuery) Then
-            Try
-                ' Check if connection is set
-                If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
-
-                    ' Set the SqlCommand for the SqlDataAdapter
-                    adapter.SelectCommand = New SqlCommand(updatedQuery, Connection)
-
-                    Dim dataTable As New DataTable()
-                    adapter.Fill(dataTable)
-
-                    ' Bind DataTable to DataGridView
-                    QueryResultDataGridView.DataSource = dataTable
-
-                    ' Execute the SQL command and capture the number of rows affected
-                    Dim rowsAffected As Integer = adapter.SelectCommand.ExecuteNonQuery()
-
-                    ' Get the current date and time
-                    Dim completionTime As String = DateTime.Now.ToString()
-
-                    txtQueryMessage.Text = ""
-                    txtQueryMessage.Text = $"( {rowsAffected} row affected ){Environment.NewLine}Completion time: {completionTime} Operation Completed"
-
-                    If QueryResultDataGridView.Rows.Count > 0 Then
-                        tabControlQuery.SelectedTab = tabResult
-                    Else
-                        ' Handle the case where QueryResultDataGridView has no rows
-                        tabControlQuery.SelectedTab = tabMessage
-                    End If
-
-                Else
-                    Dim result As DialogResult = MessageBox.Show("Connection is closed, You want Reconnect?", "Confirmation", MessageBoxButtons.YesNo)
-
-                    If result = DialogResult.Yes Then
-                        _showForm.ShowLandingPageIfNotOpen()
-                    Else
-                        MessageBox.Show("Connection property is not set.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-                    End If
-                End If
-            Catch ex As Exception
-                MessageBox.Show($"An error occurred while executing the query: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-
-            End Try
-        Else
-            MessageBox.Show("Query is Empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
-    End Sub
-
+    ' Completes the query template with parameter values
     Private Function CompleteQueryWithParameters(query As String) As String
 
         Dim completedQuery As String = query
+
         For Each control As Control In flpCustomComponent.Controls
+
             If TypeOf control Is TextBox Then
+
                 ' Get the parameter name from the TextBox name
                 Dim parameterName As String = control.Name.Replace("txt_", "")
                 ' Get the parameter value from the TextBox
                 Dim parameterValue As String = DirectCast(control, TextBox).Text
-
                 ' Replace the parameter placeholder in the query string with the parameter value
                 completedQuery = completedQuery.Replace(QueryParamStart & parameterName, parameterValue).Replace(QueryParamEnd, "")
+
             End If
+
         Next
 
         ' Return the completed query
         Return completedQuery
+
     End Function
 
+    ' Handles the click event for the query list button
     Private Sub BtnQueryList_Click(sender As Object, e As EventArgs) Handles BtnQueryList.Click
         If frmQueryList IsNot Nothing AndAlso Not frmQueryList.IsDisposed Then
             frmQueryList.BringToFront()
         Else
+
             frmQueryList = New FrmSavedQuery
             AddHandler frmQueryList.ShowQuery, AddressOf OnShowQuery
             frmQueryList.Show()
+
         End If
 
     End Sub
 
+    ' Event handler for showing a query
     Private Sub OnShowQuery(sender As Object, e As ShowQueryEventArgs)
+
         queryFilePath = e.QueryFilePath
         flpCustomComponent.Controls.Clear()
         LoadQueryFromFile(queryFilePath)
+
     End Sub
 
+    ' Event handler for selecting a folder
     Private Sub OnSelectFolder(sender As Object, e As SelectedFolderNameEventArgs)
+
         selectedFolderName = e.SelectedFolderName
         SaveQueryFile(selectedFolderName)
+
     End Sub
 
+    ' Saves the SQL query to a file
     Private Sub SaveQueryFile(ByRef selectedFolderName As String)
+
         If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
 
             Dim queryText As String = fastColoredTextBox.Text
@@ -317,6 +309,7 @@ Public Class QueryControl
             }
 
             If saveDialog.ShowDialog = DialogResult.OK Then
+
                 ' Get the chosen file path
                 Dim filePath As String = saveDialog.FileName
 
@@ -327,11 +320,13 @@ Public Class QueryControl
                 Catch ex As Exception
                     MessageBox.Show("An error occurred while saving the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
+
             End If
 
         Else
             MessageBox.Show("Query is Empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
+
     End Sub
 
 End Class
