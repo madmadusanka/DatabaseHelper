@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class frmLandingPage
+Partial Class FrmLandingPage
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -23,6 +23,7 @@ Partial Class frmLandingPage
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         pnlSqlServer = New Panel()
+        txtConnectedserverName = New TextBox()
         pnlMain = New Panel()
         pnlSelectDetails = New Panel()
         cmbSelectTable = New ComboBox()
@@ -50,14 +51,12 @@ Partial Class frmLandingPage
         lblTableCount = New Label()
         pnlselectYourDatabaselbl = New Panel()
         lblSelectyourDatabaselbl = New Label()
-        btnToggleConnection = New Button()
-        lblServerName = New Label()
-        txtServerName = New TextBox()
+        btnConnection = New Button()
         pnlSqlServerlbl = New Panel()
         lblsqlserver = New Label()
-        Button1 = New Button()
+        btnfrmQueryCompare = New Button()
         Button2 = New Button()
-        Button3 = New Button()
+        btnQueryTemplate = New Button()
         pnlDashBoardMain = New Panel()
         QueryExecuterLandingPage = New CustomControllers.QueryControl()
         Button5 = New Button()
@@ -79,16 +78,23 @@ Partial Class frmLandingPage
         ' pnlSqlServer
         ' 
         pnlSqlServer.BackColor = SystemColors.ActiveBorder
+        pnlSqlServer.Controls.Add(txtConnectedserverName)
         pnlSqlServer.Controls.Add(pnlMain)
-        pnlSqlServer.Controls.Add(btnToggleConnection)
-        pnlSqlServer.Controls.Add(lblServerName)
-        pnlSqlServer.Controls.Add(txtServerName)
+        pnlSqlServer.Controls.Add(btnConnection)
         pnlSqlServer.Controls.Add(pnlSqlServerlbl)
         pnlSqlServer.Dock = DockStyle.Left
         pnlSqlServer.Location = New Point(0, 0)
         pnlSqlServer.Name = "pnlSqlServer"
         pnlSqlServer.Size = New Size(311, 738)
         pnlSqlServer.TabIndex = 0
+        ' 
+        ' txtConnectedserverName
+        ' 
+        txtConnectedserverName.Location = New Point(16, 60)
+        txtConnectedserverName.Name = "txtConnectedserverName"
+        txtConnectedserverName.Size = New Size(281, 23)
+        txtConnectedserverName.TabIndex = 6
+        txtConnectedserverName.Visible = False
         ' 
         ' pnlMain
         ' 
@@ -100,9 +106,9 @@ Partial Class frmLandingPage
         pnlMain.Controls.Add(cmbDatabases)
         pnlMain.Controls.Add(pnlShowTable)
         pnlMain.Controls.Add(pnlselectYourDatabaselbl)
-        pnlMain.Location = New Point(12, 146)
+        pnlMain.Location = New Point(12, 128)
         pnlMain.Name = "pnlMain"
-        pnlMain.Size = New Size(287, 538)
+        pnlMain.Size = New Size(287, 556)
         pnlMain.TabIndex = 5
         pnlMain.Visible = False
         ' 
@@ -263,7 +269,7 @@ Partial Class frmLandingPage
         ' lblviewlbl
         ' 
         lblviewlbl.AutoSize = True
-        lblviewlbl.Font = New Font("Segoe UI Semibold", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblviewlbl.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lblviewlbl.Location = New Point(18, 4)
         lblviewlbl.Name = "lblviewlbl"
         lblviewlbl.Size = New Size(0, 15)
@@ -292,7 +298,7 @@ Partial Class frmLandingPage
         ' lblsplbl
         ' 
         lblsplbl.AutoSize = True
-        lblsplbl.Font = New Font("Segoe UI Semibold", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblsplbl.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lblsplbl.Location = New Point(6, 5)
         lblsplbl.Name = "lblsplbl"
         lblsplbl.Size = New Size(0, 15)
@@ -331,7 +337,7 @@ Partial Class frmLandingPage
         ' lbltbllbl
         ' 
         lbltbllbl.AutoSize = True
-        lbltbllbl.Font = New Font("Segoe UI Semibold", 9.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lbltbllbl.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lbltbllbl.Location = New Point(17, 5)
         lbltbllbl.Name = "lbltbllbl"
         lbltbllbl.Size = New Size(0, 15)
@@ -366,30 +372,14 @@ Partial Class frmLandingPage
         lblSelectyourDatabaselbl.TabIndex = 2
         lblSelectyourDatabaselbl.Text = "Select your Database"
         ' 
-        ' btnToggleConnection
+        ' btnConnection
         ' 
-        btnToggleConnection.Location = New Point(12, 109)
-        btnToggleConnection.Name = "btnToggleConnection"
-        btnToggleConnection.Size = New Size(287, 23)
-        btnToggleConnection.TabIndex = 3
-        btnToggleConnection.Text = "Connect"
-        btnToggleConnection.UseVisualStyleBackColor = True
-        ' 
-        ' lblServerName
-        ' 
-        lblServerName.AutoSize = True
-        lblServerName.Location = New Point(12, 62)
-        lblServerName.Name = "lblServerName"
-        lblServerName.Size = New Size(104, 15)
-        lblServerName.TabIndex = 2
-        lblServerName.Text = "SQL Server Name :"
-        ' 
-        ' txtServerName
-        ' 
-        txtServerName.Location = New Point(12, 81)
-        txtServerName.Name = "txtServerName"
-        txtServerName.Size = New Size(287, 23)
-        txtServerName.TabIndex = 1
+        btnConnection.Location = New Point(16, 88)
+        btnConnection.Name = "btnConnection"
+        btnConnection.Size = New Size(280, 23)
+        btnConnection.TabIndex = 3
+        btnConnection.Text = "Connect"
+        btnConnection.UseVisualStyleBackColor = True
         ' 
         ' pnlSqlServerlbl
         ' 
@@ -403,7 +393,7 @@ Partial Class frmLandingPage
         ' lblsqlserver
         ' 
         lblsqlserver.AutoSize = True
-        lblsqlserver.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblsqlserver.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lblsqlserver.ForeColor = SystemColors.ButtonFace
         lblsqlserver.Location = New Point(99, 12)
         lblsqlserver.Name = "lblsqlserver"
@@ -411,14 +401,14 @@ Partial Class frmLandingPage
         lblsqlserver.TabIndex = 0
         lblsqlserver.Text = "SQL Server"
         ' 
-        ' Button1
+        ' btnfrmQueryCompare
         ' 
-        Button1.Location = New Point(23, 26)
-        Button1.Name = "Button1"
-        Button1.Size = New Size(177, 106)
-        Button1.TabIndex = 1
-        Button1.Text = "Table Joins"
-        Button1.UseVisualStyleBackColor = True
+        btnfrmQueryCompare.Location = New Point(23, 26)
+        btnfrmQueryCompare.Name = "btnfrmQueryCompare"
+        btnfrmQueryCompare.Size = New Size(177, 106)
+        btnfrmQueryCompare.TabIndex = 1
+        btnfrmQueryCompare.Text = "Multiple Query Execution"
+        btnfrmQueryCompare.UseVisualStyleBackColor = True
         ' 
         ' Button2
         ' 
@@ -428,24 +418,26 @@ Partial Class frmLandingPage
         Button2.TabIndex = 2
         Button2.Text = "Button2"
         Button2.UseVisualStyleBackColor = True
+        Button2.Visible = False
         ' 
-        ' Button3
+        ' btnQueryTemplate
         ' 
-        Button3.Location = New Point(230, 26)
-        Button3.Name = "Button3"
-        Button3.Size = New Size(177, 106)
-        Button3.TabIndex = 3
-        Button3.Text = "Button3"
-        Button3.UseVisualStyleBackColor = True
+        btnQueryTemplate.Location = New Point(230, 26)
+        btnQueryTemplate.Name = "btnQueryTemplate"
+        btnQueryTemplate.Size = New Size(177, 106)
+        btnQueryTemplate.TabIndex = 3
+        btnQueryTemplate.Text = "Query Template"
+        btnQueryTemplate.UseVisualStyleBackColor = True
+        btnQueryTemplate.Visible = False
         ' 
         ' pnlDashBoardMain
         ' 
         pnlDashBoardMain.Controls.Add(QueryExecuterLandingPage)
         pnlDashBoardMain.Controls.Add(Button5)
         pnlDashBoardMain.Controls.Add(Button4)
-        pnlDashBoardMain.Controls.Add(Button1)
+        pnlDashBoardMain.Controls.Add(btnfrmQueryCompare)
         pnlDashBoardMain.Controls.Add(Button2)
-        pnlDashBoardMain.Controls.Add(Button3)
+        pnlDashBoardMain.Controls.Add(btnQueryTemplate)
         pnlDashBoardMain.Dock = DockStyle.Right
         pnlDashBoardMain.Location = New Point(317, 0)
         pnlDashBoardMain.Name = "pnlDashBoardMain"
@@ -456,9 +448,10 @@ Partial Class frmLandingPage
         ' QueryExecuterLandingPage
         ' 
         QueryExecuterLandingPage.Connection = Nothing
+        QueryExecuterLandingPage.IsDeleteButtonVisible = False
         QueryExecuterLandingPage.Location = New Point(12, 146)
         QueryExecuterLandingPage.Name = "QueryExecuterLandingPage"
-        QueryExecuterLandingPage.Size = New Size(1011, 538)
+        QueryExecuterLandingPage.Size = New Size(1029, 538)
         QueryExecuterLandingPage.TabIndex = 6
         ' 
         ' Button5
@@ -469,6 +462,7 @@ Partial Class frmLandingPage
         Button5.TabIndex = 5
         Button5.Text = "Button5"
         Button5.UseVisualStyleBackColor = True
+        Button5.Visible = False
         ' 
         ' Button4
         ' 
@@ -478,10 +472,11 @@ Partial Class frmLandingPage
         Button4.TabIndex = 4
         Button4.Text = "Button4"
         Button4.UseVisualStyleBackColor = True
+        Button4.Visible = False
         ' 
         ' frmLandingPage
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1370, 738)
         Controls.Add(pnlSqlServer)
@@ -515,16 +510,14 @@ Partial Class frmLandingPage
     End Sub
 
     Friend WithEvents pnlSqlServer As Panel
-    Friend WithEvents lblServerName As Label
-    Friend WithEvents txtServerName As TextBox
     Friend WithEvents pnlSqlServerlbl As Panel
     Friend WithEvents lblsqlserver As Label
-    Friend WithEvents btnToggleConnection As Button
+    Friend WithEvents btnConnection As Button
     Friend WithEvents pnlMain As Panel
     Friend WithEvents cmbDatabases As ComboBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btnfrmQueryCompare As Button
     Friend WithEvents Button2 As Button
-    Friend WithEvents Button3 As Button
+    Friend WithEvents btnQueryTemplate As Button
     Friend WithEvents pnlDashBoardMain As Panel
     Friend WithEvents Button4 As Button
     Friend WithEvents Button5 As Button
@@ -554,5 +547,6 @@ Partial Class frmLandingPage
     Friend WithEvents btnTableOption As Button
     Friend WithEvents QueryExecuterLandingPage As CustomControllers.QueryControl
     Friend WithEvents cmbSelectTable As ComboBox
+    Friend WithEvents txtConnectedserverName As TextBox
 
 End Class

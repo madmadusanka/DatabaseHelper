@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmViewQuery
+Partial Class FrmViewQuery
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -25,6 +25,7 @@ Partial Class frmViewQuery
         lblViewName = New Label()
         txtViewDefinition = New TextBox()
         lblnamelbl = New Label()
+        QueryControlfrmViewQuery = New CustomControllers.QueryControl()
         SuspendLayout()
         ' 
         ' lblViewName
@@ -42,7 +43,7 @@ Partial Class frmViewQuery
         txtViewDefinition.Multiline = True
         txtViewDefinition.Name = "txtViewDefinition"
         txtViewDefinition.ScrollBars = ScrollBars.Both
-        txtViewDefinition.Size = New Size(1280, 403)
+        txtViewDefinition.Size = New Size(658, 557)
         txtViewDefinition.TabIndex = 2
         ' 
         ' lblnamelbl
@@ -55,11 +56,20 @@ Partial Class frmViewQuery
         lblnamelbl.TabIndex = 3
         lblnamelbl.Text = "Name :"
         ' 
+        ' QueryControlfrmViewQuery
+        ' 
+        QueryControlfrmViewQuery.Connection = Nothing
+        QueryControlfrmViewQuery.Location = New Point(726, 35)
+        QueryControlfrmViewQuery.Name = "QueryControlfrmViewQuery"
+        QueryControlfrmViewQuery.Size = New Size(632, 646)
+        QueryControlfrmViewQuery.TabIndex = 4
+        ' 
         ' frmViewQuery
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1370, 601)
+        ClientSize = New Size(1370, 729)
+        Controls.Add(QueryControlfrmViewQuery)
         Controls.Add(lblnamelbl)
         Controls.Add(txtViewDefinition)
         Controls.Add(lblViewName)
@@ -72,4 +82,5 @@ Partial Class frmViewQuery
     Friend WithEvents lblViewName As Label
     Friend WithEvents txtViewDefinition As TextBox
     Friend WithEvents lblnamelbl As Label
+    Friend WithEvents QueryControlfrmViewQuery As CustomControllers.QueryControl
 End Class

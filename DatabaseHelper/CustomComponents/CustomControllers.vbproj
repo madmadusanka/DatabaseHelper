@@ -17,6 +17,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="DatabaseHelper">
+      <HintPath>..\DatabaseHelper\bin\Debug\net8.0-windows\DatabaseHelper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Service Include="{94e38dff-614b-4cbd-b67c-f211bb35ce8b}" />
   </ItemGroup>
 
