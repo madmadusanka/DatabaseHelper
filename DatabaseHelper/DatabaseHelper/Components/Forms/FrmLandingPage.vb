@@ -23,20 +23,20 @@ Public Class FrmLandingPage
     ' Programmatically trigger the Connect Button to reconnect to the server
     Public Sub ProgrammaticallyClickConnectButton()
 
-        btnConnection.PerformClick()
+        btnConnect.PerformClick()
         reconnect = True
 
     End Sub
 
     ' Button to establish connection with the server
-    Private Async Sub Btnconnect_Click(sender As Object, e As EventArgs) Handles btnConnection.Click
+    Private Async Sub BTN_Connect_Click(sender As Object, e As EventArgs) Handles btnConnect.Click
 
-        Dim frmConnectServerInstance As FrmConnectServer = Application.OpenForms.OfType(Of FrmConnectServer).FirstOrDefault()
+        Dim frmConnectServerInstance As FrmConnectToServer = Application.OpenForms.OfType(Of FrmConnectToServer).FirstOrDefault()
 
         If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
 
             Common.Connection.DisconnectServer(Connection)
-            btnConnection.Text = "Connect"
+            btnConnect.Text = "Connect"
             Await ConnectToServer()
 
         Else
@@ -44,7 +44,7 @@ Public Class FrmLandingPage
             If frmConnectServerInstance IsNot Nothing Then
                 frmConnectServerInstance.BringToFront()
             Else
-                Dim newFrmConnectServer As New FrmConnectServer()
+                Dim newFrmConnectServer As New FrmConnectToServer()
                 AddHandler newFrmConnectServer.ServerConnected, AddressOf OnServerConnected
                 newFrmConnectServer.Show()
             End If
@@ -57,7 +57,7 @@ Public Class FrmLandingPage
     Private Async Sub OnServerConnected(sender As Object, e As ServerConnectedEventArgs)
 
         Connection = e.Connection
-        txtConnectedserverName.Text = e.Servername
+        txtConnectedServerName.Text = e.Servername
         Await ConnectToServer()
 
     End Sub
@@ -70,25 +70,25 @@ Public Class FrmLandingPage
             If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
 
                 Dim countDBquery As String = SQLQueries.DbCountQuery
-                Await ShowDBCount(countDBquery, Connection, lblDBCount)
+                Await ShowDatabaseCount(countDBquery, Connection, lblDBCount)
 
                 Dim getDBquery As String = SQLQueries.DBNamesQuery
-                Await ShowDbNames(getDBquery, Connection, cmbDatabases)
+                Await ShowDatabaseNames(getDBquery, Connection, cmbDatabases)
 
-                QueryExecuterLandingPage.Connection = Connection
-                pnlDashBoardMain.Visible = True
-                txtConnectedserverName.Visible = True
-                btnConnection.Text = "Disconnect"
-                pnlMain.Visible = True
+                qcLandingPage.Connection = Connection
+                pnlRightMain.Visible = True
+                txtConnectedServerName.Visible = True
+                btnConnect.Text = "Disconnect"
+                pnlLeftSub.Visible = True
 
-                Dim formToOpen As FrmQueryCompare = Nothing
+                Dim formToOpen As FrmCompareQuery = Nothing
 
                 ' Iterate through the open forms collection
                 For Each frm As Form In Application.OpenForms
 
-                    If TypeOf frm Is FrmQueryCompare Then
+                    If TypeOf frm Is FrmCompareQuery Then
                         ' The form is already open, set formToOpen and exit the loop
-                        formToOpen = DirectCast(frm, FrmQueryCompare)
+                        formToOpen = DirectCast(frm, FrmCompareQuery)
                         Exit For
                     End If
 
@@ -116,7 +116,7 @@ Public Class FrmLandingPage
     End Function
 
     ' Display the count of database records
-    Private Async Function ShowDBCount(ByVal query As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
+    Private Async Function ShowDatabaseCount(ByVal query As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
 
         Try
 
@@ -136,7 +136,7 @@ Public Class FrmLandingPage
     End Function
 
     ' Select a database from the combobox
-    Public Async Sub CmbDatabaseNames_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDatabases.SelectedIndexChanged
+    Public Async Sub CMB_DatabaseNames_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDatabases.SelectedIndexChanged
 
         Try
 
@@ -148,17 +148,17 @@ Public Class FrmLandingPage
 
                     Dim getDBNamesquery As String = SQLQueries.DBNamesQuery
 
-                    Await ShowDbNames(getDBNamesquery, Connection, cmbDatabases)
+                    Await ShowDatabaseNames(getDBNamesquery, Connection, cmbDatabases)
 
-                    Await ShowTableCount(selectedDatabaseName, Connection, lblTableCount)
+                    Await ShowTableCount(selectedDatabaseName, Connection, lblCountOfTable)
                     Await ShowSpCount(selectedDatabaseName, Connection, lblSpCount)
-                    Await ViewCount(selectedDatabaseName, Connection, lblViewCount)
+                    Await ShowViewCount(selectedDatabaseName, Connection, lblCountOfView)
 
                     Await PopulateTableComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectTable)
                     Await PopulateProcedureComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectProcedure)
                     Await PopulateViewComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectView)
 
-                    pnlSelectDetails.Visible = True
+                    pnlLeftComboBox.Visible = True
 
                 Else
                     MessageBox.Show("Please select a database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -175,7 +175,7 @@ Public Class FrmLandingPage
     End Sub
 
     ' Display the names of available databases
-    Private Async Function ShowDbNames(ByVal query As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
+    Private Async Function ShowDatabaseNames(ByVal query As String, ByVal connection As SqlConnection, ByVal cmb As ComboBox) As Task
 
         Try
 
@@ -214,8 +214,8 @@ Public Class FrmLandingPage
 
                     Dim tableCount As Integer = Convert.ToInt32(Await command.ExecuteScalarAsync())
 
-                    pnlShowTable.Visible = True
-                    lbltbllbl.Text = "Table"
+                    pnlShowTableCount.Visible = True
+                    lblTableCount.Text = "Table"
                     lbl.Text = tableCount.ToString()
 
                 End Using
@@ -241,8 +241,8 @@ Public Class FrmLandingPage
 
                     Dim tableCount As Integer = Convert.ToInt32(Await command.ExecuteScalarAsync())
 
-                    pnlShowSp.Visible = True
-                    lblsplbl.Text = "Procedure"
+                    pnlShowSpCount.Visible = True
+                    lblCountOfSp.Text = "Procedure"
                     lbl.Text = tableCount.ToString()
 
                 End Using
@@ -256,7 +256,7 @@ Public Class FrmLandingPage
     End Function
 
     ' Display the counts of views for each database
-    Private Async Function ViewCount(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
+    Private Async Function ShowViewCount(ByVal databaseName As String, ByVal connection As SqlConnection, ByVal lbl As Label) As Task
 
         Try
 
@@ -268,9 +268,10 @@ Public Class FrmLandingPage
 
                     Dim tableCount As Integer = Convert.ToInt32(Await command.ExecuteScalarAsync())
 
-                    pnlShowView.Visible = True
-                    lblviewlbl.Text = "View"
+                    pnlShowViewCount.Visible = True
+                    lblViewCount.Text = "View"
                     lbl.Text = tableCount.ToString()
+
                 End Using
 
             End If
@@ -375,7 +376,7 @@ Public Class FrmLandingPage
     End Function
 
     ' Display SQL query
-    Public Shared Function ShowQuery(ByVal query As String, ByVal connection As SqlConnection, ByVal selectedName As String) As Task
+    Public Shared Function ShowSQLQuery(ByVal query As String, ByVal connection As SqlConnection, ByVal selectedName As String) As Task
 
         Try
 
@@ -384,7 +385,7 @@ Public Class FrmLandingPage
                 Using command As New SqlCommand(query, connection)
 
                     Dim QueryDefinition As String = command.ExecuteScalar()?.ToString()
-                    Dim viewQueryForm As New FrmViewQuery(selectedName, QueryDefinition, connection)
+                    Dim viewQueryForm As New FrmShowQuery(selectedName, QueryDefinition, connection)
                     viewQueryForm.Show()
 
                 End Using
@@ -402,13 +403,13 @@ Public Class FrmLandingPage
     End Function
 
     ' Display the SQL query for the selected view
-    Private Async Sub BtnShowViewQuery_Click(sender As Object, e As EventArgs) Handles btnShowViewQuery.Click
+    Private Async Sub BTN_ShowViewQuery_Click(sender As Object, e As EventArgs) Handles btnShowView.Click
 
         If cmbSelectView.SelectedItem IsNot Nothing Then
 
             Dim selectedViewName As String = cmbSelectView.SelectedItem.ToString()
             Dim query As String = String.Format(ViewDetailQuery, selectedViewName)
-            Await ShowQuery(query, Connection, selectedViewName)
+            Await ShowSQLQuery(query, Connection, selectedViewName)
 
         Else
             MessageBox.Show("Please select a view.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -417,13 +418,13 @@ Public Class FrmLandingPage
     End Sub
 
     ' Display the SQL query for the selected Stored Procedure
-    Private Async Sub BtnShowProcedure_Click(sender As Object, e As EventArgs) Handles btnShowProcedure.Click
+    Private Async Sub BTN_ShowProcedure_Click(sender As Object, e As EventArgs) Handles btnShowProcedure.Click
 
         If cmbSelectProcedure.SelectedItem IsNot Nothing Then
 
             Dim selectedProcedureName As String = cmbSelectProcedure.SelectedItem.ToString()
             Dim query As String = String.Format(ProcedureDetailQuery, selectedProcedureName)
-            Await ShowQuery(query, Connection, selectedProcedureName)
+            Await ShowSQLQuery(query, Connection, selectedProcedureName)
 
         Else
             MessageBox.Show("Please select a procedure.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -432,7 +433,7 @@ Public Class FrmLandingPage
     End Sub
 
     ' Show selected Table options
-    Private Sub BtnTableOption_Click(sender As Object, e As EventArgs) Handles btnTableOption.Click
+    Private Sub BTN_TableOption_Click(sender As Object, e As EventArgs) Handles btnTableOption.Click
 
         Try
 
@@ -460,14 +461,14 @@ Public Class FrmLandingPage
     End Sub
 
     ' Open Query Compare screen
-    Private Sub BtnfrmQueryCompare_Click(sender As Object, e As EventArgs) Handles btnfrmQueryCompare.Click
+    Private Sub BTN_frmQueryCompare_Click(sender As Object, e As EventArgs) Handles btnCompareQuery.Click
 
-        Dim queryCompareFormInstance As FrmQueryCompare = Application.OpenForms.OfType(Of FrmQueryCompare).FirstOrDefault()
+        Dim queryCompareFormInstance As FrmCompareQuery = Application.OpenForms.OfType(Of FrmCompareQuery).FirstOrDefault()
 
         If queryCompareFormInstance IsNot Nothing Then
             queryCompareFormInstance.BringToFront()
         Else
-            Dim queryCompareForm As New FrmQueryCompare(Connection)
+            Dim queryCompareForm As New FrmCompareQuery(Connection)
             queryCompareForm.Show()
         End If
 
@@ -485,23 +486,27 @@ Public Class FrmLandingPage
         cmbSelectTable.Items.Clear()
         cmbSelectProcedure.Items.Clear()
         cmbSelectView.Items.Clear()
-        lblTableCount.Text = ""
+        lblCountOfTable.Text = ""
         lblSpCount.Text = ""
+        lblCountOfView.Text = ""
+        lblTableCount.Text = ""
+        lblCountOfSp.Text = ""
         lblViewCount.Text = ""
-        lbltbllbl.Text = ""
-        lblsplbl.Text = ""
-        lblviewlbl.Text = ""
-        pnlShowTable.Visible = False
-        pnlShowSp.Visible = False
-        pnlShowView.Visible = False
-        pnlMain.Visible = False
-        pnlSelectDetails.Visible = False
+        pnlShowTableCount.Visible = False
+        pnlShowSpCount.Visible = False
+        pnlShowViewCount.Visible = False
+        pnlLeftSub.Visible = False
+        pnlLeftComboBox.Visible = False
         selectedDatabaseName = ""
-        pnlDashBoardMain.Visible = False
-        pnlDashBoardMain.Visible = False
-        btnConnection.Text = "Connect"
-        txtConnectedserverName.Text = ""
-        txtConnectedserverName.Visible = False
+        pnlRightMain.Visible = False
+        pnlRightMain.Visible = False
+        btnConnect.Text = "Connect"
+        txtConnectedServerName.Text = ""
+        txtConnectedServerName.Visible = False
+
+    End Sub
+
+    Private Sub FRM_LandingPage_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 

@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
-Imports DatabaseHelper.DataCache
+Imports DatabaseHelper.ServerNameCache
 
-Public Class FrmConnectServer
+Public Class FrmConnectToServer
 
     Private isConnected As Boolean = False
     Private connection As SqlConnection
@@ -20,7 +20,7 @@ Public Class FrmConnectServer
     End Enum
 
     ' Button to establish connection with the server
-    Private Async Sub BtnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
+    Private Async Sub BTN_ToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
 
         If selectedEnumNumber = 1 Then
 
@@ -120,7 +120,7 @@ Public Class FrmConnectServer
     End Sub
 
     ' Retrieve the selected authentication type from the combobox
-    Private Sub CmbAuthselect_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAuthselect.SelectedIndexChanged
+    Private Sub CMB_Authselect_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAuthselect.SelectedIndexChanged
 
         Dim selectedIndex As Integer = cmbAuthselect.SelectedIndex
 
@@ -143,7 +143,7 @@ Public Class FrmConnectServer
     End Sub
 
     ' Form Load Events
-    Private Sub FrmConnectServer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FRM_ConnectServer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Dim cachedServerName As String = ServerNameCache.GetCachedServerName()
         txtServerName.Text = cachedServerName

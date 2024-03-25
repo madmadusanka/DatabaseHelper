@@ -20,7 +20,7 @@ Public Class FrmTableOption
 
     End Sub
 
-    'Asynchronously initializes the form with data from the selected database and table
+    ' initializes the form with data from the selected database and table
     Private Async Sub InitializeAsync(ByVal selectedDatabaseName As String, ByVal selectedTableName As String, connection As SqlConnection)
 
         Try
@@ -49,7 +49,7 @@ Public Class FrmTableOption
     End Sub
 
     ' Button to display triggers
-    Private Async Sub BtnViewTrigger_Click(sender As Object, e As EventArgs) Handles btnViewTrigger.Click
+    Private Async Sub BTN_ViewTrigger_Click(sender As Object, e As EventArgs) Handles btnViewTrigger.Click
 
         Try
 
@@ -57,7 +57,7 @@ Public Class FrmTableOption
 
                 Dim selectedTriggerName As String = cmbSelectTrigger.SelectedItem.ToString()
                 Dim query As String = String.Format(TriggerDetailQuery, selectedTriggerName)
-                Await FrmLandingPage.ShowQuery(query, connection, selectedTriggerName)
+                Await FrmLandingPage.ShowSQLQuery(query, connection, selectedTriggerName)
 
             Else
                 MessageBox.Show("Please select a trigger.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -133,10 +133,10 @@ Public Class FrmTableOption
     End Function
 
     ' Form Load Event
-    Private Sub FrmTableOption_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FRM_TableOption_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        QueryExecuterTableOption.Connection = connection
-        lblTableStructurelbl.Text = $"{selectedTableName} Table Stucture"
+        qcTableOption.Connection = connection
+        lblTableStructure.Text = $"{selectedTableName} Table Stucture"
 
     End Sub
 

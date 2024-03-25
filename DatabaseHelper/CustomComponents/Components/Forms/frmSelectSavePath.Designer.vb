@@ -22,86 +22,86 @@ Partial Class FrmSelectSavePath
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        LBFolders = New ListBox()
-        txtnewFolder = New TextBox()
-        btnAddFolder = New Button()
-        pnlTitle = New Panel()
-        lblTitle = New Label()
-        pnlTitle.SuspendLayout()
+        LB_Groups = New ListBox()
+        TXT_NewGroup = New TextBox()
+        btnAddNewGroup = New Button()
+        PNL_Title = New Panel()
+        LBL_Title = New Label()
+        PNL_Title.SuspendLayout()
         SuspendLayout()
         ' 
-        ' LBFolders
+        ' LB_Groups
         ' 
-        LBFolders.FormattingEnabled = True
-        LBFolders.ItemHeight = 15
-        LBFolders.Location = New Point(12, 98)
-        LBFolders.MaximumSize = New Size(304, 259)
-        LBFolders.MinimumSize = New Size(304, 259)
-        LBFolders.Name = "LBFolders"
-        LBFolders.Size = New Size(304, 259)
-        LBFolders.TabIndex = 0
+        LB_Groups.FormattingEnabled = True
+        LB_Groups.ItemHeight = 15
+        LB_Groups.Location = New Point(12, 98)
+        LB_Groups.MaximumSize = New Size(304, 259)
+        LB_Groups.MinimumSize = New Size(304, 259)
+        LB_Groups.Name = "LB_Groups"
+        LB_Groups.Size = New Size(304, 259)
+        LB_Groups.TabIndex = 0
         ' 
-        ' txtnewFolder
+        ' TXT_NewGroup
         ' 
-        txtnewFolder.Location = New Point(12, 64)
-        txtnewFolder.Name = "txtnewFolder"
-        txtnewFolder.Size = New Size(171, 23)
-        txtnewFolder.TabIndex = 1
+        TXT_NewGroup.Location = New Point(12, 64)
+        TXT_NewGroup.Name = "TXT_NewGroup"
+        TXT_NewGroup.Size = New Size(171, 23)
+        TXT_NewGroup.TabIndex = 1
         ' 
-        ' btnAddFolder
+        ' btnAddNewGroup
         ' 
-        btnAddFolder.Location = New Point(189, 64)
-        btnAddFolder.Name = "btnAddFolder"
-        btnAddFolder.Size = New Size(127, 23)
-        btnAddFolder.TabIndex = 2
-        btnAddFolder.Text = "Add Folder"
-        btnAddFolder.UseVisualStyleBackColor = True
+        btnAddNewGroup.Location = New Point(189, 64)
+        btnAddNewGroup.Name = "btnAddNewGroup"
+        btnAddNewGroup.Size = New Size(127, 23)
+        btnAddNewGroup.TabIndex = 2
+        btnAddNewGroup.Text = "Add New Group"
+        btnAddNewGroup.UseVisualStyleBackColor = True
         ' 
-        ' pnlTitle
+        ' PNL_Title
         ' 
-        pnlTitle.BackColor = SystemColors.ActiveBorder
-        pnlTitle.Controls.Add(lblTitle)
-        pnlTitle.Location = New Point(12, 9)
-        pnlTitle.Name = "pnlTitle"
-        pnlTitle.Size = New Size(304, 47)
-        pnlTitle.TabIndex = 3
+        PNL_Title.BackColor = SystemColors.ActiveBorder
+        PNL_Title.Controls.Add(LBL_Title)
+        PNL_Title.Location = New Point(12, 9)
+        PNL_Title.Name = "PNL_Title"
+        PNL_Title.Size = New Size(304, 47)
+        PNL_Title.TabIndex = 3
         ' 
-        ' lblTitle
+        ' LBL_Title
         ' 
-        lblTitle.AutoSize = True
-        lblTitle.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblTitle.Location = New Point(79, 11)
-        lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(142, 27)
-        lblTitle.TabIndex = 0
-        lblTitle.Text = "Select Your Folder"
-        lblTitle.UseCompatibleTextRendering = True
+        LBL_Title.AutoSize = True
+        LBL_Title.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LBL_Title.Location = New Point(79, 11)
+        LBL_Title.Name = "LBL_Title"
+        LBL_Title.Size = New Size(141, 27)
+        LBL_Title.TabIndex = 0
+        LBL_Title.Text = "Select Your Group"
+        LBL_Title.UseCompatibleTextRendering = True
         ' 
         ' FrmSelectSavePath
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(328, 366)
-        Controls.Add(pnlTitle)
-        Controls.Add(btnAddFolder)
-        Controls.Add(txtnewFolder)
-        Controls.Add(LBFolders)
+        Controls.Add(PNL_Title)
+        Controls.Add(btnAddNewGroup)
+        Controls.Add(TXT_NewGroup)
+        Controls.Add(LB_Groups)
         MaximizeBox = False
         MaximumSize = New Size(344, 405)
         MinimizeBox = False
         MinimumSize = New Size(344, 405)
         Name = "FrmSelectSavePath"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "frmSelectSavePath"
-        pnlTitle.ResumeLayout(False)
-        pnlTitle.PerformLayout()
+        Text = "Save Query"
+        PNL_Title.ResumeLayout(False)
+        PNL_Title.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
-    Friend WithEvents LBFolders As ListBox
-    Friend WithEvents txtnewFolder As TextBox
-    Friend WithEvents btnAddFolder As Button
-    Friend WithEvents pnlTitle As Panel
-    Friend WithEvents lblTitle As Label
+    Friend WithEvents LB_Groups As ListBox
+    Friend WithEvents TXT_NewGroup As TextBox
+    Friend WithEvents btnAddNewGroup As Button
+    Friend WithEvents PNL_Title As Panel
+    Friend WithEvents LBL_Title As Label
 End Class

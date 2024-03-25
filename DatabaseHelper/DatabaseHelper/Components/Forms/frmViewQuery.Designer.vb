@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmViewQuery
+Partial Class FrmShowQuery
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,65 +22,66 @@ Partial Class FrmViewQuery
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        lblViewName = New Label()
-        txtViewDefinition = New TextBox()
-        lblnamelbl = New Label()
-        QueryControlfrmViewQuery = New CustomControllers.QueryControl()
+        LBL_Selected_Name = New Label()
+        txtShowDefinition = New TextBox()
+        lblName = New Label()
+        qcShowQuery = New CustomControllers.QueryControl()
         SuspendLayout()
         ' 
-        ' lblViewName
+        ' LBL_Selected_Name
         ' 
-        lblViewName.AutoSize = True
-        lblViewName.Font = New Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblViewName.Location = New Point(105, 51)
-        lblViewName.Name = "lblViewName"
-        lblViewName.Size = New Size(0, 20)
-        lblViewName.TabIndex = 1
+        LBL_Selected_Name.AutoSize = True
+        LBL_Selected_Name.Font = New Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LBL_Selected_Name.Location = New Point(105, 51)
+        LBL_Selected_Name.Name = "LBL_Selected_Name"
+        LBL_Selected_Name.Size = New Size(0, 20)
+        LBL_Selected_Name.TabIndex = 1
         ' 
-        ' txtViewDefinition
+        ' txtShowDefinition
         ' 
-        txtViewDefinition.Location = New Point(41, 113)
-        txtViewDefinition.Multiline = True
-        txtViewDefinition.Name = "txtViewDefinition"
-        txtViewDefinition.ScrollBars = ScrollBars.Both
-        txtViewDefinition.Size = New Size(658, 557)
-        txtViewDefinition.TabIndex = 2
+        txtShowDefinition.Location = New Point(41, 113)
+        txtShowDefinition.Multiline = True
+        txtShowDefinition.Name = "txtShowDefinition"
+        txtShowDefinition.ScrollBars = ScrollBars.Both
+        txtShowDefinition.Size = New Size(658, 557)
+        txtShowDefinition.TabIndex = 2
         ' 
-        ' lblnamelbl
+        ' lblName
         ' 
-        lblnamelbl.AutoSize = True
-        lblnamelbl.Font = New Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblnamelbl.Location = New Point(41, 51)
-        lblnamelbl.Name = "lblnamelbl"
-        lblnamelbl.Size = New Size(58, 20)
-        lblnamelbl.TabIndex = 3
-        lblnamelbl.Text = "Name :"
+        lblName.AutoSize = True
+        lblName.Font = New Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblName.Location = New Point(41, 51)
+        lblName.Name = "lblName"
+        lblName.Size = New Size(58, 20)
+        lblName.TabIndex = 3
+        lblName.Text = "Name :"
         ' 
-        ' QueryControlfrmViewQuery
+        ' qcShowQuery
         ' 
-        QueryControlfrmViewQuery.Connection = Nothing
-        QueryControlfrmViewQuery.Location = New Point(726, 35)
-        QueryControlfrmViewQuery.Name = "QueryControlfrmViewQuery"
-        QueryControlfrmViewQuery.Size = New Size(632, 646)
-        QueryControlfrmViewQuery.TabIndex = 4
+        qcShowQuery.Connection = Nothing
+        qcShowQuery.IsDeleteButtonVisible = False
+        qcShowQuery.Location = New Point(726, 35)
+        qcShowQuery.Name = "qcShowQuery"
+        qcShowQuery.Size = New Size(632, 646)
+        qcShowQuery.TabIndex = 4
         ' 
-        ' frmViewQuery
+        ' FrmShowQuery
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1370, 729)
-        Controls.Add(QueryControlfrmViewQuery)
-        Controls.Add(lblnamelbl)
-        Controls.Add(txtViewDefinition)
-        Controls.Add(lblViewName)
-        Name = "frmViewQuery"
-        Text = "View Query"
+        Controls.Add(qcShowQuery)
+        Controls.Add(lblName)
+        Controls.Add(txtShowDefinition)
+        Controls.Add(LBL_Selected_Name)
+        Name = "FrmShowQuery"
+        Text = "Show Query"
         WindowState = FormWindowState.Maximized
         ResumeLayout(False)
         PerformLayout()
     End Sub
-    Friend WithEvents lblViewName As Label
-    Friend WithEvents txtViewDefinition As TextBox
-    Friend WithEvents lblnamelbl As Label
-    Friend WithEvents QueryControlfrmViewQuery As CustomControllers.QueryControl
+    Friend WithEvents LBL_Selected_Name As Label
+    Friend WithEvents txtShowDefinition As TextBox
+    Friend WithEvents lblName As Label
+    Friend WithEvents qcShowQuery As CustomControllers.QueryControl
 End Class

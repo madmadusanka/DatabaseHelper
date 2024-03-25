@@ -60,11 +60,11 @@ Public Class FrmSavedQuery
         If Directory.Exists(rootPath) Then
 
             ' Set the root node of the TreeView to the specified path
-            TVSavedQuery.Nodes.Add(RootNode)
+            TVW_SavedQuery.Nodes.Add(RootNode)
 
             ' Populate the TreeView with folder names as roots and file names as children
             PopulateTreeView(RootNode, rootPath)
-            TVSavedQuery.ExpandAll()
+            TVW_SavedQuery.ExpandAll()
 
         Else
             MessageBox.Show("The specified path does not exist.")
@@ -73,11 +73,11 @@ Public Class FrmSavedQuery
     End Sub
 
     ' Handles the double click event for nodes in the TreeView
-    Private Sub TVSavedQuery_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TVSavedQuery.NodeMouseDoubleClick
+    Private Sub TVSavedQuery_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles TVW_SavedQuery.NodeMouseDoubleClick
 
         Dim clickedNode As TreeNode = e.Node
 
-        Dim selectedNode As TreeNode = TVSavedQuery.SelectedNode
+        Dim selectedNode As TreeNode = TVW_SavedQuery.SelectedNode
 
         If selectedNode IsNot Nothing Then
 
@@ -109,22 +109,22 @@ Public Class FrmSavedQuery
     End Sub
 
     ' Handles the text changed event for the search box
-    Private Sub TxtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+    Private Sub TxtSearch_TextChanged(sender As Object, e As EventArgs) Handles TXT_Search.TextChanged
 
-        Dim searchFile As String = txtSearch.Text.Trim()
+        Dim searchFile As String = TXT_Search.Text.Trim()
 
         If Not String.IsNullOrEmpty(searchFile) Then
 
             ' Clear previous search highlights
-            ClearSearchHighlights(TVSavedQuery.Nodes)
+            ClearSearchHighlights(TVW_SavedQuery.Nodes)
 
             ' Start searching from the root nodes
-            For Each node As TreeNode In TVSavedQuery.Nodes
+            For Each node As TreeNode In TVW_SavedQuery.Nodes
                 SearchAndHighlightFileNodes(searchFile, node)
             Next
 
         Else
-            ClearSearchHighlights(TVSavedQuery.Nodes)
+            ClearSearchHighlights(TVW_SavedQuery.Nodes)
         End If
 
     End Sub
@@ -134,7 +134,7 @@ Public Class FrmSavedQuery
 
         For Each node As TreeNode In parentNode
             ' Reset the background color of the node
-            node.BackColor = TVSavedQuery.BackColor
+            node.BackColor = TVW_SavedQuery.BackColor
 
             ' Recursively clear search highlights in child nodes
             ClearSearchHighlights(node.Nodes)
@@ -156,7 +156,7 @@ Public Class FrmSavedQuery
                 node.BackColor = Color.Yellow ' Highlight the found node
             Else
                 ' Node doesn't match the search query
-                node.BackColor = TVSavedQuery.BackColor ' Restore the default background color
+                node.BackColor = TVW_SavedQuery.BackColor ' Restore the default background color
             End If
 
         Next

@@ -24,8 +24,8 @@ Partial Class FrmTableOption
     Private Sub InitializeComponent()
         btnViewTrigger = New Button()
         cmbSelectTrigger = New ComboBox()
-        pnlSelectTriggerlbl = New Panel()
-        lblSelectTriggerlbl = New Label()
+        pnlSelectTrigger = New Panel()
+        lblSelectTrigger = New Label()
         dgvTableSchema1 = New DataGridView()
         dgvTableSchema2 = New DataGridView()
         dgvTableSchema3 = New DataGridView()
@@ -33,11 +33,11 @@ Partial Class FrmTableOption
         dgvTableSchema5 = New DataGridView()
         dgvTableSchema6 = New DataGridView()
         dgvTableSchema7 = New DataGridView()
-        QueryExecuterTableOption = New CustomControllers.QueryControl()
+        qcTableOption = New CustomControllers.QueryControl()
         pnlTableStructure = New Panel()
-        pnlTableStructurelbl = New Panel()
-        lblTableStructurelbl = New Label()
-        pnlSelectTriggerlbl.SuspendLayout()
+        pnlTableStructure_ = New Panel()
+        lblTableStructure = New Label()
+        pnlSelectTrigger.SuspendLayout()
         CType(dgvTableSchema1, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvTableSchema2, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvTableSchema3, ComponentModel.ISupportInitialize).BeginInit()
@@ -46,7 +46,7 @@ Partial Class FrmTableOption
         CType(dgvTableSchema6, ComponentModel.ISupportInitialize).BeginInit()
         CType(dgvTableSchema7, ComponentModel.ISupportInitialize).BeginInit()
         pnlTableStructure.SuspendLayout()
-        pnlTableStructurelbl.SuspendLayout()
+        pnlTableStructure_.SuspendLayout()
         SuspendLayout()
         ' 
         ' btnViewTrigger
@@ -68,25 +68,25 @@ Partial Class FrmTableOption
         cmbSelectTrigger.Size = New Size(260, 23)
         cmbSelectTrigger.TabIndex = 18
         ' 
-        ' pnlSelectTriggerlbl
+        ' pnlSelectTrigger
         ' 
-        pnlSelectTriggerlbl.BackColor = SystemColors.ControlDark
-        pnlSelectTriggerlbl.Controls.Add(lblSelectTriggerlbl)
-        pnlSelectTriggerlbl.ForeColor = SystemColors.ActiveCaptionText
-        pnlSelectTriggerlbl.Location = New Point(19, 21)
-        pnlSelectTriggerlbl.Name = "pnlSelectTriggerlbl"
-        pnlSelectTriggerlbl.Size = New Size(260, 34)
-        pnlSelectTriggerlbl.TabIndex = 17
+        pnlSelectTrigger.BackColor = SystemColors.ControlDark
+        pnlSelectTrigger.Controls.Add(lblSelectTrigger)
+        pnlSelectTrigger.ForeColor = SystemColors.ActiveCaptionText
+        pnlSelectTrigger.Location = New Point(19, 21)
+        pnlSelectTrigger.Name = "pnlSelectTrigger"
+        pnlSelectTrigger.Size = New Size(260, 34)
+        pnlSelectTrigger.TabIndex = 17
         ' 
-        ' lblSelectTriggerlbl
+        ' lblSelectTrigger
         ' 
-        lblSelectTriggerlbl.AutoSize = True
-        lblSelectTriggerlbl.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblSelectTriggerlbl.Location = New Point(78, 9)
-        lblSelectTriggerlbl.Name = "lblSelectTriggerlbl"
-        lblSelectTriggerlbl.Size = New Size(92, 17)
-        lblSelectTriggerlbl.TabIndex = 2
-        lblSelectTriggerlbl.Text = "Select Trigger"
+        lblSelectTrigger.AutoSize = True
+        lblSelectTrigger.Font = New Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblSelectTrigger.Location = New Point(78, 9)
+        lblSelectTrigger.Name = "lblSelectTrigger"
+        lblSelectTrigger.Size = New Size(92, 17)
+        lblSelectTrigger.TabIndex = 2
+        lblSelectTrigger.Text = "Select Trigger"
         ' 
         ' dgvTableSchema1
         ' 
@@ -144,14 +144,14 @@ Partial Class FrmTableOption
         dgvTableSchema7.Size = New Size(702, 129)
         dgvTableSchema7.TabIndex = 26
         ' 
-        ' QueryExecuterTableOption
+        ' qcTableOption
         ' 
-        QueryExecuterTableOption.Connection = Nothing
-        QueryExecuterTableOption.IsDeleteButtonVisible = False
-        QueryExecuterTableOption.Location = New Point(747, 12)
-        QueryExecuterTableOption.Name = "QueryExecuterTableOption"
-        QueryExecuterTableOption.Size = New Size(591, 701)
-        QueryExecuterTableOption.TabIndex = 27
+        qcTableOption.Connection = Nothing
+        qcTableOption.IsDeleteButtonVisible = False
+        qcTableOption.Location = New Point(747, 12)
+        qcTableOption.Name = "qcTableOption"
+        qcTableOption.Size = New Size(591, 701)
+        qcTableOption.TabIndex = 27
         ' 
         ' pnlTableStructure
         ' 
@@ -168,42 +168,42 @@ Partial Class FrmTableOption
         pnlTableStructure.Size = New Size(729, 562)
         pnlTableStructure.TabIndex = 28
         ' 
-        ' pnlTableStructurelbl
+        ' pnlTableStructure_
         ' 
-        pnlTableStructurelbl.BackColor = SystemColors.ControlDark
-        pnlTableStructurelbl.Controls.Add(lblTableStructurelbl)
-        pnlTableStructurelbl.ForeColor = SystemColors.ActiveCaptionText
-        pnlTableStructurelbl.Location = New Point(20, 132)
-        pnlTableStructurelbl.Name = "pnlTableStructurelbl"
-        pnlTableStructurelbl.Size = New Size(721, 54)
-        pnlTableStructurelbl.TabIndex = 18
+        pnlTableStructure_.BackColor = SystemColors.ControlDark
+        pnlTableStructure_.Controls.Add(lblTableStructure)
+        pnlTableStructure_.ForeColor = SystemColors.ActiveCaptionText
+        pnlTableStructure_.Location = New Point(20, 132)
+        pnlTableStructure_.Name = "pnlTableStructure_"
+        pnlTableStructure_.Size = New Size(721, 54)
+        pnlTableStructure_.TabIndex = 18
         ' 
-        ' lblTableStructurelbl
+        ' lblTableStructure
         ' 
-        lblTableStructurelbl.AutoSize = True
-        lblTableStructurelbl.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblTableStructurelbl.Location = New Point(226, 16)
-        lblTableStructurelbl.Name = "lblTableStructurelbl"
-        lblTableStructurelbl.Size = New Size(147, 25)
-        lblTableStructurelbl.TabIndex = 2
-        lblTableStructurelbl.Text = "Table Structure"
+        lblTableStructure.AutoSize = True
+        lblTableStructure.Font = New Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblTableStructure.Location = New Point(226, 16)
+        lblTableStructure.Name = "lblTableStructure"
+        lblTableStructure.Size = New Size(147, 25)
+        lblTableStructure.TabIndex = 2
+        lblTableStructure.Text = "Table Structure"
         ' 
-        ' frmTableOption
+        ' FrmTableOption
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1356, 691)
-        Controls.Add(pnlTableStructurelbl)
-        Controls.Add(QueryExecuterTableOption)
+        Controls.Add(pnlTableStructure_)
+        Controls.Add(qcTableOption)
         Controls.Add(btnViewTrigger)
         Controls.Add(cmbSelectTrigger)
-        Controls.Add(pnlSelectTriggerlbl)
+        Controls.Add(pnlSelectTrigger)
         Controls.Add(pnlTableStructure)
-        Name = "frmTableOption"
+        Name = "FrmTableOption"
         Text = "Table Options"
         WindowState = FormWindowState.Maximized
-        pnlSelectTriggerlbl.ResumeLayout(False)
-        pnlSelectTriggerlbl.PerformLayout()
+        pnlSelectTrigger.ResumeLayout(False)
+        pnlSelectTrigger.PerformLayout()
         CType(dgvTableSchema1, ComponentModel.ISupportInitialize).EndInit()
         CType(dgvTableSchema2, ComponentModel.ISupportInitialize).EndInit()
         CType(dgvTableSchema3, ComponentModel.ISupportInitialize).EndInit()
@@ -212,15 +212,15 @@ Partial Class FrmTableOption
         CType(dgvTableSchema6, ComponentModel.ISupportInitialize).EndInit()
         CType(dgvTableSchema7, ComponentModel.ISupportInitialize).EndInit()
         pnlTableStructure.ResumeLayout(False)
-        pnlTableStructurelbl.ResumeLayout(False)
-        pnlTableStructurelbl.PerformLayout()
+        pnlTableStructure_.ResumeLayout(False)
+        pnlTableStructure_.PerformLayout()
         ResumeLayout(False)
     End Sub
 
     Friend WithEvents btnViewTrigger As Button
     Friend WithEvents cmbSelectTrigger As ComboBox
-    Friend WithEvents pnlSelectTriggerlbl As Panel
-    Friend WithEvents lblSelectTriggerlbl As Label
+    Friend WithEvents pnlSelectTrigger As Panel
+    Friend WithEvents lblSelectTrigger As Label
     Friend WithEvents dgvTableSchema1 As DataGridView
     Friend WithEvents dgvTableSchema2 As DataGridView
     Friend WithEvents dgvTableSchema3 As DataGridView
@@ -228,8 +228,8 @@ Partial Class FrmTableOption
     Friend WithEvents dgvTableSchema5 As DataGridView
     Friend WithEvents dgvTableSchema6 As DataGridView
     Friend WithEvents dgvTableSchema7 As DataGridView
-    Friend WithEvents QueryExecuterTableOption As CustomControllers.QueryControl
+    Friend WithEvents qcTableOption As CustomControllers.QueryControl
     Friend WithEvents pnlTableStructure As Panel
-    Friend WithEvents pnlTableStructurelbl As Panel
-    Friend WithEvents lblTableStructurelbl As Label
+    Friend WithEvents pnlTableStructure_ As Panel
+    Friend WithEvents lblTableStructure As Label
 End Class

@@ -22,68 +22,68 @@ Partial Class FrmSavedQuery
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        TVSavedQuery = New TreeView()
-        txtSearch = New TextBox()
-        pnlTitle = New Panel()
-        lblTitle = New Label()
-        pnlTitle.SuspendLayout()
+        TVW_SavedQuery = New TreeView()
+        TXT_Search = New TextBox()
+        PNL_Title = New Panel()
+        LBL_Title = New Label()
+        PNL_Title.SuspendLayout()
         SuspendLayout()
         ' 
-        ' TVSavedQuery
+        ' TVW_SavedQuery
         ' 
-        TVSavedQuery.Location = New Point(12, 96)
-        TVSavedQuery.Name = "TVSavedQuery"
-        TVSavedQuery.Size = New Size(395, 344)
-        TVSavedQuery.TabIndex = 1
+        TVW_SavedQuery.Location = New Point(12, 96)
+        TVW_SavedQuery.Name = "TVW_SavedQuery"
+        TVW_SavedQuery.Size = New Size(395, 344)
+        TVW_SavedQuery.TabIndex = 1
         ' 
-        ' txtSearch
+        ' TXT_Search
         ' 
-        txtSearch.Location = New Point(12, 68)
-        txtSearch.Name = "txtSearch"
-        txtSearch.Size = New Size(395, 23)
-        txtSearch.TabIndex = 2
+        TXT_Search.Location = New Point(12, 67)
+        TXT_Search.Name = "TXT_Search"
+        TXT_Search.Size = New Size(395, 23)
+        TXT_Search.TabIndex = 2
         ' 
-        ' pnlTitle
+        ' PNL_Title
         ' 
-        pnlTitle.BackColor = SystemColors.ActiveBorder
-        pnlTitle.Controls.Add(lblTitle)
-        pnlTitle.Location = New Point(12, 12)
-        pnlTitle.Name = "pnlTitle"
-        pnlTitle.Size = New Size(395, 49)
-        pnlTitle.TabIndex = 3
+        PNL_Title.BackColor = SystemColors.ActiveBorder
+        PNL_Title.Controls.Add(LBL_Title)
+        PNL_Title.Location = New Point(12, 12)
+        PNL_Title.Name = "PNL_Title"
+        PNL_Title.Size = New Size(395, 49)
+        PNL_Title.TabIndex = 3
         ' 
-        ' lblTitle
+        ' LBL_Title
         ' 
-        lblTitle.AutoSize = True
-        lblTitle.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        lblTitle.Location = New Point(104, 16)
-        lblTitle.Name = "lblTitle"
-        lblTitle.Size = New Size(173, 21)
-        lblTitle.TabIndex = 0
-        lblTitle.Text = "Select query Template"
+        LBL_Title.AutoSize = True
+        LBL_Title.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        LBL_Title.Location = New Point(104, 16)
+        LBL_Title.Name = "LBL_Title"
+        LBL_Title.Size = New Size(173, 21)
+        LBL_Title.TabIndex = 0
+        LBL_Title.Text = "Select query Template"
         ' 
         ' FrmSavedQuery
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(419, 452)
-        Controls.Add(pnlTitle)
-        Controls.Add(txtSearch)
-        Controls.Add(TVSavedQuery)
+        Controls.Add(PNL_Title)
+        Controls.Add(TXT_Search)
+        Controls.Add(TVW_SavedQuery)
         MaximizeBox = False
         MaximumSize = New Size(435, 491)
         MinimizeBox = False
         MinimumSize = New Size(435, 491)
         Name = "FrmSavedQuery"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "FrmSavedQuery"
-        pnlTitle.ResumeLayout(False)
-        pnlTitle.PerformLayout()
+        Text = "Query Templates"
+        PNL_Title.ResumeLayout(False)
+        PNL_Title.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
     End Sub
-    Public WithEvents TVSavedQuery As TreeView
-    Friend WithEvents txtSearch As TextBox
-    Friend WithEvents pnlTitle As Panel
-    Friend WithEvents lblTitle As Label
+    Public WithEvents TVW_SavedQuery As TreeView
+    Friend WithEvents TXT_Search As TextBox
+    Friend WithEvents PNL_Title As Panel
+    Friend WithEvents LBL_Title As Label
 End Class

@@ -16,7 +16,7 @@ Public Class FrmSelectSavePath
 
             For Each directory As String In directories
                 Dim folderName As String = IO.Path.GetFileName(directory)
-                LBFolders.Items.Add(folderName)
+                LB_Groups.Items.Add(folderName)
                 ' Recursively populate subdirectories
                 PupulateListBox(directory)
             Next
@@ -40,10 +40,10 @@ Public Class FrmSelectSavePath
     End Sub
 
     ' Handles the selected index changed event of the ListBox
-    Private Sub LBFolders_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBFolders.SelectedIndexChanged
+    Private Sub LBFolders_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LB_Groups.SelectedIndexChanged
 
-        If LBFolders.SelectedIndex <> -1 Then
-            selectedFolderName = LBFolders.SelectedItem.ToString()
+        If LB_Groups.SelectedIndex <> -1 Then
+            selectedFolderName = LB_Groups.SelectedItem.ToString()
             RaiseEvent SelectFolder(Me, New SelectedFolderNameEventArgs(selectedFolderName))
             Me.Close()
         End If
@@ -51,10 +51,10 @@ Public Class FrmSelectSavePath
     End Sub
 
     ' Handles the click event for adding a new folder button
-    Private Sub BtnAddFolder_Click(sender As Object, e As EventArgs) Handles btnAddFolder.Click
+    Private Sub BtnAddFolder_Click(sender As Object, e As EventArgs) Handles btnAddNewGroup.Click
 
-        If Not String.IsNullOrEmpty(txtnewFolder.Text) Then
-            LBFolders.Items.Add(txtnewFolder.Text)
+        If Not String.IsNullOrEmpty(TXT_NewGroup.Text) Then
+            LB_Groups.Items.Add(TXT_NewGroup.Text)
         Else
             MessageBox.Show("Please Enter Folder Name")
         End If
