@@ -1,7 +1,7 @@
 ﻿Imports CustomControllers
 Imports System.Data.SqlClient
 
-Public Class FrmQueryCompare
+Public Class FrmCompareQuery
 
     Private queryControls As New List(Of QueryControl)()
     Private _connection As SqlConnection
@@ -34,20 +34,20 @@ Public Class FrmQueryCompare
         .Connection = _connection
         }
 
-        FLPAddCustomComponents.Controls.Add(permanentItem1)
+        flpAddCustomComponents.Controls.Add(permanentItem1)
         queryControls.Add(permanentItem1)
 
         Dim permanentItem2 As New QueryControl() With {
             .Connection = _connection
         }
 
-        FLPAddCustomComponents.Controls.Add(permanentItem2)
+        flpAddCustomComponents.Controls.Add(permanentItem2)
         queryControls.Add(permanentItem2)
 
     End Sub
 
     ' Add new custom components (queryController)
-    Private Sub BtnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+    Private Sub BTN_Add_Click(sender As Object, e As EventArgs) Handles btnAddComponent.Click
 
         If queryControls.Count < 6 Then
 
@@ -56,7 +56,7 @@ Public Class FrmQueryCompare
                 .IsDeleteButtonVisible = True
             }
 
-            FLPAddCustomComponents.Controls.Add(newQueryControl)
+            flpAddCustomComponents.Controls.Add(newQueryControl)
             queryControls.Add(newQueryControl)
 
         Else
@@ -65,4 +65,7 @@ Public Class FrmQueryCompare
 
     End Sub
 
+    Private Sub frmCompareQuery_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class
