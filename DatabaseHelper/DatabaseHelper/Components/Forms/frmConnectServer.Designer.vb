@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmConnectServer
+Partial Class FrmConnectToServer
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -27,8 +27,8 @@ Partial Class FrmConnectServer
         txtServerName = New TextBox()
         cmbAuthselect = New ComboBox()
         txtServerUserName = New TextBox()
-        Label1 = New Label()
-        Label2 = New Label()
+        lblUserName = New Label()
+        lblPassword = New Label()
         pnlUserName = New Panel()
         txtServerUserPassword = New TextBox()
         pnlTitle = New Panel()
@@ -78,29 +78,29 @@ Partial Class FrmConnectServer
         txtServerUserName.Size = New Size(195, 23)
         txtServerUserName.TabIndex = 10
         ' 
-        ' Label1
+        ' lblUserName
         ' 
-        Label1.AutoSize = True
-        Label1.Location = New Point(8, 16)
-        Label1.Name = "Label1"
-        Label1.Size = New Size(71, 15)
-        Label1.TabIndex = 12
-        Label1.Text = "User Name :"
+        lblUserName.AutoSize = True
+        lblUserName.Location = New Point(8, 16)
+        lblUserName.Name = "lblUserName"
+        lblUserName.Size = New Size(71, 15)
+        lblUserName.TabIndex = 12
+        lblUserName.Text = "User Name :"
         ' 
-        ' Label2
+        ' lblPassword
         ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(8, 41)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(63, 15)
-        Label2.TabIndex = 13
-        Label2.Text = "Password :"
+        lblPassword.AutoSize = True
+        lblPassword.Location = New Point(8, 41)
+        lblPassword.Name = "lblPassword"
+        lblPassword.Size = New Size(63, 15)
+        lblPassword.TabIndex = 13
+        lblPassword.Text = "Password :"
         ' 
         ' pnlUserName
         ' 
-        pnlUserName.Controls.Add(Label1)
+        pnlUserName.Controls.Add(lblUserName)
         pnlUserName.Controls.Add(txtServerUserName)
-        pnlUserName.Controls.Add(Label2)
+        pnlUserName.Controls.Add(lblPassword)
         pnlUserName.Controls.Add(txtServerUserPassword)
         pnlUserName.Location = New Point(69, 170)
         pnlUserName.Name = "pnlUserName"
@@ -135,7 +135,7 @@ Partial Class FrmConnectServer
         lblTitle.TabIndex = 0
         lblTitle.Text = "SQL SERVER"
         ' 
-        ' FrmConnectServer
+        ' FrmConnectToServer
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
@@ -146,7 +146,7 @@ Partial Class FrmConnectServer
         Controls.Add(btnToggleConnection)
         Controls.Add(lblServerName)
         Controls.Add(txtServerName)
-        Name = "FrmConnectServer"
+        Name = "FrmConnectToServer"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Connect To Server"
         pnlUserName.ResumeLayout(False)
@@ -162,8 +162,8 @@ Partial Class FrmConnectServer
     Friend WithEvents txtServerName As TextBox
     Friend WithEvents cmbAuthselect As ComboBox
     Friend WithEvents txtServerUserName As TextBox
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
+    Friend WithEvents lblUserName As Label
+    Friend WithEvents lblPassword As Label
     Friend WithEvents pnlUserName As Panel
     Friend WithEvents txtServerUserPassword As TextBox
     Friend WithEvents pnlTitle As Panel
