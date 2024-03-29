@@ -20,7 +20,7 @@ Public Class FrmConnectToServer
     End Enum
 
     ' Button to establish connection with the server
-    Private Async Sub BTN_ToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
+    Private Async Sub BtnToggleConnection_Click(sender As Object, e As EventArgs) Handles btnToggleConnection.Click
 
         If selectedEnumNumber = 1 Then
 
@@ -120,7 +120,7 @@ Public Class FrmConnectToServer
     End Sub
 
     ' Retrieve the selected authentication type from the combobox
-    Private Sub CMB_Authselect_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAuthselect.SelectedIndexChanged
+    Private Sub CmbAuthselect_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbAuthselect.SelectedIndexChanged
 
         Dim selectedIndex As Integer = cmbAuthselect.SelectedIndex
 
@@ -143,7 +143,7 @@ Public Class FrmConnectToServer
     End Sub
 
     ' Form Load Events
-    Private Sub FRM_ConnectServer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmConnectServer_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Dim cachedServerName As String = ServerNameCache.GetCachedServerName()
         txtServerName.Text = cachedServerName

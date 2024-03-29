@@ -9,13 +9,13 @@ Public Class FrmShowQuery
         InitializeComponent()
 
         Me.connection = connection
-        LBL_Selected_Name.Text = ShowName
+        lblSelected_Name.Text = ShowName
         txtShowDefinition.Text = ShowDefinition
 
     End Sub
 
     ' Form Load event
-    Private Sub FRM_ShowQuery_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmShowQuery_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         qcShowQuery.Connection = connection
     End Sub
 

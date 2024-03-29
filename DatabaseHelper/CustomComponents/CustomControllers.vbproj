@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="fastcoloredtextbox.net5" Version="2.16.26" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 

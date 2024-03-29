@@ -22,20 +22,20 @@ Partial Class FrmShowQuery
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        LBL_Selected_Name = New Label()
+        lblSelected_Name = New Label()
         txtShowDefinition = New TextBox()
         lblName = New Label()
         qcShowQuery = New CustomControllers.QueryControl()
         SuspendLayout()
         ' 
-        ' LBL_Selected_Name
+        ' lblSelected_Name
         ' 
-        LBL_Selected_Name.AutoSize = True
-        LBL_Selected_Name.Font = New Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
-        LBL_Selected_Name.Location = New Point(105, 51)
-        LBL_Selected_Name.Name = "LBL_Selected_Name"
-        LBL_Selected_Name.Size = New Size(0, 20)
-        LBL_Selected_Name.TabIndex = 1
+        lblSelected_Name.AutoSize = True
+        lblSelected_Name.Font = New Font("Segoe UI Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblSelected_Name.Location = New Point(105, 51)
+        lblSelected_Name.Name = "lblSelected_Name"
+        lblSelected_Name.Size = New Size(0, 20)
+        lblSelected_Name.TabIndex = 1
         ' 
         ' txtShowDefinition
         ' 
@@ -60,12 +60,14 @@ Partial Class FrmShowQuery
         ' 
         qcShowQuery.Connection = Nothing
         qcShowQuery.IsDeleteButtonVisible = False
+        qcShowQuery.IsflpCustomComponentVisible = False
+        qcShowQuery.IsViewTemplateButtonVisible = False
         qcShowQuery.Location = New Point(726, 35)
         qcShowQuery.Name = "qcShowQuery"
         qcShowQuery.Size = New Size(632, 646)
         qcShowQuery.TabIndex = 4
         ' 
-        ' FrmShowQuery
+        ' frmShowQuery
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
@@ -73,14 +75,14 @@ Partial Class FrmShowQuery
         Controls.Add(qcShowQuery)
         Controls.Add(lblName)
         Controls.Add(txtShowDefinition)
-        Controls.Add(LBL_Selected_Name)
-        Name = "FrmShowQuery"
+        Controls.Add(lblSelected_Name)
+        Name = "frmShowQuery"
         Text = "Show Query"
         WindowState = FormWindowState.Maximized
         ResumeLayout(False)
         PerformLayout()
     End Sub
-    Friend WithEvents LBL_Selected_Name As Label
+    Friend WithEvents lblSelected_Name As Label
     Friend WithEvents txtShowDefinition As TextBox
     Friend WithEvents lblName As Label
     Friend WithEvents qcShowQuery As CustomControllers.QueryControl

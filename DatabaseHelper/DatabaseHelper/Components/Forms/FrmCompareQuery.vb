@@ -47,7 +47,7 @@ Public Class FrmCompareQuery
     End Sub
 
     ' Add new custom components (queryController)
-    Private Sub BTN_Add_Click(sender As Object, e As EventArgs) Handles btnAddComponent.Click
+    Private Sub BtnAdd_Click(sender As Object, e As EventArgs) Handles btnAddComponent.Click
 
         If queryControls.Count < 6 Then
 
@@ -65,7 +65,7 @@ Public Class FrmCompareQuery
 
     End Sub
 
-    Private Sub frmCompareQuery_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmCompareQuery_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
 End Class

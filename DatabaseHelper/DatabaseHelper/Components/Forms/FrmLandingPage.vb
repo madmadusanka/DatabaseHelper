@@ -7,6 +7,8 @@ Public Class FrmLandingPage
     Private _connection As SqlConnection
     Private selectedDatabaseName As String
     Private reconnect As Boolean = False
+    Private isMethodCompleted As Boolean = False
+    Private task1 As Task
 
     ' Property representing the connection state or status
     Public Property Connection As SqlConnection
@@ -33,6 +35,7 @@ Public Class FrmLandingPage
 
         Dim frmConnectServerInstance As FrmConnectToServer = Application.OpenForms.OfType(Of FrmConnectToServer).FirstOrDefault()
 
+
         If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
 
             Common.Connection.DisconnectServer(Connection)
@@ -56,6 +59,7 @@ Public Class FrmLandingPage
     ' Event handler for when a server is successfully connected
     Private Async Sub OnServerConnected(sender As Object, e As ServerConnectedEventArgs)
 
+        ClearData()
         Connection = e.Connection
         txtConnectedServerName.Text = e.Servername
         Await ConnectToServer()
@@ -147,9 +151,7 @@ Public Class FrmLandingPage
                     selectedDatabaseName = cmbDatabases.SelectedItem.ToString()
 
                     Dim getDBNamesquery As String = SQLQueries.DBNamesQuery
-
                     Await ShowDatabaseNames(getDBNamesquery, Connection, cmbDatabases)
-
                     Await ShowTableCount(selectedDatabaseName, Connection, lblCountOfTable)
                     Await ShowSpCount(selectedDatabaseName, Connection, lblSpCount)
                     Await ShowViewCount(selectedDatabaseName, Connection, lblCountOfView)
@@ -159,6 +161,14 @@ Public Class FrmLandingPage
                     Await PopulateViewComboBoxWithQuery(selectedDatabaseName, Connection, cmbSelectView)
 
                     pnlLeftComboBox.Visible = True
+
+                    cmbSelectTable.SelectedIndex = -1
+                    cmbSelectTable.Text = String.Empty
+                    cmbSelectProcedure.SelectedIndex = -1
+                    cmbSelectProcedure.Text = String.Empty
+                    cmbSelectView.SelectedIndex = -1
+                    cmbSelectView.Text = String.Empty
+                    isMethodCompleted = True
 
                 Else
                     MessageBox.Show("Please select a database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -196,7 +206,7 @@ Public Class FrmLandingPage
             End If
 
         Catch ex As Exception
-            MessageBox.Show("An error occurred while populating the ComboBox: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("An error occurred while populating the ShowDatabaseNames ComboBox: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
     End Function
@@ -308,7 +318,7 @@ Public Class FrmLandingPage
             End If
 
         Catch ex As Exception
-            MessageBox.Show($"An error occurred while populating the ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show($"An error occurred while populating the PopulateTableComboBoxWithQuery ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
     End Function
@@ -339,7 +349,7 @@ Public Class FrmLandingPage
             End If
 
         Catch ex As Exception
-            MessageBox.Show($"An error occurred while populating the ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show($"An error occurred while populating the PopulateProcedureComboBoxWithQuery ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
     End Function
@@ -370,7 +380,7 @@ Public Class FrmLandingPage
             End If
 
         Catch ex As Exception
-            MessageBox.Show($"An error occurred while populating the ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show($"An error occurred while populating the PopulateViewComboBoxWithQuery ComboBox: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
     End Function
@@ -486,6 +496,10 @@ Public Class FrmLandingPage
         cmbSelectTable.Items.Clear()
         cmbSelectProcedure.Items.Clear()
         cmbSelectView.Items.Clear()
+        cmbDatabases.Text = String.Empty
+        cmbSelectTable.Text = String.Empty
+        cmbSelectProcedure.Text = String.Empty
+        cmbSelectView.Text = String.Empty
         lblCountOfTable.Text = ""
         lblSpCount.Text = ""
         lblCountOfView.Text = ""

@@ -35,11 +35,15 @@ Public Class Connection
 
     ' Desconnect Server
     Public Shared Sub DisconnectServer(ByVal connection As SqlConnection)
+        Try
+            If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
+                connection.Close()
+                connection.Dispose()
+            End If
+        Catch ex As Exception
+            Throw New Exception($"Error Desconnecting to the server: {ex.Message}")
+        End Try
 
-        If connection IsNot Nothing AndAlso connection.State = ConnectionState.Open Then
-            connection.Close()
-            connection.Dispose()
-        End If
 
     End Sub
 

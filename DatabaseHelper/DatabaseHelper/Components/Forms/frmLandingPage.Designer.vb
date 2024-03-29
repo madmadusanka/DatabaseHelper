@@ -449,6 +449,8 @@ Partial Class FrmLandingPage
         ' 
         qcLandingPage.Connection = Nothing
         qcLandingPage.IsDeleteButtonVisible = False
+        qcLandingPage.IsflpCustomComponentVisible = False
+        qcLandingPage.IsViewTemplateButtonVisible = False
         qcLandingPage.Location = New Point(12, 146)
         qcLandingPage.Name = "qcLandingPage"
         qcLandingPage.Size = New Size(1029, 538)

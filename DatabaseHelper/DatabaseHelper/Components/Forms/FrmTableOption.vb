@@ -49,7 +49,7 @@ Public Class FrmTableOption
     End Sub
 
     ' Button to display triggers
-    Private Async Sub BTN_ViewTrigger_Click(sender As Object, e As EventArgs) Handles btnViewTrigger.Click
+    Private Async Sub BtnViewTrigger_Click(sender As Object, e As EventArgs) Handles btnViewTrigger.Click
 
         Try
 
@@ -133,7 +133,7 @@ Public Class FrmTableOption
     End Function
 
     ' Form Load Event
-    Private Sub FRM_TableOption_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub FrmTableOption_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         qcTableOption.Connection = connection
         lblTableStructure.Text = $"{selectedTableName} Table Stucture"

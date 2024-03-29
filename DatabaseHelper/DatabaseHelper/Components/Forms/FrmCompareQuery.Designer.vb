@@ -75,6 +75,8 @@ Partial Class FrmCompareQuery
         Controls.Add(flpAddCustomComponents)
         Name = "FrmCompareQuery"
         Text = "Query Compare"
+
+
         WindowState = FormWindowState.Maximized
         pnlQueryCompare.ResumeLayout(False)
         pnlQueryCompare.PerformLayout()
