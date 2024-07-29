@@ -1,11 +1,13 @@
 ﻿Imports System.IO
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 
-Public Class FrmSelectSavePath
+Public Class frmSelectSavePath
 
+    Private rootPathJson As String = Path.Combine(Application.StartupPath, "Json")
     Private rootPath As String = Path.Combine(Application.StartupPath, "Queries")
     Private selectedFolderName As String = ""
     Public Event SelectFolder As EventHandler(Of SelectedFolderNameEventArgs)
+
 
     ' Populates the ListBox with directories
     Private Sub PupulateListBox(ByVal path As String)
@@ -16,7 +18,7 @@ Public Class FrmSelectSavePath
 
             For Each directory As String In directories
                 Dim folderName As String = IO.Path.GetFileName(directory)
-                LBFolders.Items.Add(folderName)
+                lbGroups.Items.Add(folderName)
                 ' Recursively populate subdirectories
                 PupulateListBox(directory)
             Next
@@ -40,21 +42,24 @@ Public Class FrmSelectSavePath
     End Sub
 
     ' Handles the selected index changed event of the ListBox
-    Private Sub LBFolders_SelectedIndexChanged(sender As Object, e As EventArgs) Handles LBFolders.SelectedIndexChanged
+    Private Sub LBFolders_SelectedIndexChanged(sender As Object, e As EventArgs) Handles lbGroups.SelectedIndexChanged
 
-        If LBFolders.SelectedIndex <> -1 Then
-            selectedFolderName = LBFolders.SelectedItem.ToString()
+
+        If lbGroups.SelectedIndex <> -1 Then
+            selectedFolderName = lbGroups.SelectedItem.ToString()
             RaiseEvent SelectFolder(Me, New SelectedFolderNameEventArgs(selectedFolderName))
             Me.Close()
         End If
 
+
+
     End Sub
 
     ' Handles the click event for adding a new folder button
-    Private Sub BtnAddFolder_Click(sender As Object, e As EventArgs) Handles btnAddFolder.Click
+    Private Sub BtnAddFolder_Click(sender As Object, e As EventArgs) Handles btnAddNewGroup.Click
 
-        If Not String.IsNullOrEmpty(txtnewFolder.Text) Then
-            LBFolders.Items.Add(txtnewFolder.Text)
+        If Not String.IsNullOrEmpty(txtNewGroup.Text) Then
+            lbGroups.Items.Add(txtNewGroup.Text)
         Else
             MessageBox.Show("Please Enter Folder Name")
         End If

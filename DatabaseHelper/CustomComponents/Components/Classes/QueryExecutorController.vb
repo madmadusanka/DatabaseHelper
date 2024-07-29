@@ -38,12 +38,10 @@ Public Class QueryExecutorController
             End If
 
             Using command As New SqlCommand(query, Connection)
-
                 Dim adapter As New SqlDataAdapter(command)
                 Dim dataTable As New DataTable()
                 adapter.Fill(dataTable)
                 Return dataTable
-
             End Using
 
         Catch ex As Exception

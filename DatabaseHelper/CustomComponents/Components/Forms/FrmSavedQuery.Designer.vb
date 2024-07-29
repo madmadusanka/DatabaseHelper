@@ -22,23 +22,23 @@ Partial Class FrmSavedQuery
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        TVSavedQuery = New TreeView()
+        tvwSavedQuery = New TreeView()
         txtSearch = New TextBox()
         pnlTitle = New Panel()
         lblTitle = New Label()
         pnlTitle.SuspendLayout()
         SuspendLayout()
         ' 
-        ' TVSavedQuery
+        ' tvwSavedQuery
         ' 
-        TVSavedQuery.Location = New Point(12, 96)
-        TVSavedQuery.Name = "TVSavedQuery"
-        TVSavedQuery.Size = New Size(395, 344)
-        TVSavedQuery.TabIndex = 1
+        tvwSavedQuery.Location = New Point(12, 96)
+        tvwSavedQuery.Name = "tvwSavedQuery"
+        tvwSavedQuery.Size = New Size(395, 344)
+        tvwSavedQuery.TabIndex = 1
         ' 
         ' txtSearch
         ' 
-        txtSearch.Location = New Point(12, 68)
+        txtSearch.Location = New Point(12, 67)
         txtSearch.Name = "txtSearch"
         txtSearch.Size = New Size(395, 23)
         txtSearch.TabIndex = 2
@@ -55,34 +55,34 @@ Partial Class FrmSavedQuery
         ' lblTitle
         ' 
         lblTitle.AutoSize = True
-        lblTitle.Font = New Font("Segoe UI Semibold", 12.0F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
+        lblTitle.Font = New Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         lblTitle.Location = New Point(104, 16)
         lblTitle.Name = "lblTitle"
         lblTitle.Size = New Size(173, 21)
         lblTitle.TabIndex = 0
         lblTitle.Text = "Select query Template"
         ' 
-        ' FrmSavedQuery
+        ' frmSavedQuery
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(419, 452)
         Controls.Add(pnlTitle)
         Controls.Add(txtSearch)
-        Controls.Add(TVSavedQuery)
+        Controls.Add(tvwSavedQuery)
         MaximizeBox = False
         MaximumSize = New Size(435, 491)
         MinimizeBox = False
         MinimumSize = New Size(435, 491)
-        Name = "FrmSavedQuery"
+        Name = "frmSavedQuery"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "FrmSavedQuery"
+        Text = "Query Templates"
         pnlTitle.ResumeLayout(False)
         pnlTitle.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
     End Sub
-    Public WithEvents TVSavedQuery As TreeView
+    Public WithEvents tvwSavedQuery As TreeView
     Friend WithEvents txtSearch As TextBox
     Friend WithEvents pnlTitle As Panel
     Friend WithEvents lblTitle As Label

@@ -3,7 +3,7 @@ Imports FastColoredTextBoxNS
 Imports System.IO
 Imports System.Text.RegularExpressions
 Imports DatabaseHelper
-
+Imports Newtonsoft.Json
 Public Class QueryControl
 
     Private Shared ReadOnly separator As Char() = {" "c, ","c, ";"c}
@@ -16,10 +16,21 @@ Public Class QueryControl
     Private updatedQuery As String
     Private customComponentInstance As QueryControl
     Private queryFilePath As String
+    Private _FilePath As String
     Private selectedFolderName As String
     Private NewDefaultDirectory As String
-    Private frmQuerySave As FrmSelectSavePath
+    Private frmQuerySave As frmSelectSavePath
     Private frmQueryList As FrmSavedQuery
+    Private dataTable As New DataTable()
+
+    ' Property for set query path
+    Public Sub SetTemplateQueryPath(ByVal FilePath As String)
+
+        _FilePath = FilePath
+        LoadQueryFromFile(_FilePath)
+        btnViewTemplate.Visible = False
+
+    End Sub
 
     ' Property for managing the SqlConnection object, initializes upon setting
     Public Property Connection As SqlConnection
@@ -34,18 +45,6 @@ Public Class QueryControl
 
     End Property
 
-    ' Property for managing the query text box control
-    Public Property QueryTextBox As FastColoredTextBox
-
-        Get
-            Return fastColoredTextBox
-        End Get
-        Set(ByVal value As FastColoredTextBox)
-            fastColoredTextBox = value
-        End Set
-
-    End Property
-
     ' Property for managing the visibility of the delete button
     Public Property IsDeleteButtonVisible As Boolean
 
@@ -54,6 +53,31 @@ Public Class QueryControl
         End Get
         Set(value As Boolean)
             btnDeleteThis.Visible = value
+        End Set
+
+    End Property
+
+    ' Property for managing the wiew template button
+    Public Property IsViewTemplateButtonVisible As Boolean
+
+        Get
+            Return btnViewTemplate.Visible
+        End Get
+        Set(value As Boolean)
+            btnViewTemplate.Visible = value
+        End Set
+
+    End Property
+
+    ' Property for managing flpcustomcomponent
+    Public Property IsflpCustomComponentVisible As Boolean
+
+        Get
+            Return flpCustomComponent.Visible
+        End Get
+        Set(value As Boolean)
+            flpCustomComponent.Visible = value
+
         End Set
 
     End Property
@@ -78,12 +102,20 @@ Public Class QueryControl
 
     'Query execute button
     Private Sub ExecuteQueryButton_Click(sender As Object, e As EventArgs) Handles ExecuteQueryButton.Click
+
+        Dim selectedText As String = fastColoredTextBox.SelectedText.Trim()
         Dim query As String = fastColoredTextBox.Text.Trim()
-        QueryExecute(query)
+
+        If selectedText <> String.Empty Then
+            QueryExecute(selectedText)
+        Else
+            QueryExecute(query)
+        End If
+
     End Sub
 
     ' Executes the SQL query and displays the result in QueryResultDataGridView
-    Private Sub QueryExecute(ByVal Query As String)
+    Public Sub QueryExecute(ByVal Query As String)
 
         If Not String.IsNullOrEmpty(Query) Then
 
@@ -91,11 +123,14 @@ Public Class QueryControl
 
                 If Connection IsNot Nothing AndAlso Connection.State = ConnectionState.Open Then
 
-                    Dim dataTable As New DataTable()
                     Dim completionTime As String = DateTime.Now.ToString()
+
+                    dataTable.Dispose()
+                    dataTable = New DataTable()
 
                     adapter.SelectCommand = New SqlCommand(Query, Connection)
                     adapter.Fill(dataTable)
+
                     Dim rowsAffected As Integer = adapter.SelectCommand.ExecuteNonQuery()
 
                     QueryResultDataGridView.DataSource = dataTable
@@ -146,7 +181,7 @@ Public Class QueryControl
                 frmQuerySave.BringToFront()
             Else
 
-                frmQuerySave = New FrmSelectSavePath
+                frmQuerySave = New frmSelectSavePath()
                 AddHandler frmQuerySave.SelectFolder, AddressOf OnSelectFolder
                 frmQuerySave.Show()
 
@@ -158,6 +193,21 @@ Public Class QueryControl
 
     End Sub
 
+    ' Handles the click event for the save query with executed data button
+    Private Sub btnSaveWithData_Click(sender As Object, e As EventArgs) Handles btnExportWithData.Click
+
+        If Not String.IsNullOrEmpty(fastColoredTextBox.Text) AndAlso QueryResultDataGridView.DataSource IsNot Nothing AndAlso QueryResultDataGridView.Rows.Count > 0 Then
+
+            Dim IsQueryAndDataFile = True
+            selectedFolderName = " "
+            SaveQueryFile(selectedFolderName, IsQueryAndDataFile)
+
+        Else
+            MessageBox.Show("Please execute a query first.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+
+    End Sub
+
     ' Loads a query from a file and displays it in the QueryTextBox
     Private Sub LoadQueryFromFile(filePath As String)
 
@@ -165,9 +215,13 @@ Public Class QueryControl
             ' Read the content of the selected query file
             Dim queryContent As String = File.ReadAllText(filePath)
 
-            ' Display the query content in the TextBox
-            QueryTextBox.Text = queryContent
-            GenerateTextBoxesForParameters(queryContent)
+            If String.IsNullOrEmpty(fastColoredTextBox.Text) Then
+                fastColoredTextBox.Text = queryContent
+                GenerateTextBoxesForParameters(queryContent)
+            Else
+                fastColoredTextBox.Text &= Environment.NewLine & Environment.NewLine + queryContent
+                GenerateTextBoxesForParameters(queryContent)
+            End If
 
         Catch ex As Exception
             MessageBox.Show("Please double Click a Sql File")
@@ -178,13 +232,17 @@ Public Class QueryControl
     ' Generates TextBox controls for parameters in the query
     Public Sub GenerateTextBoxesForParameters(query As String)
         ' Split the query into individual words
+
         Dim words As String() = query.Split(separator, StringSplitOptions.RemoveEmptyEntries)
+        btnViewTemplate.Visible = False
 
         ' Loop through each word to find parameters starting with @
         For Each word As String In words
             If word.StartsWith(QueryParamStart) And word.EndsWith(QueryParamEnd) Then
                 ' Remove any non-alphanumeric characters from the parameter name
                 Dim parameterName As String = Regex.Replace(word, "[^\w]", "")
+
+                btnViewTemplate.Visible = True
 
                 ' Generate a new TextBox control
                 Dim textBox As New TextBox() With {
@@ -221,11 +279,10 @@ Public Class QueryControl
     ' Handles the click event for setting data
     Private Sub BtnSetData_Click(sender As Object, e As EventArgs)
 
-        updatedQuery = CompleteQueryWithParameters(QueryTextBox.Text)
+        updatedQuery = CompleteQueryWithParameters(fastColoredTextBox.Text)
         QueryExecute(updatedQuery)
 
     End Sub
-
     ' Completes the query template with parameter values
     Private Function CompleteQueryWithParameters(query As String) As String
 
@@ -277,13 +334,14 @@ Public Class QueryControl
     ' Event handler for selecting a folder
     Private Sub OnSelectFolder(sender As Object, e As SelectedFolderNameEventArgs)
 
+        Dim IsQueryAndDataFile = False
         selectedFolderName = e.SelectedFolderName
-        SaveQueryFile(selectedFolderName)
+        SaveQueryFile(selectedFolderName, IsQueryAndDataFile)
 
     End Sub
 
     ' Saves the SQL query to a file
-    Private Sub SaveQueryFile(ByRef selectedFolderName As String)
+    Private Sub SaveQueryFile(ByRef selectedFolderName As String, ByVal IsQueryAndDataFile As Boolean)
 
         If Not String.IsNullOrEmpty(fastColoredTextBox.Text) Then
 
@@ -291,35 +349,70 @@ Public Class QueryControl
 
             ' Get the application's startup path
             Dim DefaultDirectory As String = Application.StartupPath
-            DefaultDirectory = Path.Combine(DefaultDirectory, "Queries")
 
-            ' Combine the startup path with a subfolder to store the queries, if desired
-            NewDefaultDirectory = Path.Combine(DefaultDirectory, selectedFolderName)
+            If IsQueryAndDataFile = False Then
 
-            ' Check if the subfolder exists, create it if it doesn't
-            If Not Directory.Exists(NewDefaultDirectory) Then
-                Directory.CreateDirectory(NewDefaultDirectory)
-            End If
+                DefaultDirectory = Path.Combine(DefaultDirectory, "Queries")
 
-            ' Display SaveFileDialog with the default directory
-            Dim saveDialog As New SaveFileDialog With {
-            .InitialDirectory = NewDefaultDirectory,
-            .Filter = "SQL Files (*.sql)|*.sql|All files (*.*)|*.*",
-            .Title = "Save SQL Query"
-            }
+                ' Combine the startup path with a subfolder to store the queries, if desired
+                NewDefaultDirectory = Path.Combine(DefaultDirectory, selectedFolderName)
 
-            If saveDialog.ShowDialog = DialogResult.OK Then
+                ' Check if the subfolder exists, create it if it doesn't
+                If Not Directory.Exists(NewDefaultDirectory) Then
+                    Directory.CreateDirectory(NewDefaultDirectory)
+                End If
 
-                ' Get the chosen file path
-                Dim filePath As String = saveDialog.FileName
+                Dim frmTemplateName As New FrmSaveFileName
 
-                Try
-                    ' Write the text from the TextBox to the chosen file using System.IO.File.WriteAllText
-                    File.WriteAllText(filePath, QueryTextBox.Text)
-                    MessageBox.Show("SQL query saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Catch ex As Exception
-                    MessageBox.Show("An error occurred while saving the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
+                If frmTemplateName.ShowDialog() = DialogResult.OK Then
+
+                    Dim fileName As String = frmTemplateName.FileName
+                    Dim filePath As String = Path.Combine(NewDefaultDirectory, fileName & ".sql")
+
+                    Try
+                        ' Write the text from the TextBox to the chosen file using System.IO.File.WriteAllText
+                        File.WriteAllText(filePath, fastColoredTextBox.Text)
+                        MessageBox.Show("SQL query saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As Exception
+                        MessageBox.Show("An error occurred while saving the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+
+                End If
+
+            ElseIf IsQueryAndDataFile = True Then
+
+                DefaultDirectory = Path.Combine(DefaultDirectory, "Json")
+
+                If Not Directory.Exists(DefaultDirectory) Then
+                    Directory.CreateDirectory(DefaultDirectory)
+                End If
+
+                Dim saveDialog As New SaveFileDialog With {
+                    .InitialDirectory = DefaultDirectory,
+                    .Filter = "JSON Files (*.json)|*.json|All files (*.*)|*.*",
+                    .Title = "Save Json File"
+                }
+
+                If saveDialog.ShowDialog = DialogResult.OK Then
+
+                    Dim filePath As String = saveDialog.FileName
+
+                    Dim queryAndData As New QueryAndData With {
+                                .Query = queryText,
+                                .Data = dataTable
+                    }
+
+                    Dim serializedData As String = JsonConvert.SerializeObject(queryAndData)
+
+                    Try
+                        ' Write the text from the TextBox to the chosen file using System.IO.File.WriteAllText
+                        File.WriteAllText(filePath, serializedData)
+                        MessageBox.Show("SQL query saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Catch ex As Exception
+                        MessageBox.Show("An error occurred while saving the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+
+                End If
 
             End If
 
@@ -327,6 +420,93 @@ Public Class QueryControl
             MessageBox.Show("Query is Empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
 
+    End Sub
+
+    ' Event handler for Search from grid view
+    Private Sub TxtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        ' Filter data based on TextBox input
+        Dim searchQuery As String = txtSearch.Text.Trim()
+
+        If Not String.IsNullOrEmpty(searchQuery) Then
+            Dim filterExpression As String = String.Empty
+            Dim isFirstCondition As Boolean = True
+
+            For Each column As DataColumn In dataTable.Columns
+                If column.DataType Is GetType(String) Then
+                    If Not isFirstCondition Then
+                        filterExpression &= " OR "
+                    End If
+                    filterExpression &= "[" & column.ColumnName & "] LIKE '%" & searchQuery & "%'"
+                    isFirstCondition = False
+                ElseIf column.DataType Is GetType(Integer) OrElse column.DataType Is GetType(Double) Then
+                    If Not isFirstCondition Then
+                        filterExpression &= " OR "
+                    End If
+                    ' Convert numeric values to string before using LIKE
+                    filterExpression &= "Convert([" & column.ColumnName & "], 'System.String') LIKE '%" & searchQuery & "%'"
+                    isFirstCondition = False
+                End If
+            Next
+
+            Dim dv As New DataView(dataTable) With {
+                .RowFilter = filterExpression
+            }
+            QueryResultDataGridView.DataSource = dv
+
+        Else
+            QueryResultDataGridView.DataSource = dataTable ' Show all data if search query is empty
+        End If
+    End Sub
+
+    ' Event handler for FastColoredTextBox short cuts
+    Private Sub FastColoredTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles fastColoredTextBox.KeyDown
+
+        If e.Control AndAlso e.KeyCode = Keys.S Then
+            btnsavequery.PerformClick()
+        ElseIf e.Control AndAlso e.Shift AndAlso e.KeyCode = Keys.V Then
+            BtnQueryList.PerformClick()
+        ElseIf e.KeyCode = Keys.F5 Then
+            ExecuteQueryButton.PerformClick()
+        End If
+
+    End Sub
+
+    ' Event handler for view query templates
+    Private Sub BtnViewTemplate_Click(sender As Object, e As EventArgs) Handles btnViewTemplate.Click
+
+        Dim frmOpenTemplate As New frmOpenTemplates(_connection, queryFilePath)
+        frmOpenTemplate.Show()
+
+    End Sub
+
+    ' Event handler for FastColoredTextBox text changes
+    Private Sub FastColoredTextBox_TextChanged(sender As Object, e As TextChangedEventArgs) Handles fastColoredTextBox.TextChanged
+
+        If String.IsNullOrEmpty(fastColoredTextBox.Text) Then
+            btnViewTemplate.Visible = False
+        End If
+
+    End Sub
+
+    Private Sub btnImportWithData_Click(sender As Object, e As EventArgs) Handles btnImportWithData.Click
+        Try
+            Dim openFileDialog As New OpenFileDialog()
+            openFileDialog.Filter = "JSON Files (*.json)|*.json|All files (*.*)|*.*"
+
+            If openFileDialog.ShowDialog() = DialogResult.OK Then
+
+                Dim selectedFilePath As String = openFileDialog.FileName
+                Dim jsonData As String = File.ReadAllText(selectedFilePath)
+                Dim queryAndData As QueryAndData = JsonConvert.DeserializeObject(Of QueryAndData)(jsonData)
+
+                fastColoredTextBox.Text = queryAndData.Query
+                QueryResultDataGridView.DataSource = queryAndData.Data
+
+                MessageBox.Show("File loaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while opening the file: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
 End Class

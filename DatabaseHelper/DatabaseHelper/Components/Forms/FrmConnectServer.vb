@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
-Imports DatabaseHelper.DataCache
+Imports DatabaseHelper.ServerNameCache
 
-Public Class FrmConnectServer
+Public Class FrmConnectToServer
 
     Private isConnected As Boolean = False
     Private connection As SqlConnection
